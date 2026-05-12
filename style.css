@@ -1,0 +1,1334 @@
+/* =========================================================================
+   SENIOR CREATIVE DEVELOPER - DARK LUXURY MINIMALIST STYLESHEET
+   Stack: CSS3 (Variables, Grid, Flexbox)
+   ========================================================================= */
+
+/* --- ROOT VARIABLES (Untuk mempermudah kustomisasi warna) --- */
+:root {
+    /* Tema Warna: Dark Luxury Minimalist */
+    --bg-dark: #050505;        /* Hitam Obsidian */
+    --text-light: #F0F0F0;     /* Putih Mutiara */
+    --accent-blue: #00A3FF;    /* Biru Neon Soft */
+    
+    /* Warna Turunan / Supporting */
+    --gray-dark: #121212;      /* Latar Bento & Card */
+    --gray-border: rgba(255, 255, 255, 0.05); /* Border subtle */
+    --gray-text: #8A8A8A;      /* Teks sekunder */
+    
+    /* Tipografi */
+    --font-heading: 'Syne', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    
+    /* Layout & Spacing */
+    --nav-height: 90px;
+    --container-max: 1200px;
+    
+    /* Animasi Transition */
+    --transition-fast: 0.3s ease;
+    --transition-smooth: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- RESET & GLOBAL STYLES --- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    /* 4. UX TAMBAHAN: Smooth Scrolling native CSS */
+    scroll-behavior: smooth; 
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none; /* Disembunyikan karena menggunakan custom cursor (Desktop) */
+}
+
+/* Fallback cursor normal di mobile/touch screen */
+@media (max-width: 1024px) {
+    body { cursor: auto; }
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 6%;
+}
+
+.section {
+    padding: 140px 0;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 4rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+/* --- CUSTOM CURSOR --- */
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+    pointer-events: none; /* Agar tidak menghalangi klik */
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+    mix-blend-mode: difference; /* Menambah kesan high-end */
+    display: none; 
+}
+
+@media (min-width: 1025px) {
+    .custom-cursor { display: block; }
+}
+
+.custom-cursor.hover {
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border: 2px solid var(--accent-blue);
+}
+
+/* --- 4. LOADING STATE (Preloader) --- */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+/* CSS fallback: when JS sets aria-hidden, hide with CSS too */
+.preloader[aria-hidden="true"] {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.loader-circle {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--accent-blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- 3. HEADER & SCROLL PROGRESS --- */
+.scroll-progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: transparent;
+    z-index: 1001;
+}
+
+.scroll-progress-bar {
+    height: 100%;
+    background-color: var(--accent-blue);
+    width: 0%; /* Diatur via JavaScript */
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    z-index: 1000;
+    transition: background-color var(--transition-fast), backdrop-filter var(--transition-fast);
+}
+
+/* Navigation dengan efek Blur (backdrop-filter) aktif saat di-scroll */
+header.scrolled {
+    background-color: rgba(5, 5, 5, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-border);
+}
+
+.header-container {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.nav-links a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 6px;
+}
+
+/* Hover effect underline animation */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-blue);
+    transition: width var(--transition-fast);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .desktop-nav { display: none; }
+}
+
+/* --- 3. HERO SECTION --- */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 10vw, 7rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    letter-spacing: -2px;
+}
+
+.hero-tagline {
+    font-size: clamp(1.2rem, 4vw, 2.2rem);
+    font-weight: 400;
+    color: var(--gray-text);
+    margin-bottom: 3.5rem;
+}
+
+/* Efek Text Gradient pada tagline */
+.text-gradient {
+    background: linear-gradient(90deg, var(--text-light), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 1.2rem 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ghost button hover style */
+.cta-button:hover {
+    border-color: var(--accent-blue);
+    background-color: rgba(0, 163, 255, 0.1);
+    color: var(--accent-blue);
+}
+
+/* --- 3. ABOUT SECTION --- */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .about-grid {
+        grid-template-columns: 3fr 2fr; /* Layout asimetris */
+    }
+}
+
+.about-text p {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--gray-text);
+    max-width: 800px;
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+}
+
+.about-lead {
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem) !important;
+    color: var(--text-light) !important;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    line-height: 1.5 !important;
+}
+
+.about-lead em {
+    font-style: italic;
+    background: linear-gradient(90deg, var(--text-light), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.about-sub {
+    font-size: 1rem !important;
+    color: rgba(138, 138, 138, 0.7) !important;
+    border-left: 2px solid var(--accent-blue);
+    padding-left: 1rem;
+    font-style: italic;
+}
+
+.about-text strong {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* --- 3. SKILLS (BENTO BOX) --- */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    grid-auto-rows: 260px;
+}
+
+.bento-item {
+    background-color: var(--gray-dark);
+    border-radius: 24px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid var(--gray-border);
+    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth), border-color var(--transition-fast);
+}
+
+/* Efek Hover Mengangkat (Lift-up) & Glow */
+.bento-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    border-color: rgba(0, 163, 255, 0.4);
+}
+
+.bento-item.wide {
+    grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+    .bento-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .bento-item.wide {
+        grid-column: span 2;
+    }
+}
+
+.bento-item h3 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    color: var(--text-light);
+}
+
+.bento-item p {
+    color: var(--gray-text);
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+/* --- 3. INTERACTIVE PORTFOLIO --- */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+}
+
+@media (min-width: 768px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.portfolio-card {
+    cursor: pointer;
+    outline: none;
+}
+
+.portfolio-card:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 6px;
+    border-radius: 20px;
+}
+
+/* --- FILTER TABS --- */
+.filter-tabs {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: transparent;
+    color: var(--gray-text);
+    border: 1px solid var(--gray-border);
+    padding: 0.6rem 1.8rem;
+    border-radius: 40px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,163,255,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.filter-btn:hover {
+    color: var(--text-light);
+    border-color: rgba(0, 163, 255, 0.4);
+}
+
+.filter-btn:hover::before { opacity: 1; }
+
+.filter-btn.active {
+    background: var(--accent-blue);
+    color: var(--bg-dark);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 20px rgba(0, 163, 255, 0.4);
+}
+
+/* --- CARD TAG BADGE --- */
+.card-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-blue);
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+
+/* --- PORTFOLIO HEADER --- */
+.portfolio-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.portfolio-header .section-title {
+    margin-bottom: 0;
+}
+
+.portfolio-subtitle {
+    font-size: 1rem;
+    color: var(--gray-text);
+    font-style: italic;
+    letter-spacing: 0.5px;
+    max-width: 320px;
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    .portfolio-subtitle { text-align: left; }
+}
+
+/* --- CARD INDEX NUMBER --- */
+.card-index {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: rgba(0, 163, 255, 0.4);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    transition: color var(--transition-fast);
+}
+
+.portfolio-card:hover .card-index {
+    color: var(--accent-blue);
+}
+
+/* --- CARD INFO UPGRADE --- */
+.card-info h3 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    transition: color var(--transition-fast);
+}
+
+.portfolio-card:hover .card-info h3 {
+    color: var(--accent-blue);
+}
+
+.card-info p {
+    color: var(--gray-text);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.card-image-wrapper {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    margin-bottom: 1.5rem;
+}
+
+/* Image Interaction: Scale & Saturate pada Hover */
+.portfolio-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-smooth), filter var(--transition-smooth);
+    filter: saturate(0.5) brightness(0.7); /* Base state dark/desaturated */
+}
+
+.portfolio-card:hover .portfolio-image {
+    transform: scale(1.08); /* Zoom in */
+    filter: saturate(1.2) brightness(1); /* Tingkatkan saturasi & kecerahan */
+}
+
+/* Overlay Transition yang memunculkan judul project */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 30px;
+    opacity: 0;
+    transition: opacity var(--transition-smooth);
+}
+
+.portfolio-card:hover .overlay {
+    opacity: 1;
+}
+
+.overlay-text {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--bg-dark);
+    background-color: var(--accent-blue);
+    padding: 0.8rem 2rem;
+    border-radius: 40px;
+    transform: translateY(20px);
+    transition: transform var(--transition-smooth);
+}
+
+.portfolio-card:hover .overlay-text {
+    transform: translateY(0);
+}
+
+.card-info h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
+}
+
+.card-info p {
+    color: var(--gray-text);
+    font-size: 0.95rem;
+}
+
+/* --- 3. CONTACT FORM --- */
+.contact-form {
+    max-width: 700px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+/* Form minimalis tanpa border, hanya underline */
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 15px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--gray-border);
+    color: var(--text-light);
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+/* Cegah gaya autofill default browser */
+.input-group input:-webkit-autofill,
+.input-group textarea:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px var(--bg-dark) inset !important;
+    -webkit-text-fill-color: var(--text-light) !important;
+}
+
+/* Label posisinya floating */
+.input-group label {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    color: var(--gray-text);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Floating Label: berubah warna & posisi saat input diisi/fokus */
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label,
+.input-group textarea:focus ~ label,
+.input-group textarea:not(:placeholder-shown) ~ label {
+    top: -20px;
+    font-size: 0.85rem;
+    color: var(--accent-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    border-bottom-color: var(--accent-blue);
+}
+
+.contact-subtitle {
+    color: var(--gray-text);
+    font-size: 1rem;
+    margin-top: -2rem;
+    margin-bottom: 3rem;
+    max-width: 500px;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.submit-btn {
+    background: transparent;
+    color: var(--text-light);
+    border: 1px solid var(--gray-border);
+    padding: 1.1rem 2.5rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    border-radius: 40px;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.submit-btn .wa-icon {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #25D366; /* WhatsApp green */
+    border-color: #25D366;
+    color: #fff;
+    box-shadow: 0 0 25px rgba(37, 211, 102, 0.35);
+}
+
+.submit-btn:hover .wa-icon {
+    transform: scale(1.15) rotate(-5deg);
+}
+
+.form-hint {
+    font-size: 0.82rem;
+    color: var(--gray-text);
+    opacity: 0.6;
+    font-style: italic;
+}
+
+/* WhatsApp footer icon */
+.wa-footer-link svg {
+    fill: var(--gray-text);
+    transition: fill var(--transition-fast), transform var(--transition-fast);
+    stroke: none;
+}
+
+.wa-footer-link:hover svg {
+    fill: #25D366;
+    transform: scale(1.15);
+}
+
+
+/* --- FOOTER --- */
+.footer {
+    padding: 4rem 0;
+    border-top: 1px solid var(--gray-border);
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer p {
+    color: var(--gray-text);
+    font-size: 0.9rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links a {
+    color: var(--gray-text);
+    transition: color var(--transition-fast);
+}
+
+.social-links a:hover {
+    color: var(--accent-blue);
+}
+
+/* --- 4. BACK TO TOP BUTTON --- */
+.back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 55px;
+    height: 55px;
+    background-color: var(--gray-dark);
+    color: var(--text-light);
+    border: 1px solid var(--gray-border);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    /* iOS: hidden fixed elements still intercept touches */
+    pointer-events: none;
+    transition: all var(--transition-fast);
+    z-index: 999;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.back-to-top:hover {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: var(--bg-dark);
+    transform: translateY(-5px);
+}
+
+/* --- 1. MODAL / LIGHTBOX STYLING --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(5, 5, 5, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    /* iOS CRITICAL: prevent invisible modal from blocking all taps */
+    pointer-events: none;
+    transition: all var(--transition-smooth);
+}
+
+/* State saat modal terbuka */
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background-color: var(--bg-dark);
+    width: 95%;
+    max-width: 1100px;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    transform: translateY(50px) scale(0.95); /* Animasi muncul dari bawah */
+    transition: transform var(--transition-smooth);
+    border: 1px solid var(--gray-border);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+}
+
+.modal.active .modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--gray-text);
+    cursor: pointer;
+    z-index: 10;
+    transition: color var(--transition-fast);
+}
+
+.close-modal:hover {
+    color: var(--accent-blue);
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .modal-body {
+        flex-direction: row; /* Layout berdampingan di desktop */
+    }
+}
+
+.modal-image-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .modal-image-container {
+        width: 55%;
+    }
+}
+
+#modalImage {
+    width: 100%;
+    height: 100%;
+    max-height: 50vh;
+    object-fit: cover;
+}
+
+@media (min-width: 768px) {
+    #modalImage {
+        max-height: 70vh;
+    }
+}
+
+.modal-info {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .modal-info {
+        width: 45%;
+        padding: 4rem;
+    }
+}
+
+.modal-info h2 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.modal-info p {
+    color: var(--gray-text);
+    margin-bottom: 3rem;
+    font-size: 1.05rem;
+}
+
+.modal-link {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 1rem 2.5rem;
+    background-color: var(--accent-blue);
+    color: var(--bg-dark);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 40px;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.modal-link:hover {
+    background-color: var(--text-light);
+    transform: translateY(-3px);
+}
+
+/* --- SCROLL REVEAL ANIMATIONS (Intersection Observer) --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.15s; }
+.delay-2 { transition-delay: 0.3s; }
+.delay-3 { transition-delay: 0.45s; }
+
+/* =========================================================================
+   3D ANIMATION STYLES
+   ========================================================================= */
+
+/* --- HERO CANVAS (Three.js) --- */
+.hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* --- HERO BADGE --- */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    border: 1px solid rgba(0, 163, 255, 0.3);
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+    background: rgba(0, 163, 255, 0.05);
+    animation: badgePulse 3s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 163, 255, 0); }
+    50% { box-shadow: 0 0 20px 5px rgba(0, 163, 255, 0.15); }
+}
+
+/* --- HERO DESCRIPTION --- */
+.hero-desc {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--gray-text);
+    max-width: 540px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+}
+
+.hero-desc em {
+    font-style: normal;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+/* --- SECTION SUBTITLE --- */
+.section-sub {
+    font-size: 1rem;
+    color: var(--gray-text);
+    max-width: 600px;
+    line-height: 1.8;
+    margin-top: -2.5rem;
+    margin-bottom: 3rem;
+}
+
+/* --- HERO TITLE OUTLINE --- */
+.title-outline {
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.3);
+    color: transparent;
+    font-family: var(--font-heading);
+}
+
+/* --- HERO CTA GROUP --- */
+.hero-cta-group {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.cta-secondary {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--gray-text);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 4px;
+    transition: color var(--transition-fast);
+}
+
+.cta-secondary::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--accent-blue);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition-fast);
+}
+
+.cta-secondary:hover {
+    color: var(--accent-blue);
+}
+
+.cta-secondary:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* --- FLOATING ORBS (CSS Radial 3D Glow) --- */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 1;
+    animation: orbFloat 8s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 163, 255, 0.18) 0%, transparent 70%);
+    top: -100px;
+    right: -150px;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(100, 0, 255, 0.12) 0%, transparent 70%);
+    bottom: 50px;
+    left: -100px;
+    animation-delay: -3s;
+}
+
+.orb-3 {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(0, 163, 255, 0.1) 0%, transparent 70%);
+    top: 40%;
+    left: 40%;
+    animation-delay: -5s;
+}
+
+@keyframes orbFloat {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    33% { transform: translateY(-30px) scale(1.05); }
+    66% { transform: translateY(20px) scale(0.97); }
+}
+
+/* --- FLOATING RINGS DECORATION (replaces old cube) --- */
+.hero-ring-deco {
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    pointer-events: none;
+    width: 260px;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 900px) {
+    .hero-ring-deco { display: none; }
+}
+
+.ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 163, 255, 0.25);
+    animation: ringOrbit 8s linear infinite;
+}
+
+.ring-lg {
+    width: 260px;
+    height: 260px;
+    border-color: rgba(0, 163, 255, 0.15);
+    animation-duration: 14s;
+}
+
+.ring-md {
+    width: 180px;
+    height: 180px;
+    border-color: rgba(0, 163, 255, 0.25);
+    animation-duration: 10s;
+    animation-direction: reverse;
+    border-style: dashed;
+}
+
+.ring-sm {
+    width: 100px;
+    height: 100px;
+    border-color: rgba(0, 163, 255, 0.4);
+    animation-duration: 6s;
+}
+
+.ring-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--accent-blue);
+    border-radius: 50%;
+    box-shadow: 0 0 16px 4px rgba(0, 163, 255, 0.6);
+    animation: dotPulse 3s ease-in-out infinite;
+}
+
+@keyframes ringOrbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes dotPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 16px 4px rgba(0, 163, 255, 0.6); }
+    50% { transform: scale(1.4); box-shadow: 0 0 28px 8px rgba(0, 163, 255, 0.8); }
+}
+
+/* --- BENTO ICON 3D --- */
+.bento-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(0, 163, 255, 0.08);
+    border: 1px solid rgba(0, 163, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    transition: all var(--transition-smooth);
+}
+
+.bento-icon span {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    letter-spacing: -0.5px;
+}
+
+/* --- BENTO GLOW EFFECT --- */
+.bento-glow {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(0, 163, 255, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.bento-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.bento-item:hover .bento-glow {
+    opacity: 1;
+}
+
+.bento-item:hover .bento-icon {
+    background: rgba(0, 163, 255, 0.15);
+    border-color: rgba(0, 163, 255, 0.5);
+    transform: translateY(-4px) rotateZ(5deg);
+    box-shadow: 0 8px 25px rgba(0, 163, 255, 0.3);
+}
+
+/* --- 3D TILT CARD (CSS perspective on mouse move via JS) --- */
+.tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease;
+    will-change: transform;
+}
+
+/* Inner content pop out in Z axis */
+.tilt-card h3,
+.tilt-card p,
+.tilt-card .bento-icon {
+    transform: translateZ(20px);
+    transition: transform var(--transition-smooth);
+}
+
+/* --- PARTICLE GRID LINES --- */
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0, 163, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 163, 255, 0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* --- SCROLL-TRIGGERED 3D COUNTER NUMBERS --- */
+.about-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: left;
+}
+
+.stat-number {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--text-light);
+    line-height: 1;
+    background: linear-gradient(135deg, #fff, var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--gray-text);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 0.5rem;
+}
+
+/* --- FLOATING RING DECORATION --- */
+@keyframes ringRotate {
+    to { transform: rotate(360deg); }
+}
+
+.ring-deco {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 163, 255, 0.15);
+    pointer-events: none;
+    animation: ringRotate 20s linear infinite;
+}
+
+/* --- COUNTER ANIMATION --- */
+@keyframes countUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-number.animated {
+    animation: countUp 0.8s ease forwards;
+}
+
