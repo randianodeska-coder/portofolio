@@ -6,30 +6,38 @@
 /* --- ROOT VARIABLES (Untuk mempermudah kustomisasi warna) --- */
 :root {
     /* Tema Warna: Dark Luxury Minimalist */
-    --bg-dark: #050505;        /* Hitam Obsidian */
-    --text-light: #F0F0F0;     /* Putih Mutiara */
-    --accent-blue: #00A3FF;    /* Biru Neon Soft */
-    
+    --bg-dark: #050505;
+    /* Hitam Obsidian */
+    --text-light: #F0F0F0;
+    /* Putih Mutiara */
+    --accent-blue: #00A3FF;
+    /* Biru Neon Soft */
+
     /* Warna Turunan / Supporting */
-    --gray-dark: #121212;      /* Latar Bento & Card */
-    --gray-border: rgba(255, 255, 255, 0.05); /* Border subtle */
-    --gray-text: #8A8A8A;      /* Teks sekunder */
-    
+    --gray-dark: #121212;
+    /* Latar Bento & Card */
+    --gray-border: rgba(255, 255, 255, 0.05);
+    /* Border subtle */
+    --gray-text: #8A8A8A;
+    /* Teks sekunder */
+
     /* Tipografi */
     --font-heading: 'Syne', sans-serif;
     --font-body: 'Plus Jakarta Sans', sans-serif;
-    
+
     /* Layout & Spacing */
     --nav-height: 90px;
     --container-max: 1200px;
-    
+
     /* Animasi Transition */
     --transition-fast: 0.3s ease;
     --transition-smooth: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* --- RESET & GLOBAL STYLES --- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -37,7 +45,7 @@
 
 html {
     /* 4. UX TAMBAHAN: Smooth Scrolling native CSS */
-    scroll-behavior: smooth; 
+    scroll-behavior: smooth;
 }
 
 body {
@@ -46,12 +54,15 @@ body {
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
-    cursor: none; /* Disembunyikan karena menggunakan custom cursor (Desktop) */
+    cursor: none;
+    /* Disembunyikan karena menggunakan custom cursor (Desktop) */
 }
 
 /* Fallback cursor normal di mobile/touch screen */
 @media (max-width: 1024px) {
-    body { cursor: auto; }
+    body {
+        cursor: auto;
+    }
 }
 
 a {
@@ -96,16 +107,20 @@ img {
     height: 20px;
     border-radius: 50%;
     background-color: var(--accent-blue);
-    pointer-events: none; /* Agar tidak menghalangi klik */
+    pointer-events: none;
+    /* Agar tidak menghalangi klik */
     z-index: 9999;
     transform: translate(-50%, -50%);
     transition: width 0.2s, height 0.2s, background-color 0.2s;
-    mix-blend-mode: difference; /* Menambah kesan high-end */
-    display: none; 
+    mix-blend-mode: difference;
+    /* Menambah kesan high-end */
+    display: none;
 }
 
 @media (min-width: 1025px) {
-    .custom-cursor { display: block; }
+    .custom-cursor {
+        display: block;
+    }
 }
 
 .custom-cursor.hover {
@@ -147,7 +162,9 @@ img {
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* --- 3. HEADER & SCROLL PROGRESS --- */
@@ -164,7 +181,8 @@ img {
 .scroll-progress-bar {
     height: 100%;
     background-color: var(--accent-blue);
-    width: 0%; /* Diatur via JavaScript */
+    width: 0%;
+    /* Diatur via JavaScript */
 }
 
 header {
@@ -230,7 +248,9 @@ header.scrolled {
 }
 
 @media (max-width: 768px) {
-    .desktop-nav { display: none; }
+    .desktop-nav {
+        display: none;
+    }
 }
 
 /* --- 3. HERO SECTION --- */
@@ -294,7 +314,8 @@ header.scrolled {
 
 @media (min-width: 1024px) {
     .about-grid {
-        grid-template-columns: 3fr 2fr; /* Layout asimetris */
+        grid-template-columns: 3fr 2fr;
+        /* Layout asimetris */
     }
 }
 
@@ -369,6 +390,7 @@ header.scrolled {
     .bento-grid {
         grid-template-columns: repeat(3, 1fr);
     }
+
     .bento-item.wide {
         grid-column: span 2;
     }
@@ -440,7 +462,7 @@ header.scrolled {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(0,163,255,0.15), transparent);
+    background: linear-gradient(135deg, rgba(0, 163, 255, 0.15), transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -450,7 +472,9 @@ header.scrolled {
     border-color: rgba(0, 163, 255, 0.4);
 }
 
-.filter-btn:hover::before { opacity: 1; }
+.filter-btn:hover::before {
+    opacity: 1;
+}
 
 .filter-btn.active {
     background: var(--accent-blue);
@@ -495,7 +519,9 @@ header.scrolled {
 }
 
 @media (max-width: 768px) {
-    .portfolio-subtitle { text-align: left; }
+    .portfolio-subtitle {
+        text-align: left;
+    }
 }
 
 /* --- CARD INDEX NUMBER --- */
@@ -548,12 +574,15 @@ header.scrolled {
     height: 100%;
     object-fit: cover;
     transition: transform var(--transition-smooth), filter var(--transition-smooth);
-    filter: saturate(0.5) brightness(0.7); /* Base state dark/desaturated */
+    filter: saturate(0.5) brightness(0.7);
+    /* Base state dark/desaturated */
 }
 
 .portfolio-card:hover .portfolio-image {
-    transform: scale(1.08); /* Zoom in */
-    filter: saturate(1.2) brightness(1); /* Tingkatkan saturasi & kecerahan */
+    transform: scale(1.08);
+    /* Zoom in */
+    filter: saturate(1.2) brightness(1);
+    /* Tingkatkan saturasi & kecerahan */
 }
 
 /* Overlay Transition yang memunculkan judul project */
@@ -563,7 +592,7 @@ header.scrolled {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%);
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -648,10 +677,10 @@ header.scrolled {
 }
 
 /* Floating Label: berubah warna & posisi saat input diisi/fokus */
-.input-group input:focus ~ label,
-.input-group input:not(:placeholder-shown) ~ label,
-.input-group textarea:focus ~ label,
-.input-group textarea:not(:placeholder-shown) ~ label {
+.input-group input:focus~label,
+.input-group input:not(:placeholder-shown)~label,
+.input-group textarea:focus~label,
+.input-group textarea:not(:placeholder-shown)~label {
     top: -20px;
     font-size: 0.85rem;
     color: var(--accent-blue);
@@ -704,7 +733,8 @@ header.scrolled {
 }
 
 .submit-btn:hover {
-    background-color: #25D366; /* WhatsApp green */
+    background-color: #25D366;
+    /* WhatsApp green */
     border-color: #25D366;
     color: #fff;
     box-shadow: 0 0 25px rgba(37, 211, 102, 0.35);
@@ -838,10 +868,11 @@ header.scrolled {
     border-radius: 24px;
     overflow: hidden;
     position: relative;
-    transform: translateY(50px) scale(0.95); /* Animasi muncul dari bawah */
+    transform: translateY(50px) scale(0.95);
+    /* Animasi muncul dari bawah */
     transition: transform var(--transition-smooth);
     border: 1px solid var(--gray-border);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
 }
 
 .modal.active .modal-content {
@@ -871,7 +902,8 @@ header.scrolled {
 
 @media (min-width: 768px) {
     .modal-body {
-        flex-direction: row; /* Layout berdampingan di desktop */
+        flex-direction: row;
+        /* Layout berdampingan di desktop */
     }
 }
 
@@ -956,9 +988,17 @@ header.scrolled {
     transform: translateY(0);
 }
 
-.delay-1 { transition-delay: 0.15s; }
-.delay-2 { transition-delay: 0.3s; }
-.delay-3 { transition-delay: 0.45s; }
+.delay-1 {
+    transition-delay: 0.15s;
+}
+
+.delay-2 {
+    transition-delay: 0.3s;
+}
+
+.delay-3 {
+    transition-delay: 0.45s;
+}
 
 /* =========================================================================
    3D ANIMATION STYLES
@@ -1005,8 +1045,15 @@ header.scrolled {
 }
 
 @keyframes badgePulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 163, 255, 0); }
-    50% { box-shadow: 0 0 20px 5px rgba(0, 163, 255, 0.15); }
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 163, 255, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 20px 5px rgba(0, 163, 255, 0.15);
+    }
 }
 
 /* --- HERO DESCRIPTION --- */
@@ -1120,9 +1167,19 @@ header.scrolled {
 }
 
 @keyframes orbFloat {
-    0%, 100% { transform: translateY(0px) scale(1); }
-    33% { transform: translateY(-30px) scale(1.05); }
-    66% { transform: translateY(20px) scale(0.97); }
+
+    0%,
+    100% {
+        transform: translateY(0px) scale(1);
+    }
+
+    33% {
+        transform: translateY(-30px) scale(1.05);
+    }
+
+    66% {
+        transform: translateY(20px) scale(0.97);
+    }
 }
 
 /* --- FLOATING RINGS DECORATION (replaces old cube) --- */
@@ -1141,7 +1198,9 @@ header.scrolled {
 }
 
 @media (max-width: 900px) {
-    .hero-ring-deco { display: none; }
+    .hero-ring-deco {
+        display: none;
+    }
 }
 
 .ring {
@@ -1185,13 +1244,27 @@ header.scrolled {
 }
 
 @keyframes ringOrbit {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes dotPulse {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 16px 4px rgba(0, 163, 255, 0.6); }
-    50% { transform: scale(1.4); box-shadow: 0 0 28px 8px rgba(0, 163, 255, 0.8); }
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 16px 4px rgba(0, 163, 255, 0.6);
+    }
+
+    50% {
+        transform: scale(1.4);
+        box-shadow: 0 0 28px 8px rgba(0, 163, 255, 0.8);
+    }
 }
 
 /* --- BENTO ICON 3D --- */
@@ -1271,8 +1344,8 @@ header.scrolled {
         linear-gradient(rgba(0, 163, 255, 0.04) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 163, 255, 0.04) 1px, transparent 1px);
     background-size: 80px 80px;
-    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
+    mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4) 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
 }
@@ -1311,7 +1384,9 @@ header.scrolled {
 
 /* --- FLOATING RING DECORATION --- */
 @keyframes ringRotate {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .ring-deco {
@@ -1324,11 +1399,17 @@ header.scrolled {
 
 /* --- COUNTER ANIMATION --- */
 @keyframes countUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .stat-number.animated {
     animation: countUp 0.8s ease forwards;
 }
-

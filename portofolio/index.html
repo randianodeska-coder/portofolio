@@ -356,7 +356,105 @@
     <!-- 3D Animations JS -->
     <script src="three-anim.js" defer></script>
     <!-- Filter, Magnetic Cursor & Accessibility JS -->
-    <script src="filter-magnetic.js" defer></script>
-</body>
+  <script src="filter-magnetic.js" defer></script>
 
-</html>
+<!-- MOBILE PREMIUM FX -->
+<div class="mobile-light"></div>
+
+<script>
+/* =========================================================
+   PREMIUM MOBILE EFFECTS — Android & iPhone Optimized
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* ==============================
+       1. TOUCH PARALLAX
+    ============================== */
+    const hero = document.querySelector('.hero');
+
+    if (window.DeviceOrientationEvent && hero) {
+
+        window.addEventListener('deviceorientation', (e) => {
+
+            const x = e.gamma || 0;
+            const y = e.beta || 0;
+
+            hero.style.transform =
+                `translate3d(${x * 0.4}px, ${y * 0.15}px, 0)`;
+
+        });
+    }
+
+    /* ==============================
+       2. MOBILE LIGHT FOLLOW TOUCH
+    ============================== */
+
+    const light = document.querySelector('.mobile-light');
+
+    document.addEventListener('touchmove', (e) => {
+
+        const touch = e.touches[0];
+
+        light.style.left = touch.clientX + 'px';
+        light.style.top = touch.clientY + 'px';
+
+    }, { passive: true });
+
+    /* ==============================
+       3. CARD FLOAT ANIMATION
+    ============================== */
+
+    const cards = document.querySelectorAll(
+        '.portfolio-card, .bento-item, .stat-item'
+    );
+
+    cards.forEach((card, index) => {
+
+        card.style.animation =
+            `floatingCard ${4 + index * 0.4}s ease-in-out infinite`;
+
+    });
+
+    /* ==============================
+       4. SMOOTH MOBILE SCROLL
+    ============================== */
+
+    document.documentElement.style.scrollBehavior = "smooth";
+
+    /* ==============================
+       5. HERO FADE PARALLAX
+    ============================== */
+
+    window.addEventListener('scroll', () => {
+
+        const scrollY = window.scrollY;
+
+        const title = document.querySelector('.hero-title');
+        const badge = document.querySelector('.hero-badge');
+        const desc  = document.querySelector('.hero-desc');
+
+        if(title){
+            title.style.transform =
+                `translateY(${scrollY * 0.18}px)`;
+
+            title.style.opacity =
+                1 - scrollY / 700;
+        }
+
+        if(badge){
+            badge.style.transform =
+                `translateY(${scrollY * 0.12}px)`;
+        }
+
+        if(desc){
+            desc.style.transform =
+                `translateY(${scrollY * 0.08}px)`;
+        }
+
+    }, { passive: true });
+
+});
+</script>
+
+</body>

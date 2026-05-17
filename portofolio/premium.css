@@ -517,3 +517,122 @@ body::after {
   color: rgba(138,138,138,0.6);
   letter-spacing: 0.5px;
 }
+/* =========================================================
+   PREMIUM MOBILE EFFECTS
+========================================================= */
+
+/* GPU BOOST */
+.hero,
+.hero-title,
+.hero-badge,
+.hero-desc,
+.portfolio-card,
+.bento-item,
+.stat-item {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* FLOATING CARD */
+@keyframes floatingCard {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* MOBILE LIGHT EFFECT */
+.mobile-light {
+    position: fixed;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+
+    background:
+        radial-gradient(circle,
+        rgba(14,165,233,0.18) 0%,
+        rgba(14,165,233,0.06) 40%,
+        transparent 70%);
+
+    transform: translate(-50%, -50%);
+    filter: blur(30px);
+
+    transition:
+        left 0.08s linear,
+        top 0.08s linear;
+}
+
+/* HERO PREMIUM DEPTH */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+
+    background:
+    radial-gradient(circle at 20% 20%,
+    rgba(14,165,233,0.15),
+    transparent 30%),
+
+    radial-gradient(circle at 80% 60%,
+    rgba(120,0,255,0.12),
+    transparent 35%);
+
+    animation: heroAmbient 12s ease-in-out infinite alternate;
+
+    pointer-events: none;
+}
+
+@keyframes heroAmbient {
+
+    0% {
+        transform: scale(1)
+                   translateY(0px);
+    }
+
+    100% {
+        transform: scale(1.08)
+                   translateY(-20px);
+    }
+}
+
+/* MOBILE OPTIMIZATION */
+@media (max-width: 768px) {
+
+    .portfolio-card,
+    .bento-item,
+    .stat-item {
+
+        animation-duration: 5s !important;
+    }
+
+    .hero-title {
+        transition: transform 0.2s ease-out;
+    }
+
+    .hero-desc {
+        transition: transform 0.2s ease-out;
+    }
+
+    .mobile-light {
+        display: block;
+    }
+}
+
+/* iPHONE SAFARI FIX */
+body {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* SMOOTH TOUCH */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
