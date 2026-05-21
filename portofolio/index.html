@@ -2,459 +2,405 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="format-detection" content="telephone=no">
-    <title>Randiano Deska Putra - Creative Developer & Digital Entrepreneur</title>
-    <meta name="description"
-        content="Portfolio of Randiano Deska, a Senior Creative Developer and Digital Entrepreneur specializing in high-end, modern web experiences.">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@500;700;800&display=swap"
-        rel="stylesheet">
-    <!-- Three.js loaded at end of body for performance -->
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="premium.css">
-    <link rel="stylesheet" href="mobile.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#030303">
+  <meta name="format-detection" content="telephone=no">
+  <title>Randiano Deska Putra - Creative Developer &amp; Digital Entrepreneur</title>
+  <meta name="description" content="Portfolio of Randiano Deska, a Senior Creative Developer and Digital Entrepreneur specializing in high-end, modern web experiences.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="premium.css">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="stylesheet" href="mobile.css">
+  <link rel="stylesheet" href="enhancements.css">
 </head>
 
-<body>
-    <!-- 4. UX TAMBAHAN: Loading State (Preloader) -->
-    <div id="preloader" class="preloader">
-        <div class="loader-circle"></div>
+<body class="loading">
+
+  <!-- Premium Background Layers -->
+  <div class="premium-bg-noise" aria-hidden="true"></div>
+  <div class="premium-bg-aurora" aria-hidden="true">
+    <div class="aurora-1"></div>
+    <div class="aurora-2"></div>
+    <div class="aurora-3"></div>
+  </div>
+
+  <!-- Preloader -->
+  <div id="preloader" class="preloader" aria-hidden="false">
+    <div class="preloader-inner">
+      <div class="loader-circle"></div>
+    </div>
+  </div>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress-container" aria-hidden="true">
+    <div class="scroll-progress-bar" id="scrollProgress"></div>
+  </div>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="container header-container">
+      <a href="#" class="logo">Randiano Deska Putra</a>
+      <nav class="desktop-nav" id="mainNav">
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="hero" class="hero section">
+    <div class="bg-layer hero-bg" aria-hidden="true">
+      <div class="hero-radial-glow"></div>
+      <div class="hero-animated-grid"></div>
+    </div>
+    <!-- tsParticles Canvas -->
+    <div id="tsparticles" class="hero-particles" aria-hidden="true"></div>
+    <!-- Orbs -->
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="orb orb-3" aria-hidden="true"></div>
+    <!-- Ring Decoration -->
+    <div class="hero-ring-deco" aria-hidden="true">
+      <div class="ring ring-lg"></div>
+      <div class="ring ring-md"></div>
+      <div class="ring ring-sm"></div>
+      <div class="ring-dot"></div>
     </div>
 
-    <!-- 3. HEADER: Animasi progress bar scroll -->
-    <div class="scroll-progress-container">
-        <div class="scroll-progress-bar" id="scrollProgress"></div>
+    <!-- Hero Layout Grid -->
+    <div class="container hero-layout">
+
+      <!-- Text Column -->
+      <div class="hero-content hero-text-col">
+        <div class="hero-badge reveal">✦ Open for Collaboration</div>
+        <h1 class="hero-title reveal">Randiano<br><span class="title-outline">Deska Putra</span></h1>
+        <h2 class="hero-tagline reveal delay-1"><span class="text-gradient">Creative Developer</span> &amp; Digital Strategist</h2>
+        <p class="hero-desc reveal delay-2">Saya merancang <em>pengalaman digital premium</em> — di mana setiap piksel memiliki tujuan dan setiap interaksi meninggalkan kesan.</p>
+        <div class="hero-cta-group reveal delay-3">
+          <a href="#portfolio" class="cta-button">Explore My Work</a>
+          <a href="#contact" class="cta-secondary">Let's Collaborate</a>
+        </div>
+      </div>
+
+      <!-- Photo Column -->
+      <div class="hero-photo-col">
+        <div class="hero-image-wrapper reveal">
+          <div class="hero-image-glow"></div>
+          <div class="hero-image-ring"></div>
+          <div class="hero-image-clip">
+            <img src="foto profil.png" class="hero-image" alt="Randiano Deska Putra">
+          </div>
+          <div class="hero-image-rim-light"></div>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <!-- 3. HEADER: Navigation dengan efek Blur (backdrop-filter) -->
-    <header id="header">
-        <div class="container header-container">
-            <a href="#" class="logo">Randiano Deska Putra</a>
-            <nav class="desktop-nav">
-                <ul class="nav-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false"><span aria-hidden="true">&#9776;</span></button>
-        </div>
-    </header>
-
-    <!-- 3. HERO: Typography-heavy with 3D Three.js Background -->
-    <section id="hero" class="hero section">
-        <!-- Three.js Canvas 3D Background -->
-        <canvas id="heroCanvas" class="hero-canvas"></canvas>
-        <!-- Floating 3D Orbs -->
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="container hero-content">
-            <div class="hero-badge reveal">✦ Open for Collaboration</div>
-            <h1 class="hero-title reveal">Randiano<br><span class="title-outline">Deska Putra</span></h1>
-            <!-- Tagline dengan Text Gradient -->
-            <h2 class="hero-tagline reveal delay-1"><span class="text-gradient">Creative Developer</span> & Digital
-                Strategist</h2>
-            <p class="hero-desc reveal delay-2">Saya merancang <em>pengalaman digital premium</em> — di mana setiap
-                piksel memiliki tujuan dan setiap interaksi meninggalkan kesan.</p>
-            <div class="hero-cta-group reveal delay-3">
-                <a href="#portfolio" class="cta-button">Explore My Work</a>
-                <a href="#contact" class="cta-secondary">Let's Collaborate</a>
-            </div>
-            <!-- Floating Signature Ring Decoration -->
-            <div class="hero-ring-deco" aria-hidden="true">
-                <div class="ring ring-lg"></div>
-                <div class="ring ring-md"></div>
-                <div class="ring ring-sm"></div>
-                <div class="ring-dot"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. ABOUT: Layout bersih dengan penekanan Skillset Synergy -->
-    <section id="about" class="about section">
-        <div class="container">
-            <h2 class="section-title reveal">About <span class="text-gradient">Me</span></h2>
-            <div class="about-grid reveal delay-1">
-                <div class="about-text">
-
-                    <p class="about-lead">
-                        Saya tidak sekadar membangun website —<br>saya craft <em>digital experiences that convert.</em>
-                    </p>
-
-                    <p>
-                        Dengan memadukan <strong>technical expertise</strong>, <strong>modern design
-                            sensibility</strong>, dan <strong>business strategy</strong>, saya menciptakan website yang
-                        bukan hanya memukau secara visual — tetapi bekerja keras untuk brand Anda. Setiap elemen
-                        dirancang dengan <em>purpose</em>, setiap detail dieksekusi dengan presisi.
-                    </p>
-
-                    <p class="about-sub">
-                        Bagi saya, great design bukan soal estetika semata — melainkan <em>bagaimana membangun
-                            kepercayaan dan nilai brand sejak kesan pertama.</em>
-                    </p>
-
-                    <!-- Stats -->
-                    <div class="about-stats reveal delay-2">
-                        <div class="stat-item">
-                            <div class="stat-number" data-target="30" data-suffix="+">0+</div>
-                            <div class="stat-label">Projects Completed</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" data-target="20" data-suffix="+">0+</div>
-                            <div class="stat-label">Happy Clients</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" data-target="1" data-suffix=" yr">0</div>
-                            <div class="stat-label">of Experience</div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. BENTO SKILLS: Sistem grid kotak-kotak ala iOS dengan 3D hover -->
-    <section id="skills" class="skills section">
-        <div class="container">
-            <h2 class="section-title reveal">Core <span class="text-gradient">Arsenal</span></h2>
-            <p class="section-sub reveal delay-1">Keahlian yang saya kuasai untuk deliver solusi digital berkelas — dari
-                concept hingga production-ready.</p>
-            <div class="bento-grid reveal delay-2">
-                <div class="bento-item tilt-card" data-skill-icon="&lt;/&gt;">
-                    <div class="bento-icon"><span>&#60;/&#62;</span></div>
-                    <h3>HTML5</h3>
-                    <p>Semantic markup & accessible structure yang solid sebagai fondasi setiap project.</p>
-                    <div class="bento-glow"></div>
-                </div>
-                <div class="bento-item tilt-card" data-skill-icon="~">
-                    <div class="bento-icon"><span>#</span></div>
-                    <h3>CSS3</h3>
-                    <p>Advanced Grid, Flexbox, animations & custom design systems yang pixel-perfect.</p>
-                    <div class="bento-glow"></div>
-                </div>
-                <div class="bento-item tilt-card">
-                    <div class="bento-icon"><span>JS</span></div>
-                    <h3>JavaScript</h3>
-                    <p>ES6+ modern JavaScript — interactive, performant, & clean tanpa framework berat.</p>
-                    <div class="bento-glow"></div>
-                </div>
-                <div class="bento-item tilt-card">
-                    <div class="bento-icon"><span>✦</span></div>
-                    <h3>UI Design</h3>
-                    <p>Luxury UI/UX design — dari wireframe hingga high-fidelity prototype yang memukau.</p>
-                    <div class="bento-glow"></div>
-                </div>
-                <div class="bento-item wide tilt-card">
-                    <div class="bento-icon"><span>$</span></div>
-                    <h3>Digital Business</h3>
-                    <p>Membangun strategi digital yang drive real business results — growth, conversion rate, &
-                        sustainable monetization.</p>
-                    <div class="bento-glow"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PORTFOLIO: High-end Selected Works -->
-    <section id="portfolio" class="portfolio section">
-        <div class="container">
-            <div class="portfolio-header reveal">
-                <h2 class="section-title">Selected <span class="text-gradient">Works</span></h2>
-                <p class="portfolio-subtitle">Karya pilihan yang mendefinisikan standar — di mana craft meets strategy.
-                </p>
-            </div>
-
-            <!-- Filter Tabs -->
-            <div class="filter-tabs reveal delay-1" role="tablist" aria-label="Portfolio filter">
-                <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Semua Karya</button>
-                <button class="filter-btn" data-filter="web" role="tab" aria-selected="false">Web Dev</button>
-                <button class="filter-btn" data-filter="design" role="tab" aria-selected="false">Branding</button>
-                <button class="filter-btn" data-filter="digital" role="tab" aria-selected="false">Digital</button>
-            </div>
-
-            <div class="portfolio-grid" id="portfolioGrid">
-
-                <!-- Project 01: VAULT — Web Development -->
-                <div class="portfolio-card" data-project="vault" data-category="web" tabindex="0" role="button"
-                    aria-label="View VAULT project details">
-                    <div class="card-index">01</div>
-                    <div class="card-image-wrapper">
-                        <img src="web.png" loading="lazy" alt="VAULT — Ultra-premium luxury e-commerce platform"
-                            class="portfolio-image">
-                        <div class="overlay" aria-hidden="true">
-                            <span class="overlay-text">Open Case Study</span>
-                        </div>
-                    </div>
-                    <div class="card-info">
-                        <span class="card-tag">Web Development</span>
-                        <h3>RNVN WEB</h3>
-                        <p>PRNVN Web Developer menciptakan website modern dengan kombinasi desain cinematic, clean UI, 
-                            dan teknologi performa tinggi untuk membantu brand tampil lebih eksklusif dan profesional.</p>
-                    </div>
-                </div>
-
-                <!-- Project 02: RNVN — Branding & Design -->
-                <div class="portfolio-card" data-project="rnvn" data-category="design" tabindex="0" role="button"
-                    aria-label="View RNVN project details">
-                    <div class="card-index">02</div>
-                    <div class="card-image-wrapper">
-                        <img src="rnvn street wear.png" loading="lazy" alt="RNVN — Premium streetwear brand identity"
-                            class="portfolio-image">
-                        <div class="overlay" aria-hidden="true">
-                            <span class="overlay-text">Open Case Study</span>
-                        </div>
-                    </div>
-                    <div class="card-info">
-                        <span class="card-tag">Branding & Identity</span>
-                        <h3>RNVN streetwear</h3>
-                        <p>Brand identity streetwear yang dibangun di atas controlled aggression. Di mana silence
-                            berbicara lebih keras dari noise.</p>
-                    </div>
-                </div>
-
-                <!-- Project 03: NEXUS — Digital Product -->
-                <div class="portfolio-card" data-project="nexus" data-category="digital" tabindex="0" role="button"
-                    aria-label="View NEXUS project details">
-                    <div class="card-index">03</div>
-                    <div class="card-image-wrapper">
-                        <img src="rnvn printing.png" loading="lazy" alt="NEXUS — Immersive interactive web experience"
-                            class="portfolio-image">
-                        <div class="overlay" aria-hidden="true">
-                            <span class="overlay-text">Open Case Study</span>
-                        </div>
-                    </div>
-                    <div class="card-info">
-                        <span class="card-tag">PREMIUM PRINTING</span>
-                        <h3>RNVN PRINTING </h3>
-                        <p> Menyediakan layanan percetakan modern dengan kualitas premium untuk kebutuhan personal, bisnis, dan brand kreatif. </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <!-- CONTACT: Form kirim pesan langsung ke WhatsApp -->
-    <section id="contact" class="contact section">
-        <div class="container">
-            <h2 class="section-title reveal">Let's <span class="text-gradient">Connect</span></h2>
-            <p class="contact-subtitle reveal">Punya project impian? Ceritakan kepada saya — pesan Anda akan langsung
-                masuk ke WhatsApp saya dan saya response dalam 24 jam.</p>
-            <form class="contact-form reveal delay-1" id="contactForm" novalidate>
-                <div class="input-group">
-                    <input type="text" id="name" required placeholder=" " autocomplete="name">
-                    <label for="name">Your Name</label>
-                </div>
-                <div class="input-group">
-                    <input type="email" id="email" required placeholder=" " autocomplete="email">
-                    <label for="email">Your Email</label>
-                </div>
-                <div class="input-group">
-                    <textarea id="message" rows="4" required placeholder=" "></textarea>
-                    <label for="message">Your Message</label>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <svg class="wa-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"
-                            aria-hidden="true">
-                            <path
-                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                        </svg>
-                        Kirim Pesan via WhatsApp
-                    </button>
-                    <p class="form-hint">Pesan Anda akan terbuka di WhatsApp — klik Send untuk mengirim langsung. 🚀</p>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container footer-container">
-            <p>&copy; 2026 <strong>Randiano Deska Putra</strong>. Crafted with passion & precision.</p>
-            <div class="social-links">
-                <a href="https://www.instagram.com/randianodskptra_/" target="_blank" rel="noopener noreferrer"
-                    aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
-                </a>
-                <a href="https://github.com/randianodeska-coder" aria-label="GitHub">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path
-                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                        </path>
-                    </svg>
-                </a>
-                <!-- WhatsApp Direct Link -->
-                <a href="https://wa.me/6285159223964" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
-                    class="wa-footer-link">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- 4. UX TAMBAHAN: Back to Top Button -->
-    <button id="backToTop" class="back-to-top" aria-label="Back to top">
-        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
-            stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="19" x2="12" y2="5"></line>
-            <polyline points="5 12 12 5 19 12"></polyline>
-        </svg>
-    </button>
-
-    <!-- 1. MODAL / LIGHTBOX (Pop-up Project Detail) — Full ARIA accessible -->
-    <div id="projectModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
-        aria-hidden="true">
-        <!-- Focus trap sentinel start -->
-        <span class="focus-sentinel" tabindex="0" aria-hidden="true"></span>
-        <div class="modal-content">
-            <button class="close-modal" aria-label="Close project modal">&times;</button>
-            <div class="modal-body">
-                <div class="modal-image-container">
-                    <img id="modalImage" src="" alt="">
-                </div>
-                <div class="modal-info">
-                    <h2 id="modalTitle">Project Title</h2>
-                    <p id="modalDesc">Project detailed description goes here...</p>
-                    <a href="#" id="modalLink" class="modal-link" target="_blank" rel="noopener noreferrer">View Live
-                        Demo</a>
-                </div>
-            </div>
-        </div>
-        <!-- Focus trap sentinel end -->
-        <span class="focus-sentinel" tabindex="0" aria-hidden="true"></span>
+  <!-- About -->
+  <section id="about" class="about section">
+    <div class="bg-layer about-bg" aria-hidden="true">
+      <div class="about-glass-overlay"></div>
+      <div class="about-ambient-lights"></div>
     </div>
+    <div class="container">
+      <h2 class="section-title reveal">About <span class="text-gradient">Me</span></h2>
+      <div class="about-grid reveal delay-1">
+        <div class="about-text">
+          <p class="about-lead">
+            Saya tidak sekadar membangun website —<br>saya craft <em>digital experiences that convert.</em>
+          </p>
+          <p>
+            Dengan memadukan <strong>technical expertise</strong>, <strong>modern design sensibility</strong>, dan <strong>business strategy</strong>, saya menciptakan website yang bukan hanya memukau secara visual — tetapi bekerja keras untuk brand Anda. Setiap elemen dirancang dengan <em>purpose</em>, setiap detail dieksekusi dengan presisi.
+          </p>
+          <p class="about-sub">
+            Bagi saya, great design bukan soal estetika semata — melainkan <em>bagaimana membangun kepercayaan dan nilai brand sejak kesan pertama.</em>
+          </p>
 
-    <!-- Custom Cursor (Opsional, khusus Desktop) -->
-    <div class="custom-cursor" aria-hidden="true"></div>
+          <!-- Stats -->
+          <div class="about-stats reveal delay-2">
+            <div class="stat-item">
+              <div class="stat-number" data-target="30" data-suffix="+">0+</div>
+              <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" data-target="20" data-suffix="+">0+</div>
+              <div class="stat-label">Happy Clients</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" data-target="1" data-suffix=" yr">0</div>
+              <div class="stat-label">of Experience</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Custom JS -->
-    <script src="script.js" defer></script>
-    <!-- Three.js for 3D (loaded last for performance) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-    <!-- 3D Animations JS -->
-    <script src="three-anim.js" defer></script>
-    <!-- Filter, Magnetic Cursor & Accessibility JS -->
+  <!-- Skills -->
+  <section id="skills" class="skills section">
+    <div class="bg-layer skills-bg" aria-hidden="true">
+      <div class="skills-abstract-shape-1"></div>
+      <div class="skills-abstract-shape-2"></div>
+      <div class="skills-animated-lines"></div>
+    </div>
+    <div class="container">
+      <h2 class="section-title reveal">Core <span class="text-gradient">Arsenal</span></h2>
+      <p class="section-sub reveal delay-1">Keahlian yang saya kuasai untuk deliver solusi digital berkelas — dari concept hingga production-ready.</p>
+      <div class="bento-grid reveal delay-2">
+        <div class="bento-item tilt-card" data-skill-icon="&lt;/&gt;">
+          <div class="bento-icon"><span>&#60;/&#62;</span></div>
+          <h3>HTML5</h3>
+          <p>Semantic markup &amp; accessible structure yang solid sebagai fondasi setiap project.</p>
+          <div class="bento-glow"></div>
+        </div>
+        <div class="bento-item tilt-card" data-skill-icon="~">
+          <div class="bento-icon"><span>#</span></div>
+          <h3>CSS3</h3>
+          <p>Advanced Grid, Flexbox, animations &amp; custom design systems yang pixel-perfect.</p>
+          <div class="bento-glow"></div>
+        </div>
+        <div class="bento-item tilt-card">
+          <div class="bento-icon"><span>JS</span></div>
+          <h3>JavaScript</h3>
+          <p>ES6+ modern JavaScript — interactive, performant, &amp; clean tanpa framework berat.</p>
+          <div class="bento-glow"></div>
+        </div>
+        <div class="bento-item tilt-card">
+          <div class="bento-icon"><span>✦</span></div>
+          <h3>UI Design</h3>
+          <p>Luxury UI/UX design — dari wireframe hingga high-fidelity prototype yang memukau.</p>
+          <div class="bento-glow"></div>
+        </div>
+        <div class="bento-item wide tilt-card">
+          <div class="bento-icon"><span>$</span></div>
+          <h3>Digital Business</h3>
+          <p>Membangun strategi digital yang drive real business results — growth, conversion rate, &amp; sustainable monetization.</p>
+          <div class="bento-glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio" class="portfolio section">
+    <div class="bg-layer portfolio-bg" aria-hidden="true">
+      <div class="portfolio-futuristic-grid"></div>
+      <div class="portfolio-cinematic-glow"></div>
+    </div>
+    <div class="container">
+      <div class="portfolio-header reveal">
+        <h2 class="section-title">Selected <span class="text-gradient">Works</span></h2>
+        <p class="portfolio-subtitle">Karya pilihan yang mendefinisikan standar — di mana craft meets strategy.</p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs reveal delay-1" role="tablist" aria-label="Portfolio filter">
+        <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Semua Karya</button>
+        <button class="filter-btn" data-filter="web" role="tab" aria-selected="false">Web Dev</button>
+        <button class="filter-btn" data-filter="design" role="tab" aria-selected="false">Branding</button>
+        <button class="filter-btn" data-filter="digital" role="tab" aria-selected="false">Digital</button>
+      </div>
+
+      <div class="portfolio-grid" id="portfolioGrid">
+        <!-- Project 01 -->
+        <div class="portfolio-card reveal" data-project="vault" data-category="web" tabindex="0" role="button" aria-label="View VAULT project details">
+          <div class="card-index">01</div>
+          <div class="card-image-wrapper">
+            <img src="web.png" loading="lazy" alt="VAULT — Ultra-premium luxury e-commerce platform" class="portfolio-image">
+            <div class="overlay" aria-hidden="true">
+              <span class="overlay-text">Open Case Study</span>
+            </div>
+          </div>
+          <div class="card-info">
+            <span class="card-tag">Web Development</span>
+            <h3>RNVN WEB</h3>
+            <p>PRNVN Web Developer menciptakan website modern dengan kombinasi desain cinematic, clean UI, dan teknologi performa tinggi untuk membantu brand tampil lebih eksklusif dan profesional.</p>
+          </div>
+        </div>
+
+        <!-- Project 02 -->
+        <div class="portfolio-card reveal delay-1" data-project="rnvn" data-category="design" tabindex="0" role="button" aria-label="View RNVN project details">
+          <div class="card-index">02</div>
+          <div class="card-image-wrapper">
+            <img src="rnvn street wear.png" loading="lazy" alt="RNVN — Premium streetwear brand identity" class="portfolio-image">
+            <div class="overlay" aria-hidden="true">
+              <span class="overlay-text">Open Case Study</span>
+            </div>
+          </div>
+          <div class="card-info">
+            <span class="card-tag">Branding &amp; Identity</span>
+            <h3>RNVN streetwear</h3>
+            <p>Brand identity streetwear yang dibangun di atas controlled aggression. Di mana silence berbicara lebih keras dari noise.</p>
+          </div>
+        </div>
+
+        <!-- Project 03 -->
+        <div class="portfolio-card reveal delay-2" data-project="nexus" data-category="digital" tabindex="0" role="button" aria-label="View NEXUS project details">
+          <div class="card-index">03</div>
+          <div class="card-image-wrapper">
+            <img src="rnvn printing.png" loading="lazy" alt="NEXUS — Immersive interactive web experience" class="portfolio-image">
+            <div class="overlay" aria-hidden="true">
+              <span class="overlay-text">Open Case Study</span>
+            </div>
+          </div>
+          <div class="card-info">
+            <span class="card-tag">PREMIUM PRINTING</span>
+            <h3>RNVN PRINTING</h3>
+            <p>Menyediakan layanan percetakan modern dengan kualitas premium untuk kebutuhan personal, bisnis, dan brand kreatif.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="contact section">
+    <div class="bg-layer contact-bg" aria-hidden="true">
+      <div class="contact-luxury-gradient"></div>
+      <div class="contact-particles"></div>
+    </div>
+    <div class="container">
+      <h2 class="section-title reveal">Let's <span class="text-gradient">Connect</span></h2>
+      <p class="contact-subtitle reveal">Punya project impian? Ceritakan kepada saya — pesan Anda akan langsung masuk ke WhatsApp saya dan saya response dalam 24 jam.</p>
+      <form class="contact-form reveal delay-1" id="contactForm" novalidate>
+        <div class="input-group">
+          <input type="text" id="name" required placeholder=" " autocomplete="name">
+          <label for="name">Your Name</label>
+        </div>
+        <div class="input-group">
+          <input type="email" id="email" required placeholder=" " autocomplete="email">
+          <label for="email">Your Email</label>
+        </div>
+        <div class="input-group">
+          <textarea id="message" rows="4" required placeholder=" "></textarea>
+          <label for="message">Your Message</label>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <svg class="wa-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Kirim Pesan via WhatsApp
+          </button>
+          <p class="form-hint">Pesan Anda akan terbuka di WhatsApp — klik Send untuk mengirim langsung. 🚀</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="bg-layer footer-bg" aria-hidden="true"></div>
+    <div class="container footer-container">
+      <p>&copy; 2026 <strong>Randiano Deska Putra</strong>. Crafted with passion &amp; precision.</p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/randianodskptra_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+        <a href="https://github.com/randianodeska-coder" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+          </svg>
+        </a>
+        <a href="https://wa.me/628563122123" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="wa-footer-link">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+  </button>
+
+  <!-- Modal -->
+  <div id="projectModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <span class="focus-sentinel" tabindex="0" aria-hidden="true"></span>
+    <div class="modal-content">
+      <button class="close-modal" aria-label="Close project modal">&times;</button>
+      <div class="modal-body">
+        <div class="modal-image-container">
+          <img id="modalImage" src="" alt="">
+        </div>
+        <div class="modal-info">
+          <h2 id="modalTitle">Project Title</h2>
+          <p id="modalDesc">Project detailed description goes here...</p>
+          <a href="#" id="modalLink" class="modal-link" target="_blank" rel="noopener noreferrer">View Live Demo</a>
+        </div>
+      </div>
+    </div>
+    <span class="focus-sentinel" tabindex="0" aria-hidden="true"></span>
+  </div>
+
+  <!-- Floating Dock -->
+  <div class="floating-dock reveal" aria-hidden="true">
+    <a href="https://www.instagram.com/randianodskptra_/" target="_blank" rel="noopener noreferrer" class="dock-item" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+      </svg>
+    </a>
+    <a href="https://github.com/randianodeska-coder" target="_blank" rel="noopener noreferrer" class="dock-item" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+      </svg>
+    </a>
+    <a href="https://wa.me/628563122123" target="_blank" rel="noopener noreferrer" class="dock-item" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div class="custom-cursor" aria-hidden="true"></div>
+  <div class="cursor-follower" aria-hidden="true"></div>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <!-- Lenis for Smooth Scrolling -->
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+  <!-- tsParticles v2 (stable, widely supported) -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+  <!-- Scripts -->
+  <script src="script.js" defer></script>
+  <script src="animations.js" defer></script>
   <script src="filter-magnetic.js" defer></script>
 
-<!-- MOBILE PREMIUM FX -->
-<div class="mobile-light"></div>
-
-<script>
-/* =========================================================
-   PREMIUM MOBILE EFFECTS — Android & iPhone Optimized
-========================================================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    /* ==============================
-       1. TOUCH PARALLAX
-    ============================== */
-    const hero = document.querySelector('.hero');
-
-    if (window.DeviceOrientationEvent && hero) {
-
-        window.addEventListener('deviceorientation', (e) => {
-
-            const x = e.gamma || 0;
-            const y = e.beta || 0;
-
-            hero.style.transform =
-                `translate3d(${x * 0.4}px, ${y * 0.15}px, 0)`;
-
-        });
-    }
-
-    /* ==============================
-       2. MOBILE LIGHT FOLLOW TOUCH
-    ============================== */
-
-    const light = document.querySelector('.mobile-light');
-
-    document.addEventListener('touchmove', (e) => {
-
-        const touch = e.touches[0];
-
-        light.style.left = touch.clientX + 'px';
-        light.style.top = touch.clientY + 'px';
-
-    }, { passive: true });
-
-    /* ==============================
-       3. CARD FLOAT ANIMATION
-    ============================== */
-
-    const cards = document.querySelectorAll(
-        '.portfolio-card, .bento-item, .stat-item'
-    );
-
-    cards.forEach((card, index) => {
-
-        card.style.animation =
-            `floatingCard ${4 + index * 0.4}s ease-in-out infinite`;
-
-    });
-
-    /* ==============================
-       4. SMOOTH MOBILE SCROLL
-    ============================== */
-
-    document.documentElement.style.scrollBehavior = "smooth";
-
-    /* ==============================
-       5. HERO FADE PARALLAX
-    ============================== */
-
-    window.addEventListener('scroll', () => {
-
-        const scrollY = window.scrollY;
-
-        const title = document.querySelector('.hero-title');
-        const badge = document.querySelector('.hero-badge');
-        const desc  = document.querySelector('.hero-desc');
-
-        if(title){
-            title.style.transform =
-                `translateY(${scrollY * 0.18}px)`;
-
-            title.style.opacity =
-                1 - scrollY / 700;
-        }
-
-        if(badge){
-            badge.style.transform =
-                `translateY(${scrollY * 0.12}px)`;
-        }
-
-        if(desc){
-            desc.style.transform =
-                `translateY(${scrollY * 0.08}px)`;
-        }
-
-    }, { passive: true });
-
-});
-</script>
-
 </body>
+</html>

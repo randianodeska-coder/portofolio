@@ -3,35 +3,23 @@
    Stack: CSS3 (Variables, Grid, Flexbox)
    ========================================================================= */
 
-/* --- ROOT VARIABLES (Untuk mempermudah kustomisasi warna) --- */
+/* --- ROOT VARIABLES --- */
 :root {
-    /* Tema Warna: Dark Luxury Minimalist */
-    --bg-dark: #050505;
-    /* Hitam Obsidian */
-    --text-light: #F0F0F0;
-    /* Putih Mutiara */
-    --accent-blue: #00A3FF;
-    /* Biru Neon Soft */
-
-    /* Warna Turunan / Supporting */
-    --gray-dark: #121212;
-    /* Latar Bento & Card */
-    --gray-border: rgba(255, 255, 255, 0.05);
-    /* Border subtle */
-    --gray-text: #8A8A8A;
-    /* Teks sekunder */
-
-    /* Tipografi */
+    --bg-dark: #030303;
+    --bg-surface: #0a0a0a;
+    --text-light: #F8F8F8;
+    --accent-blue: #0EA5E9;
+    --accent-2: #7C3AED;
+    --gray-dark: #0d0d0d;
+    --gray-border: rgba(255,255,255,0.07);
+    --gray-text: #6B7280;
     --font-heading: 'Syne', sans-serif;
     --font-body: 'Plus Jakarta Sans', sans-serif;
-
-    /* Layout & Spacing */
-    --nav-height: 90px;
+    --nav-height: 80px;
     --container-max: 1200px;
-
-    /* Animasi Transition */
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
     --transition-fast: 0.3s ease;
-    --transition-smooth: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    --transition-smooth: 0.6s var(--ease);
 }
 
 /* --- RESET & GLOBAL STYLES --- */
@@ -44,8 +32,7 @@
 }
 
 html {
-    /* 4. UX TAMBAHAN: Smooth Scrolling native CSS */
-    scroll-behavior: smooth;
+    /* Lenis handles smooth scrolling via JS */
 }
 
 body {
@@ -86,7 +73,10 @@ img {
 }
 
 .section {
-    padding: 140px 0;
+    padding: clamp(80px, 10vw, 160px) 0;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
 .section-title {
@@ -212,9 +202,13 @@ header.scrolled {
 
 .logo {
     font-family: var(--font-heading);
-    font-size: 1.8rem;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
     font-weight: 800;
-    letter-spacing: -1px;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #fff 40%, var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .nav-links {
@@ -249,16 +243,121 @@ header.scrolled {
 
 @media (max-width: 768px) {
     .desktop-nav {
-        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.97);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateX(100%);
+        transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 1000;
+        pointer-events: none;
+    }
+    .desktop-nav.open {
+        transform: translateX(0);
+        pointer-events: auto;
+    }
+    .desktop-nav .nav-links {
+        flex-direction: column;
+        gap: 0;
+        text-align: center;
+    }
+    .desktop-nav .nav-links a {
+        font-size: 1.4rem;
+        letter-spacing: 6px;
+        padding: 1.2rem 2rem;
+        display: block;
     }
 }
 
-/* --- 3. HERO SECTION --- */
+/* Menu Toggle (Hamburger) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 1002;
+    position: relative;
+}
+.hamburger-line {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: #fff;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
+}
+.menu-toggle.open .hamburger-line:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.menu-toggle.open .hamburger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.menu-toggle.open .hamburger-line:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+@media (max-width: 768px) {
+    .menu-toggle { display: flex; }
+}
+
+/* --- HERO SECTION --- */
 .hero {
     height: 100vh;
     display: flex;
     align-items: center;
     position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse 80% 60% at 65% 35%, rgba(14,165,233,0.09) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 10% 75%, rgba(124,58,237,0.07) 0%, transparent 60%),
+        #030303;
+}
+
+/* tsParticles container */
+.hero-particles {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+}
+.hero-particles canvas {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Cursor styles */
+.custom-cursor {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: var(--accent-blue);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+    display: none;
+    transition: width .25s ease, height .25s ease, opacity .25s ease;
+}
+.cursor-follower {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid rgba(14,165,233,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    display: none;
+    transition: width .4s ease, height .4s ease, border-color .3s ease;
+}
+.custom-cursor.hover { width: 0; height: 0; opacity: 0; }
+.cursor-follower.hover { width: 56px; height: 56px; border-color: var(--accent-blue); }
+@media (min-width: 1025px) {
+    .custom-cursor, .cursor-follower { display: block; }
 }
 
 .hero-title {
@@ -365,21 +464,33 @@ header.scrolled {
 }
 
 .bento-item {
-    background-color: var(--gray-dark);
-    border-radius: 24px;
-    padding: 2.5rem;
+    background: linear-gradient(145deg, #0d0d0d, #080808);
+    border-radius: 20px;
+    padding: 2rem 2.2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border: 1px solid var(--gray-border);
     transition: transform var(--transition-smooth), box-shadow var(--transition-smooth), border-color var(--transition-fast);
+    position: relative;
+    overflow: hidden;
 }
+.bento-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(14,165,233,0.07) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+.bento-item:hover::before { opacity: 1; }
 
-/* Efek Hover Mengangkat (Lift-up) & Glow */
 .bento-item:hover {
     transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
-    border-color: rgba(0, 163, 255, 0.4);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 30px rgba(14,165,233,0.08);
+    border-color: rgba(14,165,233,0.35);
 }
 
 .bento-item.wide {
@@ -425,12 +536,12 @@ header.scrolled {
 .portfolio-card {
     cursor: pointer;
     outline: none;
+    transition: transform 0.6s var(--ease);
 }
-
 .portfolio-card:focus-visible {
     outline: 2px solid var(--accent-blue);
     outline-offset: 6px;
-    border-radius: 20px;
+    border-radius: 12px;
 }
 
 /* --- FILTER TABS --- */
@@ -562,10 +673,16 @@ header.scrolled {
 
 .card-image-wrapper {
     position: relative;
-    border-radius: 20px;
+    border-radius: 12px;
     overflow: hidden;
     aspect-ratio: 4/5;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--gray-border);
+    transition: border-color 0.6s var(--ease), box-shadow 0.6s var(--ease);
+}
+.portfolio-card:hover .card-image-wrapper {
+    border-color: rgba(14,165,233,0.3);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
 }
 
 /* Image Interaction: Scale & Saturate pada Hover */
@@ -713,35 +830,28 @@ header.scrolled {
     background: transparent;
     color: var(--text-light);
     border: 1px solid var(--gray-border);
-    padding: 1.1rem 2.5rem;
+    padding: 1rem 2.5rem;
     font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     cursor: pointer;
-    border-radius: 40px;
-    transition: all var(--transition-fast);
+    border-radius: 4px;
+    transition: all 0.4s var(--ease);
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    -webkit-appearance: none;
+    position: relative;
+    overflow: hidden;
 }
-
-.submit-btn .wa-icon {
-    flex-shrink: 0;
-    transition: transform 0.3s ease;
-}
-
 .submit-btn:hover {
-    background-color: #25D366;
-    /* WhatsApp green */
+    background: #25D366;
     border-color: #25D366;
     color: #fff;
-    box-shadow: 0 0 25px rgba(37, 211, 102, 0.35);
-}
-
-.submit-btn:hover .wa-icon {
-    transform: scale(1.15) rotate(-5deg);
+    box-shadow: 0 0 30px rgba(37,211,102,0.35);
+    transform: translateY(-2px);
 }
 
 .form-hint {
@@ -768,6 +878,18 @@ header.scrolled {
 .footer {
     padding: 4rem 0;
     border-top: 1px solid var(--gray-border);
+    background: var(--bg-dark);
+    position: relative;
+}
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
 }
 
 .footer-container {
@@ -797,7 +919,39 @@ header.scrolled {
     color: var(--accent-blue);
 }
 
-/* --- 4. BACK TO TOP BUTTON --- */
+/* --- BACK TO TOP --- */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    background: rgba(14, 165, 233, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.25);
+    border-radius: 6px;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s var(--ease);
+    backdrop-filter: blur(10px);
+}
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.back-to-top:hover {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 25px rgba(14, 165, 233, 0.4);
+    transform: translateY(-4px);
+}
 .back-to-top {
     position: fixed;
     bottom: 40px;
