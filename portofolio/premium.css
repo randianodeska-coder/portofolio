@@ -1113,9 +1113,10 @@ a {
     appearance: none;
 }
 
-/* Hilangkan delay tap iPhone */
+/* Allow vertical pan scroll on all touch devices — do NOT use manipulation here
+   as it can prevent scroll in some Android browsers */
 html {
-    touch-action: manipulation;
+    touch-action: pan-y;
 }
 
 /* Pastikan header tidak blok touch */
@@ -1123,9 +1124,9 @@ header {
     pointer-events: auto;
 }
 
-/* Nav mobile fix */
+/* Nav mobile fix — only receives touches when open */
 .desktop-nav {
-    pointer-events: auto;
+    pointer-events: none;
 }
 
 /* Portfolio image jangan blok klik */
@@ -1136,9 +1137,11 @@ header {
    iPHONE SAFARI FIX TOTAL
 ========================================================= */
 
+/* ANDROID FIX: Never use touch-action:none on body — it permanently blocks scroll.
+   Use overflow:hidden only, scroll restore is handled by JS. */
 body.menu-open {
     overflow: hidden;
-    touch-action: none;
+    /* touch-action: none REMOVED — breaks Android scroll */
 }
 
 /* FIX TOUCH */

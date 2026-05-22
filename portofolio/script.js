@@ -97,35 +97,42 @@ async function initParticles() {
     const isMobile = window.innerWidth < 768;
     const isTouch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
+    // Disable particles entirely on mobile for smooth scroll performance
+    if (isMobile || isTouch) {
+        container.style.display = 'none';
+        document.body.classList.add('no-webgl');
+        return;
+    }
+
     try {
         await tsParticles.load('tsparticles', {
             background: { color: { value: 'transparent' } },
-            fpsLimit: isMobile ? 40 : 60,
+            fpsLimit: 60,
             particles: {
                 number: {
-                    value: isMobile ? 40 : 90,
-                    density: { enable: true, area: 800 }
+                    value: 80,
+                    density: { enable: true, area: 900 }
                 },
                 color: { value: ['#0EA5E9', '#ffffff', '#7C3AED'] },
                 opacity: {
-                    value: 0.5,
-                    random: { enable: true, minimumValue: 0.2 },
-                    animation: { enable: true, speed: 0.8, minimumValue: 0.1, sync: false }
+                    value: 0.45,
+                    random: { enable: true, minimumValue: 0.15 },
+                    animation: { enable: true, speed: 0.6, minimumValue: 0.1, sync: false }
                 },
-                size: { value: { min: 0.5, max: 2.5 } },
+                size: { value: { min: 0.5, max: 2 } },
                 links: {
                     enable: true, distance: 130,
-                    color: '#0EA5E9', opacity: 0.2, width: 0.8
+                    color: '#0EA5E9', opacity: 0.18, width: 0.7
                 },
                 move: {
                     enable: true,
-                    speed: isMobile ? 0.5 : 0.8,
+                    speed: 0.7,
                     direction: 'none', random: true, straight: false, outMode: 'out'
                 }
             },
             interactivity: {
                 events: {
-                    onHover: { enable: !isTouch, mode: 'grab' },
+                    onHover: { enable: true, mode: 'grab' },
                     onClick:  { enable: false }
                 },
                 modes: {
@@ -135,11 +142,9 @@ async function initParticles() {
             detectRetina: true
         });
 
-        // Allow pointer events for grab interactivity on desktop
-        if (!isTouch) {
-            const canvas = container.querySelector('canvas');
-            if (canvas) canvas.style.pointerEvents = 'none';
-        }
+        // Particles canvas should not block mouse events
+        const canvas = container.querySelector('canvas');
+        if (canvas) canvas.style.pointerEvents = 'none';
     } catch (e) {
         console.warn('tsParticles failed:', e);
         document.body.classList.add('no-webgl');
@@ -442,7 +447,7 @@ const projectData = {
         title: "RNVN PRINTING",
         desc: "Kami melayani Cetak Undangan Cetak Foto Banner & Poster Sticker & Merchandise Sablon Kaos Branding UMKM Digital Printing Desain & Produksi Visual Dengan kualitas modern dan hasil yang siap meningkatkan identitas visual bisnis maupun personal project Anda.",
         imgSrc: "rnvn printing2.png",
-        link: "https://randianodeskaputra.netlify.app/"
+        link: "https://rnvn-printing.vercel.app/"
     }
 };
 
@@ -455,6 +460,8 @@ function initModal() {
     const closeBtn = document.querySelector('.close-modal');
     if (!modal) return;
 
+    let _savedScrollY = 0;
+
     const openModal = (projectId) => {
         const data = projectData[projectId];
         if (!data) return;
@@ -464,8 +471,10 @@ function initModal() {
         modalLink.href = data.link;
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
-        const scrollY = window.scrollY;
-        document.body.style.top = `-${scrollY}px`;
+
+        // Save scroll position before locking
+        _savedScrollY = window.scrollY || window.pageYOffset;
+        document.body.style.top = `-${_savedScrollY}px`;
         document.body.classList.add('modal-open');
 
         if (typeof gsap !== 'undefined') {
@@ -477,12 +486,16 @@ function initModal() {
     };
 
     const closeModal = () => {
-        const scrollY = Math.abs(parseFloat(document.body.style.top || '0'));
-        document.body.classList.remove('modal-open');
-        document.body.style.top = '';
-        window.scrollTo(0, scrollY);
         modal.classList.remove('active');
         modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        document.body.style.top = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.overflowY = '';
+        // Restore scroll — use both methods for Android compatibility
+        window.scrollTo({ top: _savedScrollY, left: 0, behavior: 'instant' });
+        document.documentElement.scrollTop = _savedScrollY;
     };
 
     document.querySelectorAll('.portfolio-card').forEach(card => {
@@ -596,10 +609,26 @@ function initFilterTabs() {
    ========================================================================= */
 function initLenis() {
     if (typeof Lenis === 'undefined') return;
-    
+
+    const isTouch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // ANDROID/iOS FIX: Disable Lenis entirely on touch devices.
+    // Native browser scroll is smoother and more reliable on mobile.
+    // Lenis interferes with Android Chrome's native momentum scrolling.
+    if (isTouch) {
+        // Ensure html/body can scroll natively
+        document.documentElement.style.overflowY = '';
+        document.body.style.overflowY = '';
+        // Still update GSAP ScrollTrigger on native scroll
+        if (typeof ScrollTrigger !== 'undefined') {
+            window.addEventListener('scroll', ScrollTrigger.update, { passive: true });
+        }
+        return;
+    }
+
     const lenis = new Lenis({
         duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         direction: 'vertical',
         gestureDirection: 'vertical',
         smooth: true,
@@ -609,31 +638,35 @@ function initLenis() {
         infinite: false,
     });
 
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    // Sync Lenis with ScrollTrigger if available
-    if (typeof ScrollTrigger !== 'undefined') {
+    // CRITICAL FIX: Use ONLY ONE animation loop.
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => {
             lenis.raf(time * 1000);
         });
         gsap.ticker.lagSmoothing(0, 0);
+    } else {
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
     }
-    
-    // Fix anchor links
+
+    // Fix anchor links to use Lenis scroll (smooth animated jump)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
-            const target = document.querySelector(this.getAttribute('href'));
+            const href = this.getAttribute('href');
+            if (!href || href === '#') return;
+            const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
-                lenis.scrollTo(target, { offset: -80 });
+                lenis.scrollTo(target, { offset: -80, duration: 1.2 });
             }
         });
     });
+
+    window._lenis = lenis;
 }
 
 /* =========================================================================

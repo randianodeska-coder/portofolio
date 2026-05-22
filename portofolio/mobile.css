@@ -15,15 +15,24 @@
 html,
 body {
   overflow-x: hidden;
+  /* ANDROID FIX: Ensure vertical scroll is always allowed */
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   width: 100%;
+  /* Allow vertical pan on touch devices */
+  touch-action: pan-y;
 }
 
-/* iOS Safari: smooth scroll */
+/* iOS Safari text size */
 html {
-  scroll-behavior: smooth;
+  /* NOTE: scroll-behavior: smooth is intentionally OMITTED here.
+     Lenis smooth scroll library handles scrolling. Having both
+     causes jittery/double-scroll on mobile. */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* GPU compositing for smoother animations */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* iOS tap highlight removal */
@@ -66,9 +75,10 @@ body {
 
 /* ── HEADER / NAV — Full iOS Fix ── */
 header {
-  /* Ensure header is always above everything on iOS */
+  /* GPU layer promotion for smooth header animation on iOS */
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+  will-change: transform;
 }
 
 @media (max-width: 768px) {
@@ -1550,14 +1560,15 @@ body::after {
 }
 
 /* ── MODAL OPEN BODY LOCK — iOS Safari scroll prevention ── */
-/* iOS ignores overflow:hidden on body. position:fixed is the only reliable fix. */
+/* ANDROID FIX: Use a gentler body lock that doesn't break scroll restore.
+   We set position:fixed + top to save position, then restore on close via JS. */
 body.modal-open {
   position: fixed !important;
   width: 100% !important;
-  overflow-y: hidden !important;
-  /* Prevent layout shift when switching to position:fixed */
   left: 0 !important;
   right: 0 !important;
+  overflow: hidden !important;
+  /* Do NOT set touch-action here — it can prevent the page from ever scrolling again */
 }
 
 /* =========================================================================
@@ -1692,5 +1703,112 @@ select,
     user-select: none;
     touch-action: manipulation !important;
     cursor: pointer !important;
+  }
+}
+
+/* =========================================================================
+   MOBILE SCROLL PERFORMANCE — GPU Compositing & Animation Optimization
+   Prevents jank during scroll on touch devices
+   ========================================================================= */
+
+@media (max-width: 768px) {
+
+  /* ── Promote scroll-animated elements to GPU layers ── */
+  .hero-text-col,
+  .hero-photo-col,
+  .section,
+  .portfolio-card,
+  .bento-item {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* ── Disable heavy CSS animations on mobile ── */
+  /* Aurora blobs: too GPU-intensive during scroll */
+  .aurora-1,
+  .aurora-2,
+  .aurora-3 {
+    animation: none !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+
+  /* Noise texture: unnecessary on mobile */
+  .premium-bg-noise {
+    display: none !important;
+  }
+
+  /* Animated grid: disable to reduce paint calls */
+  .hero-animated-grid {
+    animation: none !important;
+  }
+
+  /* Gradient shift on text: disable to save CPU */
+  .text-gradient {
+    animation: none !important;
+    background-position: 0% center !important;
+  }
+
+  /* Badge shimmer: non-critical, disable */
+  .hero-badge::after {
+    animation: none !important;
+    display: none !important;
+  }
+
+  /* Scroll progress bar gradient animation: disable */
+  .scroll-progress-bar {
+    animation: none !important;
+    background: linear-gradient(90deg, #0EA5E9, #7C3AED) !important;
+  }
+
+  /* ── Smooth touch scrolling on containers that need it ── */
+  .filter-tabs,
+  .modal-content,
+  .nav-links {
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: none;
+  }
+
+  /* ── Contain scroll within sections — REMOVED (blocks Android scroll) ── */
+  /* overscroll-behavior:contain on <section> blocks momentum scroll in Android Chrome */
+  section {
+    /* only prevent horizontal bleed, not vertical scroll chain */
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ── Portfolio card: remove backdrop-filter on mobile (very expensive) ── */
+  .portfolio-card,
+  .bento-item {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* ── Header blur: simplified for mobile performance ── */
+  header {
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
+}
+
+/* Touch devices in general (includes tablets) */
+@media (hover: none) and (pointer: coarse) {
+
+  /* Remove all hover transform effects — they don't work on touch
+     and cause visual glitches after tap */
+  .bento-item:hover,
+  .portfolio-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Disable magnetic button transforms (desktop only feature) */
+  .cta-button,
+  .cta-secondary,
+  .filter-btn {
+    transform: none !important;
+    will-change: auto !important;
   }
 }
