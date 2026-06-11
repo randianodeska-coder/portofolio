@@ -448,6 +448,18 @@ const projectData = {
         desc: "Kami melayani Cetak Undangan Cetak Foto Banner & Poster Sticker & Merchandise Sablon Kaos Branding UMKM Digital Printing Desain & Produksi Visual Dengan kualitas modern dan hasil yang siap meningkatkan identitas visual bisnis maupun personal project Anda.",
         imgSrc: "rnvn printing2.png",
         link: "https://rnvn-printing.vercel.app/"
+    },
+    aiautomation: {
+        title: "RNVN AI Automation",
+        desc: "Platform otomasi bisnis berbasis AI yang dirancang untuk membantu bisnis, brand, dan individu mengotomatiskan alur kerja secara cerdas. Mulai dari otomasi pemasaran, manajemen leads, hingga integrasi sistem — semua dalam satu platform modern yang efisien dan berorientasi pada hasil nyata.",
+        imgSrc: "rnvnaiautomation.png",
+        link: "https://aiautomation-teal.vercel.app/"
+    },
+    nexusplatform: {
+        title: "NEXUS — Cyberpunk Observability Platform",
+        desc: "Futuristic observability platform dengan 3D city visualization menggunakan Three.js + WebGL. Menampilkan mission-control cockpit interface, autonomous AI monitoring agents, real-time alert feed, animated dashboard, dan GSAP ScrollTrigger animations. Dibangun dengan dark-mode cyberpunk aesthetic, HUD overlays, dan immersive sci-fi storytelling.",
+        imgSrc: "rnvnaiautomation.png",
+        link: "nexus/index.html"
     }
 };
 
@@ -627,15 +639,15 @@ function initLenis() {
     }
 
     const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        direction: 'vertical',
-        gestureDirection: 'vertical',
-        smooth: true,
-        mouseMultiplier: 1,
-        smoothTouch: false,
-        touchMultiplier: 2,
+        duration: 1.0,
+        easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t), // expo-out
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        smoothTouch: false,   // keep native touch on mobile
+        touchMultiplier: 1.5,
         infinite: false,
+        lerp: 0.1,            // lower = smoother but more lag; 0.1 is ideal
     });
 
     // CRITICAL FIX: Use ONLY ONE animation loop.
@@ -644,7 +656,7 @@ function initLenis() {
         gsap.ticker.add((time) => {
             lenis.raf(time * 1000);
         });
-        gsap.ticker.lagSmoothing(0, 0);
+        gsap.ticker.lagSmoothing(500, 33); // allow up to 33ms frames before lag correction
     } else {
         function raf(time) {
             lenis.raf(time);

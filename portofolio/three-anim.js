@@ -191,9 +191,14 @@
     // On touch devices: use a subtle CSS float instead of mouse-tilt
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouch) {
-        // Add a gentle floating animation class to bento cards on mobile
-        document.querySelectorAll('.tilt-card').forEach((card, i) => {
-            card.style.animation = `bentoPulse ${3 + i * 0.5}s ease-in-out infinite alternate`;
+        // On mobile: disable 3D transforms entirely to prevent overflow bleed
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.style.transformStyle  = 'flat';
+            card.style.transform       = 'none';
+            card.style.perspective     = 'none';
+            // Hide glow entirely on mobile
+            const glow = card.querySelector('.bento-glow');
+            if (glow) glow.style.display = 'none';
         });
         return;
     }

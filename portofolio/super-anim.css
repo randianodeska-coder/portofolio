@@ -1,0 +1,686 @@
+/* =========================================================================
+   SUPER ANIMATIONS — RNVN PORTFOLIO v5.0
+   Loaded LAST — highest priority overrides
+   Mobile-first premium cinematic effects
+   ========================================================================= */
+
+/* ═══════════════════════════════════════════════════════
+   1. MORPHING BLOB BACKGROUND (Hero ambient)
+═══════════════════════════════════════════════════════ */
+.premium-bg-aurora .aurora-1 {
+  animation: blobMorph1 18s ease-in-out infinite alternate;
+}
+.premium-bg-aurora .aurora-2 {
+  animation: blobMorph2 22s ease-in-out infinite alternate;
+}
+.premium-bg-aurora .aurora-3 {
+  animation: blobMorph3 26s ease-in-out infinite alternate;
+}
+
+@keyframes blobMorph1 {
+  0%   { transform: translate(0,0) scale(1);          border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+  33%  { transform: translate(8vw, 4vh) scale(1.12);  border-radius: 40% 60% 30% 70% / 60% 40% 50% 60%; }
+  66%  { transform: translate(-5vw, 8vh) scale(0.95); border-radius: 70% 30% 50% 50% / 40% 70% 60% 30%; }
+  100% { transform: translate(3vw,-6vh) scale(1.08);  border-radius: 50% 50% 40% 60% / 30% 60% 70% 40%; }
+}
+@keyframes blobMorph2 {
+  0%   { transform: translate(0,0) scale(1);           border-radius: 30% 70% 50% 50% / 60% 40% 60% 40%; }
+  50%  { transform: translate(-7vw, -5vh) scale(1.15); border-radius: 60% 40% 70% 30% / 40% 60% 30% 70%; }
+  100% { transform: translate(5vw, 3vh) scale(0.92);   border-radius: 50% 50% 30% 70% / 70% 30% 50% 50%; }
+}
+@keyframes blobMorph3 {
+  0%   { transform: translate(0,0) scale(1);          border-radius: 70% 30% 40% 60% / 30% 70% 50% 50%; }
+  40%  { transform: translate(4vw,-8vh) scale(1.10);  border-radius: 30% 70% 60% 40% / 50% 50% 70% 30%; }
+  100% { transform: translate(-8vw, 5vh) scale(0.98); border-radius: 50% 50% 70% 30% / 60% 40% 30% 70%; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   2. HERO — Glowing text shimmer on title
+═══════════════════════════════════════════════════════ */
+.hero-title {
+  background-clip: text;
+  -webkit-background-clip: text;
+  position: relative;
+}
+
+/* Animated shimmer sweep across hero title */
+.hero-title::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.07) 50%,
+    transparent 100%
+  );
+  animation: titleShimmer 5s ease-in-out 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes titleShimmer {
+  0%   { left: -60%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { left: 120%; opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   3. HERO BADGE — Orbit dot
+═══════════════════════════════════════════════════════ */
+.hero-badge {
+  position: relative;
+}
+.hero-badge::before {
+  content: '';
+  position: absolute;
+  left: 10px; top: 50%;
+  transform: translateY(-50%);
+  width: 6px; height: 6px;
+  background: #0EA5E9;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #0EA5E9, 0 0 16px rgba(14,165,233,0.6);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: translateY(-50%) scale(1);   opacity: 1; }
+  50%       { transform: translateY(-50%) scale(1.6); opacity: 0.7; box-shadow: 0 0 16px #0EA5E9, 0 0 32px rgba(14,165,233,0.5); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   4. SECTION TITLES — Neon underline sweep animation
+═══════════════════════════════════════════════════════ */
+.section-title {
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #0EA5E9, #7C3AED, #0EA5E9);
+  background-size: 200%;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(14,165,233,0.7);
+  transition: width 1.0s cubic-bezier(0.16,1,0.3,1);
+  animation: neonLineShift 4s linear infinite;
+}
+
+.section-title.active::after,
+.section-title.reveal.active::after {
+  width: 100%;
+}
+
+/* Trigger via JS scroll reveal class */
+.section-title.line-reveal::after { width: 100%; }
+
+@keyframes neonLineShift {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   5. BENTO CARDS — Animated border gradient on hover
+═══════════════════════════════════════════════════════ */
+.bento-item {
+  background-clip: padding-box;
+  position: relative;
+}
+
+.bento-item::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 21px;
+  background: linear-gradient(135deg,
+    rgba(14,165,233,0.0),
+    rgba(14,165,233,0.0));
+  z-index: -1;
+  transition: background 0.5s ease;
+}
+
+.bento-item:hover::before {
+  background: linear-gradient(135deg,
+    rgba(14,165,233,0.4),
+    rgba(124,58,237,0.3),
+    rgba(14,165,233,0.1));
+  animation: borderGradientRotate 3s linear infinite;
+}
+
+@keyframes borderGradientRotate {
+  0%   { background: linear-gradient(0deg,   rgba(14,165,233,0.5), rgba(124,58,237,0.3)); }
+  33%  { background: linear-gradient(120deg, rgba(124,58,237,0.5), rgba(14,165,233,0.3)); }
+  66%  { background: linear-gradient(240deg, rgba(14,165,233,0.4), rgba(124,58,237,0.5)); }
+  100% { background: linear-gradient(360deg, rgba(14,165,233,0.5), rgba(124,58,237,0.3)); }
+}
+
+/* Bento icon — pulse glow */
+.bento-icon {
+  position: relative;
+  overflow: visible !important;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1),
+              box-shadow 0.3s ease;
+}
+
+.bento-item:hover .bento-icon {
+  transform: scale(1.12) translateY(-2px);
+  box-shadow:
+    0 0 20px rgba(14,165,233,0.4),
+    0 0 40px rgba(14,165,233,0.15);
+}
+
+/* ═══════════════════════════════════════════════════════
+   6. TECH STACK — Animated gradient card borders
+═══════════════════════════════════════════════════════ */
+.tech-category {
+  position: relative;
+  z-index: 0;
+  overflow: visible;
+}
+
+/* Moving gradient border on tech category */
+.tech-category::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 17px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(14,165,233,0.6) 60deg,
+    rgba(124,58,237,0.6) 120deg,
+    transparent 180deg,
+    transparent 360deg
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: conicRotate 4s linear infinite;
+}
+
+.tech-category:hover::after { opacity: 1; }
+
+@keyframes conicRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Tech tags — neon glow pulse on hover */
+.tech-tag {
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  position: relative;
+}
+
+.tech-tag:hover {
+  background: rgba(14,165,233,0.18) !important;
+  border-color: rgba(14,165,233,0.6) !important;
+  color: #fff !important;
+  text-shadow: 0 0 8px rgba(14,165,233,0.8);
+  box-shadow:
+    0 0 12px rgba(14,165,233,0.25),
+    inset 0 0 8px rgba(14,165,233,0.1) !important;
+  transform: translateY(-2px) scale(1.04) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   7. PORTFOLIO CARD — 3D cinematic reveal
+═══════════════════════════════════════════════════════ */
+.portfolio-card {
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1),
+              box-shadow 0.5s ease,
+              border-color 0.4s ease !important;
+}
+
+/* Neon border on hover — animated */
+.portfolio-card:hover {
+  box-shadow:
+    0 0 0 1px rgba(14,165,233,0.2),
+    0 0 40px rgba(14,165,233,0.12),
+    0 0 80px rgba(14,165,233,0.06),
+    0 24px 60px rgba(0,0,0,0.5) !important;
+}
+
+/* Card number — animated on hover */
+.portfolio-card:hover .card-index {
+  color: rgba(14,165,233,0.9) !important;
+  text-shadow: 0 0 20px rgba(14,165,233,0.5);
+  transition: all 0.4s ease;
+}
+
+/* Card tag — glow */
+.card-tag {
+  transition: all 0.3s ease;
+}
+.portfolio-card:hover .card-tag {
+  text-shadow: 0 0 12px rgba(14,165,233,0.6);
+  letter-spacing: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   8. FILTER BUTTONS — Active state enhanced
+═══════════════════════════════════════════════════════ */
+.filter-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(14,165,233,0.1), rgba(124,58,237,0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.filter-btn:hover::before { opacity: 1; }
+
+.filter-btn.active {
+  position: relative;
+}
+
+.filter-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 15%; right: 15%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+  border-radius: 2px;
+  animation: filterActiveBar 2s ease infinite alternate;
+}
+
+@keyframes filterActiveBar {
+  0%   { opacity: 0.6; left: 20%; right: 20%; }
+  100% { opacity: 1;   left: 10%; right: 10%; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   9. CONTACT FORM — Premium input focus
+═══════════════════════════════════════════════════════ */
+.input-group {
+  position: relative;
+}
+
+/* Input glow effect on focus */
+.input-group input:focus,
+.input-group textarea:focus {
+  caret-color: #0EA5E9;
+}
+
+/* Animated label on focus */
+.input-group label {
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+
+/* Submit button — animated neon pulse when idle */
+.submit-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: -2px; right: -2px; bottom: -2px;
+  background: linear-gradient(90deg, #0EA5E9, #7C3AED, #25D366, #0EA5E9);
+  background-size: 300%;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity 0.4s ease;
+  animation: btnBorderShift 4s linear infinite;
+}
+
+.submit-btn:hover::before { opacity: 0.7; }
+
+@keyframes btnBorderShift {
+  0%   { background-position: 0% center; }
+  100% { background-position: 300% center; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   10. STAT ITEMS — Counter glow up
+═══════════════════════════════════════════════════════ */
+.stat-number {
+  position: relative;
+  display: inline-block;
+}
+
+.stat-item:hover .stat-number {
+  filter: drop-shadow(0 0 16px rgba(14,165,233,0.7)) !important;
+  transition: filter 0.4s ease;
+}
+
+.stat-item:hover {
+  border-color: rgba(14,165,233,0.4) !important;
+  background: rgba(14,165,233,0.04) !important;
+  box-shadow:
+    0 0 30px rgba(14,165,233,0.08),
+    0 8px 32px rgba(0,0,0,0.3) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   11. SCROLL PROGRESS — rainbow shimmer
+═══════════════════════════════════════════════════════ */
+.scroll-progress-bar {
+  background: linear-gradient(90deg,
+    #0EA5E9 0%,
+    #7C3AED 35%,
+    #0EA5E9 65%,
+    #7C3AED 100%) !important;
+  background-size: 300% !important;
+  animation: progressShimmer 3s linear infinite !important;
+  box-shadow: 0 0 14px rgba(14,165,233,0.6), 0 0 4px rgba(14,165,233,1) !important;
+  height: 2px !important;
+}
+
+@keyframes progressShimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 300% center; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   12. FOOTER — Premium stacked layout
+═══════════════════════════════════════════════════════ */
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 3rem 0 !important;
+  position: relative;
+}
+
+/* Horizontal divider with gradient */
+.footer-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -10%; right: -10%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(14,165,233,0.4) 20%,
+    rgba(124,58,237,0.4) 50%,
+    rgba(14,165,233,0.4) 80%,
+    transparent);
+  animation: footerLineShift 6s ease infinite alternate;
+}
+
+@keyframes footerLineShift {
+  0%   { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.social-links {
+  display: flex;
+  gap: 1.2rem;
+}
+
+/* Social icons — neon float */
+.social-links a {
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1) !important;
+}
+
+.social-links a:hover {
+  transform: translateY(-4px) scale(1.15) !important;
+  color: #0EA5E9 !important;
+  filter: drop-shadow(0 0 14px rgba(14,165,233,0.7)) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   13. FLOATING DOCK — neon glass
+═══════════════════════════════════════════════════════ */
+.floating-dock {
+  background: rgba(5,5,8,0.8) !important;
+  border: 1px solid rgba(14,165,233,0.15) !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 8px 32px rgba(0,0,0,0.5),
+    0 0 20px rgba(14,165,233,0.06) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+.dock-item {
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1) !important;
+  opacity: 0.7;
+}
+
+.dock-item:hover {
+  transform: translateY(-5px) scale(1.2) !important;
+  opacity: 1;
+  color: #0EA5E9 !important;
+  filter: drop-shadow(0 0 12px rgba(14,165,233,0.8)) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   14. PRELOADER — cinematic upgrade
+═══════════════════════════════════════════════════════ */
+.loader-circle {
+  border-top-color: #0EA5E9 !important;
+  box-shadow:
+    0 0 20px rgba(14,165,233,0.5),
+    0 0 40px rgba(14,165,233,0.2) !important;
+  animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   15. CUSTOM CURSOR — Enhanced
+═══════════════════════════════════════════════════════ */
+.custom-cursor {
+  mix-blend-mode: normal !important;
+  background: radial-gradient(circle, #0EA5E9, rgba(14,165,233,0.7)) !important;
+  box-shadow:
+    0 0 12px rgba(14,165,233,0.8),
+    0 0 24px rgba(14,165,233,0.4) !important;
+}
+
+.cursor-follower {
+  border: 1.5px solid rgba(14,165,233,0.5) !important;
+  background: rgba(14,165,233,0.04) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   16. BACK TO TOP — Neon upgrade
+═══════════════════════════════════════════════════════ */
+.back-to-top {
+  border-color: rgba(14,165,233,0.2) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.back-to-top::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(14,165,233,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.back-to-top:hover::before { opacity: 1; }
+
+.back-to-top:hover {
+  border-color: rgba(14,165,233,0.6) !important;
+  box-shadow:
+    0 0 20px rgba(14,165,233,0.3),
+    0 0 40px rgba(14,165,233,0.1) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   17. MOBILE — Premium touch experience
+═══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* Morphing blobs smaller on mobile */
+  .aurora-1 { width: 45vw !important; height: 45vw !important; opacity: 0.5 !important; }
+  .aurora-2 { width: 35vw !important; height: 35vw !important; opacity: 0.4 !important; }
+  .aurora-3 { opacity: 0.25 !important; }
+
+  /* Hero title shimmer — keep but subtler */
+  .hero-title::after { opacity: 0.5; }
+
+  /* Hero badge pulse dot — larger tap area */
+  .hero-badge::before {
+    width: 7px; height: 7px;
+    left: 12px;
+  }
+
+  /* Section title neon line visible immediately */
+  .section-title::after {
+    transition: width 0.7s ease;
+  }
+
+  /* Bento — gradient border on tap */
+  .bento-item:active::before {
+    background: linear-gradient(135deg,
+      rgba(14,165,233,0.5),
+      rgba(124,58,237,0.4),
+      rgba(14,165,233,0.2));
+  }
+
+  /* Tech tag — larger tap targets */
+  .tech-tag {
+    padding: 0.4rem 0.9rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  /* Portfolio card — press feedback */
+  .portfolio-card:active {
+    transform: scale(0.97) !important;
+    box-shadow:
+      0 0 0 1px rgba(14,165,233,0.3),
+      0 8px 20px rgba(14,165,233,0.15) !important;
+    transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+  }
+
+  /* Filter tabs — enhanced active */
+  .filter-btn.active::after { display: none; }
+
+  /* Submit button — WhatsApp green glow on mobile */
+  .submit-btn {
+    background: linear-gradient(135deg, rgba(37,211,102,0.1), rgba(14,165,233,0.05)) !important;
+    border-color: rgba(37,211,102,0.3) !important;
+  }
+  .submit-btn:active {
+    transform: scale(0.97) !important;
+    background: rgba(37,211,102,0.2) !important;
+    box-shadow: 0 0 20px rgba(37,211,102,0.3) !important;
+  }
+
+  /* Stat items — horizontal stack with glow */
+  .stat-item:active {
+    background: rgba(14,165,233,0.06) !important;
+    border-color: rgba(14,165,233,0.4) !important;
+    transform: scale(0.97) !important;
+  }
+
+  /* Dock icons — larger touch targets */
+  .dock-item {
+    width: 42px !important;
+    height: 42px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0.9 !important;
+  }
+
+  /* Scroll progress bar thicker */
+  .scroll-progress-bar { height: 3px !important; }
+
+  /* Footer layout mobile */
+  .footer-container {
+    align-items: center !important;
+    text-align: center !important;
+    padding: 2.5rem 1.2rem !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Back to top — bigger on mobile */
+  .back-to-top {
+    width: 52px !important;
+    height: 52px !important;
+    bottom: 6rem !important;
+    right: 1.2rem !important;
+  }
+
+  /* Disable expensive backdrop-filter on very small screens */
+  @media (max-width: 380px) {
+    .floating-dock, .hero-badge, .cta-button {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   18. TABLET — 768px–1024px
+═══════════════════════════════════════════════════════ */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .tech-stack-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  .portfolio-grid { gap: 2rem !important; }
+
+  .bento-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  .hero-title {
+    font-size: clamp(3rem, 8vw, 5.5rem) !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   19. REDUCED MOTION — Disable all extras
+═══════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .hero-title::after,
+  .hero-badge::before,
+  .bento-item::before,
+  .tech-category::after,
+  .filter-btn::after,
+  .submit-btn::before,
+  .footer-container::before,
+  .scroll-progress-bar,
+  .loader-circle {
+    animation: none !important;
+    transition: none !important;
+  }
+  .section-title::after { transition: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   20. SMOOTH REVEAL UPGRADE — stronger defaults
+═══════════════════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px) scale(0.97);
+  transition:
+    opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+    transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  will-change: opacity, transform;
+}
+
+.reveal.delay-1 { transition-delay: 0.12s; }
+.reveal.delay-2 { transition-delay: 0.24s; }
+.reveal.delay-3 { transition-delay: 0.38s; }
+
+.reveal.active {
+  opacity: 1;
+  transform: translate3d(0,0,0) scale(1);
+}
+
+/* Mobile reveal — less distance */
+@media (max-width: 768px) {
+  .reveal {
+    transform: translateY(22px) scale(0.985);
+    transition:
+      opacity 0.75s cubic-bezier(0.16,1,0.3,1),
+      transform 0.75s cubic-bezier(0.16,1,0.3,1);
+  }
+}
