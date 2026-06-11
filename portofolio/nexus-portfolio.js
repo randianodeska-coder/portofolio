@@ -70,7 +70,7 @@ function initAll(){
   initBackToTop(); initGsap(); initHoverEffects(); initTextScramble(); initMagneticButtons();
   initScreenGlitchOnClick(); initCyberGlitchStorm(); initAutoGlitchMonitor(); initProfileHoloRings(); initMouseHud();
   initScrollSkew(); initCyberCursor(); initViewportScanner(); initGlitchTransitions();
-  initAudioSystem(); initCards3DTilt();
+  initCards3DTilt();
 }
 
 /* ── CLOCK ── */
@@ -94,10 +94,6 @@ function initNav(){
       nav.classList.remove('open'); toggle.classList.remove('open'); toggle.setAttribute('aria-expanded',false);
     }));
   }
-  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
-  }));
 }
 
 /* ── SCROLL PROGRESS ── */
@@ -676,7 +672,8 @@ function initScrollSkew(){
 
 /* ── LAGGING NEON CROSSHAIR CURSOR ── */
 function initCyberCursor(){
-  if(window.innerWidth<768)return;
+  const isTouchDevice='ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if(window.innerWidth<768 || isTouchDevice) return;
   
   document.body.style.cursor='none';
   document.querySelectorAll('.btn-primary, .btn-ghost, .dock-item, .back-to-top, .menu-toggle, a, button').forEach(el=>{
@@ -746,14 +743,18 @@ function initGlitchTransitions(){
   `;
   document.body.appendChild(transitionDiv);
 
-  document.querySelectorAll('#mainNav a, .hero-actions a, .back-to-top').forEach(link=>{
+  document.querySelectorAll('a[href^="#"], .back-to-top').forEach(link=>{
     link.addEventListener('click',e=>{
-      const targetId=link.getAttribute('href');
-      if(!targetId || !targetId.startsWith('#')) return;
-      e.preventDefault();
-      
-      const targetEl=document.querySelector(targetId);
+      let targetEl;
+      if(link.classList.contains('back-to-top') || link.id === 'backToTop'){
+        targetEl=document.body;
+      } else {
+        const targetId=link.getAttribute('href');
+        if(!targetId || !targetId.startsWith('#')) return;
+        targetEl=document.querySelector(targetId);
+      }
       if(!targetEl) return;
+      e.preventDefault();
 
       transitionDiv.classList.add('active');
       
@@ -780,90 +781,7 @@ function initGlitchTransitions(){
   });
 }
 
-/* ── WEB AUDIO SYNTHESIZER SFX ── */
-let audioContext=null;
-let audioEnabled=false;
 
-function playSynthSound(type){
-  if(!audioEnabled) return;
-  try {
-    if(!audioContext) audioContext=new (window.AudioContext || window.webkitAudioContext)();
-    if(audioContext.state==='suspended') audioContext.resume();
-    
-    const osc=audioContext.createOscillator();
-    const gainNode=audioContext.createGain();
-    
-    osc.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    if(type==='hover'){
-      osc.type='sine';
-      osc.frequency.setValueAtTime(1200, audioContext.currentTime);
-      gainNode.gain.setValueAtTime(0.03, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime+0.05);
-      osc.start();
-      osc.stop(audioContext.currentTime+0.05);
-    } else if(type==='click'){
-      osc.type='square';
-      osc.frequency.setValueAtTime(800, audioContext.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(320, audioContext.currentTime+0.08);
-      gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime+0.08);
-      osc.start();
-      osc.stop(audioContext.currentTime+0.08);
-    } else if(type==='power'){
-      osc.type='sawtooth';
-      osc.frequency.setValueAtTime(160, audioContext.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(950, audioContext.currentTime+0.35);
-      gainNode.gain.setValueAtTime(0.04, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime+0.35);
-      osc.start();
-      osc.stop(audioContext.currentTime+0.35);
-    }
-  } catch(e){}
-}
-
-function initAudioSystem(){
-  const btn=document.createElement('button');
-  btn.id='audioToggle';
-  btn.style.position='fixed';
-  btn.style.bottom='20px';
-  btn.style.left='20px';
-  btn.style.zIndex='999999';
-  btn.style.background='rgba(0,0,0,0.85)';
-  btn.style.border='1px solid var(--red)';
-  btn.style.color='var(--red)';
-  btn.style.fontFamily='var(--font-mono)';
-  btn.style.fontSize='9px';
-  btn.style.padding='6px 12px';
-  btn.style.letterSpacing='2px';
-  btn.style.boxShadow='0 0 8px rgba(255,0,51,0.2)';
-  btn.style.transition='all 0.3s ease';
-  btn.textContent='[ AUDIO: OFF ]';
-  btn.style.cursor='none';
-  document.body.appendChild(btn);
-
-  btn.addEventListener('click',()=>{
-    audioEnabled=!audioEnabled;
-    if(audioEnabled){
-      btn.style.borderColor='var(--cyan)';
-      btn.style.color='var(--cyan)';
-      btn.style.boxShadow='0 0 10px rgba(0,255,204,0.4)';
-      btn.textContent='[ AUDIO: ACTIVE ]';
-      playSynthSound('power');
-    } else {
-      btn.style.borderColor='var(--red)';
-      btn.style.color='var(--red)';
-      btn.style.boxShadow='0 0 8px rgba(255,0,51,0.2)';
-      btn.textContent='[ AUDIO: OFF ]';
-    }
-  });
-
-  document.querySelectorAll('a, button, .portfolio-card, .skill-card, .dock-item, .menu-toggle').forEach(el=>{
-    el.addEventListener('mouseenter',()=>playSynthSound('hover'),{passive:true});
-    el.addEventListener('click',()=>playSynthSound('click'),{passive:true});
-  });
-}
 
 /* ── CARDS 3D TILT ── */
 function initCards3DTilt(){
