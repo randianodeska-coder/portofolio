@@ -65,12 +65,25 @@ const rand = (a,b) => Math.random()*(b-a)+a;
 
 /* ── INIT ── */
 function initAll(){
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
   initClock(); initNav(); initScrollProgress(); initReveal();
   initCity3D(); initCounters(); initFilter(); initModal(); initForm();
-  initBackToTop(); initGsap(); initHoverEffects(); initTextScramble(); initMagneticButtons();
-  initScreenGlitchOnClick(); initCyberGlitchStorm(); initAutoGlitchMonitor(); initProfileHoloRings(); initMouseHud();
-  initScrollSkew(); initCyberCursor(); initViewportScanner(); initGlitchTransitions();
-  initCards3DTilt();
+  initBackToTop(); initGsap(); initTextScramble(); initViewportScanner(); initGlitchTransitions();
+  initProfileHoloRings();
+
+  // Only initialize interactive hover/mousemove/tilt effects on desktop (non-touch)
+  if(!isTouch){
+    initHoverEffects();
+    initMagneticButtons();
+    initScreenGlitchOnClick();
+    initCyberGlitchStorm();
+    initAutoGlitchMonitor();
+    initMouseHud();
+    initScrollSkew();
+    initCyberCursor();
+    initCards3DTilt();
+  }
 }
 
 /* ── CLOCK ── */
@@ -89,9 +102,15 @@ function initNav(){
       const open=nav.classList.toggle('open');
       toggle.classList.toggle('open',open);
       toggle.setAttribute('aria-expanded',open);
+      header.classList.toggle('nav-active',open); // Make header transparent when mobile nav is open
+      document.body.classList.toggle('nav-open',open); // Lock background scrolling
     });
     nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-      nav.classList.remove('open'); toggle.classList.remove('open'); toggle.setAttribute('aria-expanded',false);
+      nav.classList.remove('open'); 
+      toggle.classList.remove('open'); 
+      toggle.setAttribute('aria-expanded',false);
+      header.classList.remove('nav-active');
+      document.body.classList.remove('nav-open');
     }));
   }
 }
@@ -267,11 +286,36 @@ function initFilter(){
 
 /* ── MODAL ── */
 const projects={
-  vault:{title:'RNVN — Web Development',desc:'Layanan RNVN Web Developer: Web Design, Web Development, Responsive Design, E-Commerce, Landing Page, Portfolio, SEO & Speed Optimization, Maintenance & Support.',imgSrc:'rnvn web.png',link:'https://randianodeskaputra.netlify.app/'},
-  rnvn:{title:'RNVN — Streetwear Identity',desc:'RNVN is a brand born from controlled aggression. The visual identity fuses brutalist grid systems with editorial typography to create a presence that dominates — online and off.',imgSrc:'rnvnwear.png',link:'https://rnvn-brand.vercel.app/'},
-  nexus:{title:'RNVN PRINTING',desc:'Kami melayani Cetak Undangan, Cetak Foto, Banner & Poster, Sticker & Merchandise, Sablon Kaos, Branding UMKM, Digital Printing, Desain & Produksi Visual.',imgSrc:'rnvn printing2.png',link:'https://rnvn-printing.vercel.app/'},
-  aiautomation:{title:'RNVN AI Automation',desc:'Platform otomasi bisnis berbasis AI untuk mengotomatiskan alur kerja secara cerdas. Mulai dari otomasi pemasaran, manajemen leads, hingga integrasi sistem.',imgSrc:'rnvnaiautomation.png',link:'https://aiautomation-teal.vercel.app/'},
-  nexusplatform:{title:'NEXUS Platform',desc:'Futuristic observability platform dengan 3D city visualization, autonomous AI agents, mission-control HUD, dan cyberpunk dark aesthetic.',imgSrc:'rnvnaiautomation.png',link:'nexus/index.html'}
+  vault:{
+    title: "RNVN — web Development",
+    desc: "Layanan RNVN Web Developer Web Design Desain website modern, clean, dan premium dengan tampilan yang elegan dan user friendly. Web Development Pembuatan website cepat, aman, responsif, dan berperforma tinggi. Responsive Design Tampilan optimal di desktop, tablet, maupun smartphone. E-Commerce Website Membangun toko online modern lengkap dengan produk, cart, checkout, dan payment gateway. Landing Page Premium Landing page cinematic untuk promosi brand, produk, event, atau bisnis. Portfolio Website Website personal atau company profile dengan identitas visual profesional. SEO & Speed Optimization Optimasi website agar cepat, ringan, dan mudah ditemukan di Google. Maintenance & Support Perawatan website, update sistem, dan support berkelanjutan. Domain & Hosting Membantu setup domain dan hosting agar website siap online dengan aman dan stabil.",
+    imgSrc: "rnvn web.png",
+    link: "https://randianodeskaputra.netlify.app"
+  },
+  rnvn:{
+    title: "RNVN — Streetwear Identity",
+    desc: "RNVN is a brand born from controlled aggression. The visual identity fuses brutalist grid systems with editorial typography to create a presence that dominates — online and off. Logo, lookbook, and digital storefront conceived as a singular, cohesive statement.",
+    imgSrc: "mockup.png",
+    link: "https://rnvn-brand.vercel.app"
+  },
+  nexus:{
+    title: "RNVN PRINTING",
+    desc: "Kami melayani Cetak Undangan Cetak Foto Banner & Poster Sticker & Merchandise Sablon Kaos Branding UMKM Digital Printing Desain & Produksi Visual Dengan kualitas modern dan hasil yang siap meningkatkan identitas visual bisnis maupun personal project Anda.",
+    imgSrc: "rnvn printing2.png",
+    link: "https://rnvn-printing.vercel.app/"
+  },
+  aiautomation:{
+    title: "RNVN AI Automation",
+    desc: "Platform otomasi bisnis berbasis AI yang dirancang untuk membantu bisnis, brand, dan individu mengotomatiskan alur kerja secara cerdas. Mulai dari otomasi pemasaran, manajemen leads, hingga integrasi sistem — semua dalam satu platform modern yang efisien dan berorientasi pada hasil nyata.",
+    imgSrc: "rnvnaiautomation.png",
+    link: "https://aiautomation-teal.vercel.app/"
+  },
+  nexusplatform:{
+    title: "NEXUS — Cyberpunk Observability Platform",
+    desc: "Futuristic observability platform dengan 3D city visualization menggunakan Three.js + WebGL. Menampilkan mission-control cockpit interface, autonomous AI monitoring agents, real-time alert feed, animated dashboard, dan GSAP ScrollTrigger animations. Dibangun dengan dark-mode cyberpunk aesthetic, HUD overlays, dan immersive sci-fi storytelling.",
+    imgSrc: "rnvnaiautomation.png",
+    link: "https://aiautomation-teal.vercel.app/"
+  }
 };
 
 function initModal(){
@@ -280,7 +324,7 @@ function initModal(){
   let savedY=0;
   const open=id=>{
     const d=projects[id]; if(!d)return;
-    img.src=d.imgSrc; title.textContent=d.title; desc.textContent=d.desc; link.href=d.link;
+    img.src=d.imgSrc; title.textContent=d.title; desc.textContent=d.desc; link.setAttribute('href',d.link);
     modal.classList.add('active'); modal.setAttribute('aria-hidden','false');
     savedY=window.scrollY; document.body.style.top=`-${savedY}px`;
     document.body.classList.add('modal-open');
@@ -290,7 +334,7 @@ function initModal(){
     modal.classList.remove('active'); modal.setAttribute('aria-hidden','true');
     document.body.classList.remove('modal-open');
     document.body.style.top='';
-    window.scrollTo({top:savedY,behavior:'instant'});
+    window.scrollTo(0, savedY); // Safe viewport scroll position restore for Android & iOS
   };
   document.querySelectorAll('.portfolio-card').forEach(c=>{
     c.addEventListener('click',()=>open(c.dataset.project));
@@ -315,9 +359,22 @@ function initForm(){
     const text=`Halo Randiano! 👋%0ASaya menghubungi via portfolio website.%0A%0A*Nama:* ${encodeURIComponent(name)}%0A*Email:* ${encodeURIComponent(email)}%0A%0A*Pesan:*%0A${encodeURIComponent(msg)}`;
     window.open(`https://wa.me/${WA}?text=${text}`,'_blank','noopener,noreferrer');
     const btn=$('submitBtn');
-    btn.textContent='✓ REDIRECTED TO WHATSAPP!'; btn.style.background='#00FF88'; btn.style.color='#000';
+    const btnText=btn.querySelector('.btn-text');
+    if(btnText){
+      btnText.textContent='✓ REDIRECTED TO WHATSAPP!';
+    } else {
+      btn.textContent='✓ REDIRECTED TO WHATSAPP!';
+    }
+    btn.style.background='#00FF88'; btn.style.color='#000';
     form.reset();
-    setTimeout(()=>{btn.textContent='→ KIRIM PESAN';btn.style.background='';btn.style.color='';},4000);
+    setTimeout(()=>{
+      if(btnText){
+        btnText.textContent='Kirim Pesan via WhatsApp';
+      } else {
+        btn.textContent='Kirim Pesan via WhatsApp';
+      }
+      btn.style.background=''; btn.style.color='';
+    },4000);
   });
 }
 
@@ -402,7 +459,10 @@ function initMagneticButtons(){
 
 /* ── SCREEN GLITCH ON CLICK ── */
 function initScreenGlitchOnClick(){
-  document.body.addEventListener('mousedown',()=>{
+  document.body.addEventListener('click',e=>{
+    // Ignore form inputs to avoid focus/typing glitches
+    if(e.target.closest('input, textarea, select')) return;
+    
     document.body.classList.add('screen-glitch-active');
     setTimeout(()=>{
       document.body.classList.remove('screen-glitch-active');
@@ -581,19 +641,22 @@ function initProfileHoloRings(){
     wrapper.appendChild(ry);
     wrapper.appendChild(rx);
 
-    wrapper.addEventListener('mousemove',e=>{
-      const rect=wrapper.getBoundingClientRect();
-      const x=e.clientX-rect.left-rect.width/2;
-      const y=e.clientY-rect.top-rect.height/2;
-      const tiltX=(y/(rect.height/2))*20;
-      const tiltY=-(x/(rect.width/2))*20;
-      wrapper.style.setProperty('--tilt-x',`${tiltX}deg`);
-      wrapper.style.setProperty('--tilt-y',`${tiltY}deg`);
-    },{passive:true});
-    wrapper.addEventListener('mouseleave',()=>{
-      wrapper.style.setProperty('--tilt-x',`0deg`);
-      wrapper.style.setProperty('--tilt-y',`0deg`);
-    });
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if(!isTouch){
+      wrapper.addEventListener('mousemove',e=>{
+        const rect=wrapper.getBoundingClientRect();
+        const x=e.clientX-rect.left-rect.width/2;
+        const y=e.clientY-rect.top-rect.height/2;
+        const tiltX=(y/(rect.height/2))*20;
+        const tiltY=-(x/(rect.width/2))*20;
+        wrapper.style.setProperty('--tilt-x',`${tiltX}deg`);
+        wrapper.style.setProperty('--tilt-y',`${tiltY}deg`);
+      },{passive:true});
+      wrapper.addEventListener('mouseleave',()=>{
+        wrapper.style.setProperty('--tilt-x',`0deg`);
+        wrapper.style.setProperty('--tilt-y',`0deg`);
+      });
+    }
   }
 }
 
@@ -743,7 +806,7 @@ function initGlitchTransitions(){
   `;
   document.body.appendChild(transitionDiv);
 
-  document.querySelectorAll('a[href^="#"], .back-to-top').forEach(link=>{
+  document.querySelectorAll('a[href^="#"]:not(#modalLink), .back-to-top').forEach(link=>{
     link.addEventListener('click',e=>{
       let targetEl;
       if(link.classList.contains('back-to-top') || link.id === 'backToTop'){

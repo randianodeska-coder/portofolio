@@ -78,6 +78,7 @@ function initAll() {
     initSpotlight();
     initHeroParallax();
     initMagneticButtons();
+    initCards3DTilt();
     // Ultra Premium Animation Engine (animations.js)
     if (typeof initUltraPremiumAnimations === 'function') {
         initUltraPremiumAnimations();
@@ -435,31 +436,31 @@ const projectData = {
         title: "RNVN — web Development",
         desc: "Layanan RNVN Web Developer Web Design Desain website modern, clean, dan premium dengan tampilan yang elegan dan user friendly. Web Development Pembuatan website cepat, aman, responsif, dan berperforma tinggi. Responsive Design Tampilan optimal di desktop, tablet, maupun smartphone. E-Commerce Website Membangun toko online modern lengkap dengan produk, cart, checkout, dan payment gateway. Landing Page Premium Landing page cinematic untuk promosi brand, produk, event, atau bisnis. Portfolio Website Website personal atau company profile dengan identitas visual profesional. SEO & Speed Optimization Optimasi website agar cepat, ringan, dan mudah ditemukan di Google. Maintenance & Support Perawatan website, update sistem, dan support berkelanjutan. Domain & Hosting Membantu setup domain dan hosting agar website siap online dengan aman dan stabil.",
         imgSrc: "rnvn web.png",
-        link: "https://randianodeskaputra.netlify.app/"
+        link: "https://randianodeskaputra.netlify.app"
     },
     rnvn: {
         title: "RNVN — Streetwear Identity",
         desc: "RNVN is a brand born from controlled aggression. The visual identity fuses brutalist grid systems with editorial typography to create a presence that dominates — online and off. Logo, lookbook, and digital storefront conceived as a singular, cohesive statement.",
         imgSrc: "mockup.png",
-        link: "https://rnvn-brand.vercel.app/"
+        link: "https://rnvn-brand.vercel.app"
     },
     nexus: {
         title: "RNVN PRINTING",
         desc: "Kami melayani Cetak Undangan Cetak Foto Banner & Poster Sticker & Merchandise Sablon Kaos Branding UMKM Digital Printing Desain & Produksi Visual Dengan kualitas modern dan hasil yang siap meningkatkan identitas visual bisnis maupun personal project Anda.",
         imgSrc: "rnvn printing2.png",
-        link: "https://rnvn-printing.vercel.app/"
+        link: "https://rnvn-printing.vercel.app"
     },
     aiautomation: {
         title: "RNVN AI Automation",
         desc: "Platform otomasi bisnis berbasis AI yang dirancang untuk membantu bisnis, brand, dan individu mengotomatiskan alur kerja secara cerdas. Mulai dari otomasi pemasaran, manajemen leads, hingga integrasi sistem — semua dalam satu platform modern yang efisien dan berorientasi pada hasil nyata.",
         imgSrc: "rnvnaiautomation.png",
-        link: "https://aiautomation-teal.vercel.app/"
+        link: "https://aiautomation-teal.vercel.app"
     },
     nexusplatform: {
         title: "NEXUS — Cyberpunk Observability Platform",
         desc: "Futuristic observability platform dengan 3D city visualization menggunakan Three.js + WebGL. Menampilkan mission-control cockpit interface, autonomous AI monitoring agents, real-time alert feed, animated dashboard, dan GSAP ScrollTrigger animations. Dibangun dengan dark-mode cyberpunk aesthetic, HUD overlays, dan immersive sci-fi storytelling.",
         imgSrc: "rnvnaiautomation.png",
-        link: "nexus/index.html"
+        link: "https://aiautomation-teal.vercel.app"
     }
 };
 
@@ -480,7 +481,7 @@ function initModal() {
         modalImage.src = data.imgSrc;
         modalTitle.textContent = data.title;
         modalDesc.textContent = data.desc;
-        modalLink.href = data.link;
+        modalLink.setAttribute('href', data.link);
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
 
@@ -666,7 +667,7 @@ function initLenis() {
     }
 
     // Fix anchor links to use Lenis scroll (smooth animated jump)
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('a[href^="#"]:not(#modalLink)').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             if (!href || href === '#') return;
@@ -765,5 +766,27 @@ function initMagneticButtons() {
                 ease: "elastic.out(1, 0.3)"
             });
         });
+    });
+}
+
+/* =========================================================================
+   19. CARDS 3D TILT
+   ========================================================================= */
+function initCards3DTilt() {
+    document.querySelectorAll('.portfolio-card, .skill-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const tiltX = (y / (rect.height / 2)) * 8;
+            const tiltY = -(x / (rect.width / 2)) * 8;
+            card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+        }, { passive: true });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+        });
+        
+        card.style.transition = 'transform 0.1s ease-out, box-shadow 0.15s ease-out';
     });
 }

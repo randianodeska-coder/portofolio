@@ -203,12 +203,13 @@ a.cinfo-val:hover{color:var(--red)}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(12px);z-index:8000;display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;visibility:hidden;pointer-events:none;transition:all .4s}
 .modal.active{opacity:1;visibility:visible;pointer-events:auto}
 .modal-content{background:var(--dark3);border:1px solid rgba(255,0,51,.25);max-width:800px;width:100%;position:relative;max-height:90vh;overflow-y:auto}
-.close-modal{position:absolute;top:1rem;right:1rem;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;z-index:1;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);transition:border-color .3s,color .3s}
-.close-modal:hover{border-color:var(--red);color:var(--red)}
+.close-modal{position:absolute;top:1rem;right:1rem;background:rgba(4,4,10,0.65);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:1.4rem;cursor:pointer;z-index:10;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:border-color .3s,color .3s,background .3s}
+.close-modal:hover{border-color:var(--red);color:var(--red);background:rgba(4,4,10,0.85)}
 .modal-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
 @media(max-width:700px){.modal-body{grid-template-columns:1fr}}
-.modal-img-wrap{aspect-ratio:16/9;overflow:hidden}
-.modal-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top}
+.modal-img-wrap{position:relative;aspect-ratio:16/10;overflow:hidden}
+.modal-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 75%,var(--dark3) 100%);pointer-events:none}
+.modal-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center}
 .modal-info{padding:2rem}
 .modal-info h2{font-family:var(--font-head);font-size:1.1rem;letter-spacing:1px;margin-bottom:1rem;color:#fff}
 .modal-info p{font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:1.5rem}
@@ -438,7 +439,25 @@ footer{border-top:1px solid var(--border);padding:2rem}
   100% { left: 100%; }
 }
 
-/* Mobile Android & iOS Polish fixes */
+/* =========================================================================
+   MOBILE ANDROID & iOS POLISH & BUG FIXES
+   ========================================================================= */
+
+/* ── Prevent grey tap highlight box on mobile iOS/Android ── */
+a, button, [role="button"], input, textarea, select, .portfolio-card, .filter-btn {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* ── Lock background scroll when modal or navigation menu is open ── */
+body.modal-open,
+body.nav-open {
+  position: fixed !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Mobile responsive style overrides */
 @media (max-width: 768px) {
   .sec-pad {
     padding: 60px 1.25rem !important;
@@ -446,19 +465,40 @@ footer{border-top:1px solid var(--border);padding:2rem}
   .sec-dark {
     padding: 60px 1.25rem !important;
   }
+
+  /* ── MODAL SCROLL & POLISH ── */
   .modal {
-    padding: 0.75rem !important;
+    padding: 0.5rem !important;
     align-items: flex-start !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
   }
   .modal-content {
-    margin: 1.5rem auto !important;
+    margin: 1rem auto !important;
     max-height: none !important;
+    border-radius: 12px !important;
   }
   .modal-info {
     padding: 1.25rem !important;
   }
+  /* Fix: modal CTA button is full width on mobile for easy tapping */
+  #modalLink {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 1rem !important;
+    font-size: 0.8rem !important;
+  }
+  /* Fix: Modal close button floats fixed so it's always reachable when scrolling long modal info */
+  .close-modal {
+    position: fixed !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    z-index: 10000 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* ── FLOATING DOCK & BACK TO TOP ── */
   .floating-dock {
     width: 90% !important;
     justify-content: space-around !important;
@@ -467,9 +507,19 @@ footer{border-top:1px solid var(--border);padding:2rem}
     gap: 0.35rem !important;
   }
   .dock-item {
-    width: 32px !important;
-    height: 32px !important;
+    width: 34px !important;
+    height: 34px !important;
   }
+  /* Fix: Increase Back to Top tap target size and adjust position to hover nicely above dock */
+  .back-to-top {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 1.1rem !important;
+    bottom: 5.2rem !important;
+    right: 1rem !important;
+  }
+
+  /* ── HERO ── */
   .hero-title {
     font-size: clamp(2.0rem, 8.5vw, 4.5rem) !important;
   }
@@ -477,11 +527,96 @@ footer{border-top:1px solid var(--border);padding:2rem}
     height: 100dvh !important;
     min-height: -webkit-fill-available !important;
   }
+  /* Fix: prevent metric separators from wrapping awkwardly on small viewports */
+  .hero-metrics {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.8rem !important;
+    width: 100% !important;
+    max-width: 480px !important;
+    margin: 0 auto 2rem !important;
+  }
+  .metric-sep {
+    display: none !important;
+  }
+  .metric {
+    text-align: center !important;
+  }
+  
+  /* ── ABOUT STATS ── */
+  /* Fix: prevent 3-column stats blocks from wrapping awkwardly */
+  .about-stats {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+    margin-top: 1.5rem !important;
+  }
+  .astat {
+    padding: 0.75rem 0.4rem !important;
+  }
+  .astat-num {
+    font-size: clamp(1.4rem, 6vw, 1.8rem) !important;
+  }
+  .astat-label {
+    font-size: 0.52rem !important;
+    letter-spacing: 1px !important;
+  }
+
+  /* ── PRELOADER ── */
   .pre-logo {
     font-size: 2.2rem !important;
     letter-spacing: 5px !important;
   }
   .pre-bar {
     width: 200px !important;
+  }
+
+  /* ── iOS INPUTS SAFETY ── */
+  /* Fix: prevent iOS auto-zoom bug on input/textarea focus by forcing min 16px font size */
+  .input-group input,
+  .input-group textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* ── HEADER OVERLAY SCROLL TRANSPARENCY WHEN NAV IS OPEN ── */
+#header.nav-active {
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ── DISABLE STUCK HOVER EFFECTS & CARD TILTS ON TOUCH SCREENS ── */
+@media (hover: none) and (pointer: coarse) {
+  .portfolio-card:hover, 
+  .skill-card:hover, 
+  .tech-cat:hover, 
+  .astat:hover,
+  .btn-primary:hover,
+  .btn-ghost:hover,
+  .dock-item:hover,
+  .back-to-top:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  /* Keep normal contrast for cards without hover state */
+  .card-img img {
+    filter: saturate(0.8) brightness(0.85) !important;
+  }
+  .portfolio-card:hover .card-img img {
+    transform: none !important;
+    animation: none !important;
+  }
+  .portfolio-card:hover::after {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  .portfolio-card:hover .card-overlay {
+    opacity: 0.9 !important;
+  }
+  .portfolio-card:hover .card-overlay span {
+    transform: none !important;
   }
 }
