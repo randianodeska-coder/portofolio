@@ -1,0 +1,1065 @@
+/* ================================================================
+   PAGE-3D.CSS — Full-page 3D animations, brightness & polish
+   Loaded last. Overrides safely.
+   ================================================================ */
+
+* { box-sizing: border-box; }
+
+/* ================================================================
+   BRIGHTNESS FIX — Hero too dark
+   ================================================================ */
+
+/* Reduce hero bg image darkness */
+.hero-3d-bg {
+  opacity: 0.25 !important;
+}
+.symbiote-overlay {
+  background: radial-gradient(
+    circle at center,
+    transparent 5%,
+    rgba(5, 5, 15, 0.55) 50%,
+    rgba(0,0,0,0.88) 100%
+  ) !important;
+}
+
+/* Reduce aurora canvas darkness */
+#auroraCanvas  { opacity: 0.3  !important; }
+#starCanvas    { opacity: 0.5  !important; }
+
+/* Scanlines — very subtle */
+.scanlines {
+  opacity: 0.4 !important;
+}
+
+/* body gradient — slightly lighter center */
+body {
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    #0d1020 0%,
+    #050508 60%,
+    #000 100%
+  ) !important;
+}
+
+/* ================================================================
+   HERO — clean layout & subtle 3D float
+   ================================================================ */
+#hero {
+  perspective: 1200px;
+}
+.hero-content {
+  transform-style: preserve-3d;
+  animation: heroFloat 9s ease-in-out infinite alternate;
+}
+@keyframes heroFloat {
+  0%   { transform: translateY(0px); }
+  100% { transform: translateY(-8px); }
+}
+
+/* Hero eyebrow badge */
+.hero-eyebrow {
+  animation: badgeDrop 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+  color: rgba(255,255,255,0.85) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+@keyframes badgeDrop {
+  from { opacity:0; transform: translateY(-16px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* Hero title — crisp & bright */
+.hero-title {
+  color: #ffffff !important;
+  text-shadow:
+    0 0 40px rgba(193,18,31,0.2),
+    0 4px 20px rgba(0,0,0,0.6) !important;
+}
+.title-red {
+  color: var(--red) !important;
+  text-shadow: 0 0 30px rgba(193,18,31,0.5) !important;
+}
+
+/* Hero title lines — staggered slide */
+.hero-title .title-line {
+  display: block;
+  overflow: visible;
+}
+.hero-title .title-line:nth-child(1) { animation: slideUp3D 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s both; }
+.hero-title .title-line:nth-child(2) { animation: slideUp3D 0.9s cubic-bezier(0.16,1,0.3,1) 0.55s both; }
+.hero-title .title-line:nth-child(3) { animation: slideUp3D 0.9s cubic-bezier(0.16,1,0.3,1) 0.7s both; }
+@keyframes slideUp3D {
+  from { opacity:0; transform: translateY(40px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* Hero tagline */
+.hero-tagline {
+  color: rgba(255,255,255,0.85) !important;
+  font-size: clamp(1rem,2.5vw,1.3rem) !important;
+}
+
+/* Hero sub text */
+.hero-sub {
+  color: rgba(255,255,255,0.65) !important;
+  line-height: 1.75 !important;
+}
+
+/* Hero buttons — clean spacing */
+.hero-actions {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.9s both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(24px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* Hero sub text */
+.hero-sub {
+  animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.8s both;
+  line-height: 1.75;
+}
+
+/* Hero metrics — 3D pop-in */
+.hero-metrics {
+  animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 1.0s both;
+}
+.metric {
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.metric:hover {
+  transform: translateY(-6px) scale(1.08);
+}
+
+/* Crosshair — subtle 3D rotate */
+.crosshair {
+  animation: crossSpin 30s linear infinite;
+}
+@keyframes crossSpin {
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+  to   { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+/* ================================================================
+   MARQUEE — 3D depth strip
+   ================================================================ */
+.marquee-wrapper {
+  transform-style: preserve-3d;
+  border-top: 1px solid rgba(193,18,31,0.2) !important;
+  border-bottom: 1px solid rgba(193,18,31,0.2) !important;
+  background: linear-gradient(90deg,
+    rgba(193,18,31,0.03) 0%,
+    rgba(0,212,255,0.02) 50%,
+    rgba(193,18,31,0.03) 100%) !important;
+}
+.marquee-content span {
+  transition: color 0.3s, text-shadow 0.3s;
+}
+.marquee-content span:hover {
+  color: #fff !important;
+  text-shadow: 0 0 20px rgba(193,18,31,0.7), 0 0 40px rgba(0,212,255,0.3) !important;
+}
+
+/* ================================================================
+   ABOUT — 3D card + floating image
+   ================================================================ */
+#about {
+  perspective: 1000px;
+}
+
+/* Floating profile image */
+.hero-image-wrapper {
+  animation: profileFloat 6s ease-in-out infinite alternate !important;
+  transform-style: preserve-3d;
+}
+@keyframes profileFloat {
+  0%   { transform: translateY(0px) rotateY(-3deg) rotateX(2deg); }
+  50%  { transform: translateY(-14px) rotateY(3deg) rotateX(-2deg); }
+  100% { transform: translateY(-7px) rotateY(-1deg) rotateX(1deg); }
+}
+
+.hero-img-ring {
+  animation: ringPulse 3s ease-in-out infinite alternate;
+}
+@keyframes ringPulse {
+  0%   { opacity:0.4; transform: scale(1) rotate(0deg); }
+  100% { opacity:0.8; transform: scale(1.05) rotate(180deg); }
+}
+
+/* About stats — 3D hover */
+.about-stats {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 2.5rem;
+}
+.astat {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1),
+              border-color 0.3s, box-shadow 0.3s !important;
+  overflow: hidden;
+}
+.astat::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 0%, rgba(193,18,31,0.15), transparent 70%);
+  opacity:0;
+  transition:opacity 0.4s;
+}
+.astat:hover {
+  transform: translateY(-10px) rotateX(8deg) scale(1.04) !important;
+  border-color: var(--red) !important;
+  box-shadow: 0 20px 40px rgba(193,18,31,0.25), 0 0 0 1px rgba(193,18,31,0.2) !important;
+}
+.astat:hover::before { opacity:1; }
+
+/* About badge pulse */
+.about-badge {
+  animation: badgePulse 2.5s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%,100% { box-shadow:0 0 0 0 rgba(193,18,31,0); }
+  50%      { box-shadow:0 0 0 6px rgba(193,18,31,0.1); }
+}
+.badge-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:var(--red);
+  box-shadow:0 0 8px var(--red);
+  animation: dotBlink 1.5s ease-in-out infinite;
+  display:inline-block;
+  margin-right:6px;
+}
+@keyframes dotBlink {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.4; transform:scale(0.7); }
+}
+
+/* Section tag animation */
+.sec-tag {
+  position:relative;
+  overflow:hidden;
+}
+.sec-tag::after {
+  content:'';
+  position:absolute;
+  left:-100%; top:0;
+  width:60%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(193,18,31,0.2),transparent);
+  animation:tagShimmer 4s ease-in-out infinite;
+}
+@keyframes tagShimmer {
+  0%   { left:-100%; }
+  100% { left:200%; }
+}
+
+/* ================================================================
+   SKILLS — 3D tilt cards + staggered reveal
+   ================================================================ */
+#skills {
+  perspective: 1000px;
+}
+
+.skills-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.8rem;
+  margin-bottom:4rem;
+}
+
+.skill-card {
+  position:relative;
+  transform-style:preserve-3d;
+  cursor:default;
+  transition:
+    transform 0.5s cubic-bezier(0.23,1,0.32,1),
+    box-shadow 0.5s ease,
+    border-color 0.4s ease !important;
+  border:1px solid rgba(255,255,255,0.06) !important;
+}
+.skill-card:hover {
+  transform: translateY(-14px) rotateX(6deg) rotateY(-2deg) scale(1.03) !important;
+  border-color:rgba(193,18,31,0.35) !important;
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(193,18,31,0.15),
+    0 0 50px rgba(193,18,31,0.08) !important;
+}
+
+/* Skill icon glow */
+.skill-icon {
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:52px; height:52px;
+  border-radius:12px;
+  background:rgba(193,18,31,0.08);
+  border:1px solid rgba(193,18,31,0.2);
+  font-size:1.4rem;
+  margin-bottom:1.5rem;
+  transition:all 0.4s;
+}
+.skill-card:hover .skill-icon {
+  background:rgba(193,18,31,0.18);
+  border-color:rgba(193,18,31,0.5);
+  box-shadow:0 0 20px rgba(193,18,31,0.4);
+  transform:rotateY(180deg);
+}
+
+/* Tech grid cards */
+.tech-cat {
+  background:rgba(255,255,255,0.02) !important;
+  border:1px solid rgba(255,255,255,0.06) !important;
+  border-radius:14px !important;
+  padding:1.5rem !important;
+  transform-style:preserve-3d;
+  transition:
+    transform 0.45s cubic-bezier(0.23,1,0.32,1),
+    border-color 0.3s,
+    box-shadow 0.4s !important;
+  position:relative;
+  overflow:hidden;
+}
+.tech-cat::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:2px;
+  background:linear-gradient(90deg,var(--red),rgba(0,212,255,0.6),transparent);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.tech-cat:hover {
+  transform:translateY(-8px) rotateX(5deg) !important;
+  border-color:rgba(193,18,31,0.3) !important;
+  box-shadow:0 20px 40px rgba(0,0,0,0.5),0 0 20px rgba(193,18,31,0.06) !important;
+}
+.tech-cat:hover::before { transform:scaleX(1); }
+
+/* Tech tags hover */
+.tech-tags span {
+  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.tech-tags span:hover {
+  transform:translateY(-3px) scale(1.08) !important;
+  background:rgba(193,18,31,0.15) !important;
+  border-color:rgba(193,18,31,0.4) !important;
+  color:#fff !important;
+  box-shadow:0 6px 16px rgba(193,18,31,0.2) !important;
+}
+
+/* ================================================================
+   PORTFOLIO — 3D depth cards
+   ================================================================ */
+#portfolio {
+  perspective:1200px;
+}
+
+.portfolio-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:2.5rem;
+}
+
+.portfolio-card {
+  transform-style:preserve-3d;
+  transition:
+    transform 0.55s cubic-bezier(0.23,1,0.32,1),
+    box-shadow 0.55s ease,
+    border-color 0.4s !important;
+  position:relative;
+}
+.portfolio-card:hover {
+  transform:translateY(-20px) rotateX(5deg) rotateY(-2deg) scale(1.02) !important;
+  border-color:rgba(193,18,31,0.4) !important;
+  box-shadow:
+    0 40px 80px rgba(193,18,31,0.2),
+    0 20px 40px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(193,18,31,0.2) !important;
+}
+
+/* Card image zoom */
+.card-img img {
+  transition:transform 0.7s cubic-bezier(0.23,1,0.32,1), filter 0.5s !important;
+  filter:grayscale(20%) brightness(0.9);
+}
+.portfolio-card:hover .card-img img {
+  transform:scale(1.1) !important;
+  filter:grayscale(0%) brightness(1.05) !important;
+}
+
+/* Card overlay cinematic */
+.card-overlay {
+  background:linear-gradient(to top,
+    rgba(10,5,5,0.95) 0%,
+    rgba(193,18,31,0.15) 60%,
+    transparent 100%) !important;
+}
+
+/* Card number 3D */
+.card-num {
+  transition:all 0.4s;
+}
+.portfolio-card:hover .card-num {
+  transform:translateZ(20px) scale(1.1);
+  -webkit-text-stroke:1px rgba(193,18,31,0.8) !important;
+}
+
+/* Filter buttons */
+.filter-btn {
+  transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.filter-btn:hover {
+  transform:translateY(-3px) scale(1.05) !important;
+}
+.filter-btn.active {
+  transform:translateY(-2px) !important;
+  box-shadow:0 8px 24px rgba(193,18,31,0.35) !important;
+}
+
+/* ================================================================
+   CONTACT — 3D form + neon glow
+   ================================================================ */
+#contact {
+  perspective:1000px;
+}
+
+.contact-form {
+  transform-style:preserve-3d;
+  transition:transform 0.5s ease, box-shadow 0.5s !important;
+}
+.contact-form:hover {
+  transform:translateY(-6px) rotateX(1.5deg) !important;
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.6),
+    0 0 40px rgba(193,18,31,0.06) !important;
+}
+
+/* Input neon focus */
+.input-group input,
+.input-group textarea {
+  transition:border-color 0.3s, box-shadow 0.3s !important;
+}
+.input-group input:focus,
+.input-group textarea:focus {
+  border-bottom-color:var(--red) !important;
+  box-shadow:0 4px 20px -8px rgba(193,18,31,0.5) !important;
+}
+
+/* Contact info hover */
+.cinfo {
+  transition:border-color 0.3s, transform 0.3s, padding-left 0.3s !important;
+}
+.cinfo:hover {
+  border-color:var(--red) !important;
+  transform:translateX(6px) !important;
+  padding-left:1.8rem !important;
+}
+
+/* Submit button */
+#submitBtn, .contact-form .btn-primary {
+  position:relative;
+  overflow:hidden;
+  transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+#submitBtn:hover, .contact-form .btn-primary:hover {
+  transform:translateY(-4px) scale(1.02) !important;
+  box-shadow:0 0 30px rgba(193,18,31,0.5),0 12px 30px rgba(0,0,0,0.4) !important;
+}
+
+/* ================================================================
+   FOOTER — animated gradient line
+   ================================================================ */
+footer {
+  position:relative;
+  overflow:hidden;
+}
+footer::after {
+  content:'';
+  position:absolute;
+  top:0; left:-100%;
+  width:100%; height:1px;
+  background:linear-gradient(90deg,transparent,var(--red),rgba(0,212,255,0.6),transparent);
+  animation:footerLine 5s ease-in-out infinite;
+}
+@keyframes footerLine {
+  0%   { left:-100%; }
+  100% { left:100%; }
+}
+
+.footer-logo {
+  transition:all 0.3s;
+}
+.footer-logo:hover {
+  color:var(--red) !important;
+  text-shadow:0 0 20px rgba(193,18,31,0.6) !important;
+  letter-spacing:4px;
+}
+
+.footer-social a {
+  transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.footer-social a:hover {
+  transform:translateY(-6px) scale(1.15) rotate(-5deg) !important;
+  border-color:var(--red) !important;
+  background:var(--red) !important;
+  box-shadow:0 10px 24px rgba(193,18,31,0.5) !important;
+}
+
+/* ================================================================
+   FLOATING DOCK — 3D hover
+   ================================================================ */
+.dock-item {
+  transition:
+    transform 0.4s cubic-bezier(0.34,1.56,0.64,1),
+    background 0.3s,
+    box-shadow 0.3s !important;
+}
+.dock-item:hover {
+  transform:translateY(-12px) scale(1.2) rotateZ(-5deg) !important;
+  background:var(--red) !important;
+  box-shadow:0 12px 28px rgba(193,18,31,0.6) !important;
+}
+
+/* ================================================================
+   SCROLL REVEAL — let GSAP control opacity, CSS only transition
+   ================================================================ */
+.reveal {
+  /* DO NOT set opacity:0 here — GSAP controls inline opacity */
+  transition:
+    opacity 0.75s cubic-bezier(0.16,1,0.3,1),
+    transform 0.75s cubic-bezier(0.16,1,0.3,1);
+  will-change: opacity, transform;
+}
+.reveal.active {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  visibility: visible !important;
+}
+
+/* Portfolio & skill cards always visible — GSAP handles entrance */
+.portfolio-card,
+.skill-card,
+.tech-cat,
+.astat {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Stagger delays */
+.skill-card:nth-child(1).reveal { transition-delay:0.05s !important; }
+.skill-card:nth-child(2).reveal { transition-delay:0.12s !important; }
+.skill-card:nth-child(3).reveal { transition-delay:0.19s !important; }
+.skill-card:nth-child(4).reveal { transition-delay:0.26s !important; }
+.portfolio-card:nth-child(1).reveal { transition-delay:0.05s !important; }
+.portfolio-card:nth-child(2).reveal { transition-delay:0.12s !important; }
+.portfolio-card:nth-child(3).reveal { transition-delay:0.19s !important; }
+.portfolio-card:nth-child(4).reveal { transition-delay:0.26s !important; }
+.tech-cat:nth-child(1).reveal { transition-delay:0.05s !important; }
+.tech-cat:nth-child(2).reveal { transition-delay:0.1s !important; }
+.tech-cat:nth-child(3).reveal { transition-delay:0.15s !important; }
+.tech-cat:nth-child(4).reveal { transition-delay:0.2s !important; }
+
+/* ================================================================
+   BACK TO TOP — 3D bounce
+   ================================================================ */
+.back-to-top {
+  transition:
+    transform 0.4s cubic-bezier(0.34,1.56,0.64,1),
+    box-shadow 0.4s !important;
+}
+.back-to-top:hover {
+  transform:translateY(-8px) scale(1.15) rotateZ(10deg) !important;
+  box-shadow:0 14px 30px rgba(193,18,31,0.6) !important;
+}
+
+/* ================================================================
+   NAV — active link 3D underline
+   ================================================================ */
+.desktop-nav .nav-links a {
+  position:relative;
+  transition:color 0.3s, transform 0.3s !important;
+}
+.desktop-nav .nav-links a:hover {
+  transform:translateY(-2px) !important;
+}
+
+/* ================================================================
+   SECTION DIVIDERS — Red neon line
+   ================================================================ */
+#about, #portfolio {
+  position:relative;
+}
+#about::before, #portfolio::before {
+  content:'';
+  position:absolute;
+  top:0; left:50%;
+  transform:translateX(-50%);
+  width:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--red),rgba(0,212,255,0.5),transparent);
+  animation:dividerExpand 1.5s ease-out 0.5s forwards;
+}
+@keyframes dividerExpand {
+  from { width:0; opacity:0; }
+  to   { width:80%; opacity:0.5; }
+}
+
+/* ================================================================
+   MOBILE — Premium Android & iOS experience
+   ================================================================ */
+
+/* ── iOS safe area support ── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .floating-dock {
+    bottom: calc(1.2rem + env(safe-area-inset-bottom)) !important;
+  }
+  .back-to-top {
+    bottom: calc(5.5rem + env(safe-area-inset-bottom)) !important;
+  }
+  footer {
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* ── Global mobile polish ── */
+  html, body {
+    overflow-x: hidden !important;
+    -webkit-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+  }
+  * {
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  /* ── Disable heavy 3D on mobile (performance) ── */
+  .hero-content       { animation: none !important; }
+  .contact-form:hover { transform: none !important; }
+  .skill-card:hover   { transform: translateY(-6px) !important; }
+  .portfolio-card:hover { transform: translateY(-8px) !important; }
+  .tech-cat:hover     { transform: translateY(-4px) !important; }
+  .astat:hover        { transform: translateY(-5px) !important; }
+
+  /* ── HERO — mobile layout ── */
+  #hero {
+    perspective: none !important;
+    min-height: 100dvh !important;
+    padding-top: 80px !important;
+    padding-bottom: 120px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .hero-content {
+    padding: 0 1.4rem !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  /* Hero eyebrow — compact */
+  .hero-eyebrow {
+    font-size: 0.62rem !important;
+    letter-spacing: 2.5px !important;
+    padding: 0.45rem 1rem !important;
+    gap: 0.6rem !important;
+    display: inline-flex !important;
+    margin-bottom: 1.4rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+  }
+
+  /* Hero title — big and clean */
+  .hero-title {
+    font-size: clamp(2.6rem, 12vw, 4.2rem) !important;
+    line-height: 1.05 !important;
+    letter-spacing: 0px !important;
+    margin-bottom: 1.2rem !important;
+  }
+
+  /* Hero tagline */
+  .hero-tagline {
+    font-size: clamp(0.95rem, 4vw, 1.15rem) !important;
+    line-height: 1.55 !important;
+    margin-bottom: 1rem !important;
+    padding: 0 0.5rem !important;
+  }
+
+  /* Hero sub */
+  .hero-sub {
+    font-size: clamp(0.85rem, 3.5vw, 1rem) !important;
+    line-height: 1.7 !important;
+    margin-bottom: 2rem !important;
+    padding: 0 0.25rem !important;
+    color: rgba(255,255,255,0.6) !important;
+  }
+
+  /* Hero buttons — full width, large touch targets */
+  .hero-actions {
+    flex-direction: column !important;
+    gap: 0.85rem !important;
+    margin-bottom: 2rem !important;
+    padding: 0 !important;
+  }
+  .btn-primary, .btn-ghost {
+    width: 100% !important;
+    max-width: 340px !important;
+    margin: 0 auto !important;
+    padding: 1rem 1.5rem !important;
+    font-size: 0.82rem !important;
+    text-align: center !important;
+    justify-content: center !important;
+    min-height: 52px !important;
+    border-radius: 6px !important;
+  }
+
+  /* Hero metrics — compact row */
+  .hero-metrics {
+    gap: 1rem !important;
+    padding-top: 1.4rem !important;
+    border-top: 1px solid rgba(255,255,255,0.08) !important;
+    max-width: 320px !important;
+    margin: 0 auto !important;
+  }
+  .m-num { font-size: 1.8rem !important; }
+  .m-label { font-size: 0.55rem !important; letter-spacing: 2px !important; }
+  .metric-sep { display: none !important; }
+
+  /* HUD hidden on mobile */
+  .hud-tl, .hud-tr, .hud-bl, .hud-br { display: none !important; }
+  .crosshair { display: none !important; }
+
+  /* ── ABOUT section ── */
+  #about .sec-pad {
+    padding: 4.5rem 1.4rem !important;
+  }
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+    text-align: center !important;
+  }
+  .about-right { order: -1 !important; }
+
+  /* Profile image — mobile size & simple float */
+  .hero-image-wrapper {
+    width: clamp(200px, 60vw, 280px) !important;
+    height: clamp(200px, 60vw, 280px) !important;
+    margin: 0 auto !important;
+    animation: profileFloatMobile 5s ease-in-out infinite alternate !important;
+  }
+  @keyframes profileFloatMobile {
+    0%   { transform: translateY(0px); }
+    100% { transform: translateY(-12px); }
+  }
+
+  .sec-body {
+    font-size: 0.95rem !important;
+    line-height: 1.75 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .about-stats {
+    justify-content: center !important;
+    gap: 1rem !important;
+  }
+  .astat {
+    padding: 1.1rem 1.4rem !important;
+    flex: 1 1 80px !important;
+    min-width: 80px !important;
+  }
+  .astat-num { font-size: 1.8rem !important; }
+
+  .about-badge {
+    margin: 0 auto !important;
+    display: inline-flex !important;
+  }
+
+  /* ── SKILLS section ── */
+  #skills {
+    padding: 4.5rem 1.4rem !important;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .skill-card {
+    padding: 1.4rem 1.1rem !important;
+  }
+  .skill-card h3 {
+    font-size: 1rem !important;
+  }
+  .skill-card p {
+    font-size: 0.8rem !important;
+    line-height: 1.55 !important;
+  }
+  .skill-icon {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Tech grid — 2 columns on mobile */
+  .tech-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.85rem !important;
+  }
+  .tech-cat {
+    padding: 1.1rem !important;
+  }
+  .tech-tags {
+    gap: 6px !important;
+  }
+  .tech-tags span {
+    font-size: 0.68rem !important;
+    padding: 3px 8px !important;
+  }
+
+  /* ── PORTFOLIO section ── */
+  #portfolio .sec-pad {
+    padding: 4.5rem 1.4rem !important;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  .filter-tabs {
+    gap: 0.5rem !important;
+    margin-bottom: 2rem !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  .filter-btn {
+    font-size: 0.68rem !important;
+    padding: 0.55rem 1rem !important;
+    min-height: 40px !important;
+  }
+
+  /* Always show card overlay hint on mobile */
+  .card-overlay {
+    opacity: 0.75 !important;
+  }
+  .card-overlay span {
+    transform: translateY(0) !important;
+    font-size: 0.7rem !important;
+    padding: 0.5rem 1.2rem !important;
+  }
+
+  .card-body {
+    padding: 1.4rem !important;
+  }
+  .card-body h3 {
+    font-size: 1.3rem !important;
+  }
+  .card-body p {
+    font-size: 0.88rem !important;
+    -webkit-line-clamp: 2 !important;
+  }
+  .card-num {
+    font-size: 3rem !important;
+  }
+
+  /* ── CONTACT section ── */
+  #contact .sec-pad {
+    padding: 4.5rem 1.4rem !important;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+  .contact-form {
+    padding: 2rem 1.4rem !important;
+  }
+  .input-group input,
+  .input-group textarea {
+    font-size: 16px !important; /* prevent iOS zoom */
+    padding: 0.9rem 0 !important;
+  }
+  .input-group label {
+    font-size: 0.85rem !important;
+  }
+  #submitBtn, .contact-form .btn-primary {
+    padding: 1.1rem !important;
+    font-size: 0.85rem !important;
+    min-height: 54px !important;
+  }
+
+  .cinfo {
+    padding-left: 1.2rem !important;
+  }
+  .cinfo-val { font-size: 1rem !important; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2.5rem 1.4rem !important;
+  }
+  .footer-inner {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1.2rem !important;
+  }
+  .footer-copy {
+    font-size: 0.72rem !important;
+    line-height: 1.6 !important;
+    opacity: 0.6 !important;
+  }
+  .footer-social {
+    gap: 1rem !important;
+  }
+  .footer-social a {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  /* ── FLOATING DOCK — centered bottom ── */
+  .floating-dock {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    bottom: 1.2rem !important;
+    width: auto !important;
+    gap: 0.6rem !important;
+    padding: 0.7rem 1.2rem !important;
+    border-radius: 40px !important;
+  }
+  .dock-item {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .dock-item svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  /* ── BACK TO TOP ── */
+  .back-to-top {
+    width: 46px !important;
+    height: 46px !important;
+    font-size: 1.2rem !important;
+    right: 1rem !important;
+    bottom: 5rem !important;
+  }
+
+  /* ── MARQUEE — smaller on mobile ── */
+  .marquee-content span {
+    font-size: 0.85rem !important;
+    padding: 0 28px !important;
+    letter-spacing: 2px !important;
+  }
+
+  /* ── SECTION titles ── */
+  .sec-title {
+    font-size: clamp(1.9rem, 8vw, 2.8rem) !important;
+    margin-bottom: 1.2rem !important;
+  }
+  .sec-tag {
+    font-size: 0.72rem !important;
+    letter-spacing: 3px !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* ── NAVIGATION mobile ── */
+  #header {
+    padding: 0.9rem 1.2rem !important;
+  }
+  .nav-logo {
+    font-size: 1.2rem !important;
+  }
+
+  /* ── MODAL mobile ── */
+  .modal { padding: 0.5rem !important; align-items: flex-start !important; }
+  .modal-content { margin: 0.5rem auto !important; max-height: 95dvh !important; overflow-y: auto !important; }
+  .modal-body { grid-template-columns: 1fr !important; }
+  .modal-img-wrap { aspect-ratio: 16/9 !important; min-height: unset !important; }
+  .modal-info { padding: 1.5rem !important; }
+  .modal-info h2 { font-size: 1.5rem !important; }
+  .modal-info p  { font-size: 0.9rem !important; }
+  .close-modal { position: fixed !important; top: 0.8rem !important; right: 0.8rem !important; z-index: 10001 !important; width: 40px !important; height: 40px !important; }
+
+  /* ── Touch tap feedbacks ── */
+  .skill-card:active     { transform: scale(0.96) !important; transition: transform 0.12s ease !important; }
+  .portfolio-card:active { transform: scale(0.97) !important; transition: transform 0.12s ease !important; }
+  .filter-btn:active     { transform: scale(0.93) !important; opacity: 0.8 !important; }
+  .btn-primary:active    { transform: scale(0.96) !important; }
+  .btn-ghost:active      { transform: scale(0.96) !important; opacity: 0.8 !important; }
+  .dock-item:active      { transform: scale(0.85) !important; background: var(--red) !important; }
+  .astat:active          { transform: scale(0.95) !important; }
+  .back-to-top:active    { transform: scale(0.9) !important; }
+
+  /* ── Reduce canvas effects on mobile ── */
+  #embersCanvas  { opacity: 0.4 !important; }
+  #auroraCanvas  { opacity: 0.2 !important; }
+  #starCanvas    { opacity: 0.4 !important; }
+  .scanlines     { display: none !important; }
+  .hero-3d-bg    { opacity: 0.18 !important; }
+}
+
+/* ── Very small phones (<400px) ── */
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: clamp(2.2rem, 13vw, 3rem) !important;
+    letter-spacing: -1px !important;
+  }
+  .hero-eyebrow {
+    font-size: 0.56rem !important;
+    letter-spacing: 2px !important;
+  }
+  .hero-image-wrapper {
+    width: clamp(170px, 55vw, 230px) !important;
+    height: clamp(170px, 55vw, 230px) !important;
+  }
+  .skills-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .tech-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .astat {
+    padding: 0.9rem 1rem !important;
+  }
+  .btn-primary, .btn-ghost {
+    max-width: 100% !important;
+  }
+}
+
+/* ── Landscape mobile ── */
+@media (max-width: 900px) and (orientation: landscape) {
+  #hero {
+    min-height: 100dvh !important;
+    padding-top: 70px !important;
+    padding-bottom: 80px !important;
+  }
+  .hero-title {
+    font-size: clamp(1.8rem, 7vw, 3rem) !important;
+  }
+  .hero-image-wrapper { display: none !important; }
+  .about-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .about-right { order: 0 !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+

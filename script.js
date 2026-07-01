@@ -1,504 +1,792 @@
 /**
- * SENIOR CREATIVE DEVELOPER PORTFOLIO
- * Vanilla JS Scripting: Preloader, Scroll Animations, Modal Logic, and Custom Cursor.
+ * RNVN PORTFOLIO — Premium Script
+ * GSAP + ScrollTrigger + tsParticles
  */
 
 /* =========================================================================
-   1. LOADING STATE / PRELOADER
+   GSAP Registration
    ========================================================================= */
-// Gunakan DOMContentLoaded bukan window.load
-// Agar preloader langsung hilang setelah HTML selesai di-parse,
-// TIDAK menunggu semua gambar 16MB selesai dimuat
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
+
+/* =========================================================================
+   1. PRELOADER
+   ========================================================================= */
 document.addEventListener('DOMContentLoaded', () => {
     const preloader = document.getElementById('preloader');
-    if (preloader) {
-        // Animasi loading sebentar lalu hilang
-        setTimeout(() => {
-            preloader.style.opacity    = '0';
+    const body = document.body;
+
+    const hidePreloader = () => {
+        if (!preloader) { initAll(); return; }
+        if (typeof gsap !== 'undefined') {
+            gsap.to(preloader, {
+                opacity: 0, duration: 0.6, ease: 'power2.out',
+                onComplete: () => {
+                    preloader.style.display = 'none';
+                    preloader.setAttribute('aria-hidden', 'true');
+                    body.classList.remove('loading');
+                    body.classList.add('loaded');
+                    initAll();
+                }
+            });
+        } else {
+            preloader.style.opacity = '0';
             preloader.style.visibility = 'hidden';
-            preloader.style.pointerEvents = 'none';
             preloader.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
-        }, 800);
-    }
+            body.classList.remove('loading');
+            body.classList.add('loaded');
+            initAll();
+        }
+    };
+
+    setTimeout(hidePreloader, 900);
 });
 
-// Safety net: window.load juga memastikan preloader hilang
-// Jika DOMContentLoaded sudah handle di atas, ini tidak akan mengubah apa-apa
 window.addEventListener('load', () => {
-    const preloader = document.getElementById('preloader');
-    if (preloader && preloader.style.opacity !== '0') {
-        preloader.style.opacity    = '0';
-        preloader.style.visibility = 'hidden';
-        preloader.style.pointerEvents = 'none';
-        preloader.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-    }
+    setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        if (preloader && preloader.style.display !== 'none') {
+            preloader.style.display = 'none';
+            document.body.classList.remove('loading');
+            document.body.classList.add('loaded');
+            initAll();
+        }
+    }, 200);
 });
-
 
 /* =========================================================================
-   2. CUSTOM CURSOR (KHUSUS DESKTOP)
+   2. INIT ALL
    ========================================================================= */
-const cursor = document.querySelector('.custom-cursor');
-// Elemen-elemen yang jika dihover akan mengubah bentuk cursor
-const interactiveElements = document.querySelectorAll('a, button, .portfolio-card, input, textarea');
+let initialized = false;
+function initAll() {
+    if (initialized) return;
+    initialized = true;
 
-// Mengubah posisi custom cursor mengikuti mouse
-document.addEventListener('mousemove', (e) => {
-    if (cursor) {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+    initParticles();
+    initReveal();
+    initNavbar();
+    initCounters();
+    initCursor();
+    initScrollProgress();
+    initBackToTop();
+    initModal();
+    initContactForm();
+    initMobileNav();
+    initFilterTabs();
+    initLenis();
+    initSpotlight();
+    initHeroParallax();
+    initMagneticButtons();
+    initCards3DTilt();
+    // Ultra Premium Animation Engine (animations.js)
+    if (typeof initUltraPremiumAnimations === 'function') {
+        initUltraPremiumAnimations();
     }
-});
-
-// Memberikan efek membesar (hover state) pada custom cursor
-interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        if (cursor) cursor.classList.add('hover');
-    });
-    el.addEventListener('mouseleave', () => {
-        if (cursor) cursor.classList.remove('hover');
-    });
-});
-
+}
 
 /* =========================================================================
-   3. SCROLL PROGRESS BAR & HEADER EFFECTS
+   3. TSPARTICLES
    ========================================================================= */
-const scrollProgress = document.getElementById('scrollProgress');
-const header = document.getElementById('header');
-const backToTopBtn = document.getElementById('backToTop');
-
-window.addEventListener('scroll', () => {
-    // Menghitung seberapa jauh user telah melakukan scroll (dalam persentase)
-    const totalScroll = document.documentElement.scrollTop;
-    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrollPercent = (totalScroll / windowHeight) * 100;
-
-    // Update lebar progress bar
-    if (scrollProgress) {
-        scrollProgress.style.width = `${scrollPercent}%`;
+async function initParticles() {
+    const container = document.getElementById('tsparticles');
+    if (!container || typeof tsParticles === 'undefined') {
+        document.body.classList.add('no-webgl');
+        return;
     }
 
-    // Menambahkan kelas 'scrolled' pada header untuk memicu efek backdrop-filter (blur)
-    if (header) {
-        if (totalScroll > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
+    const isMobile = window.innerWidth < 768;
+    const isTouch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // Disable particles entirely on mobile for smooth scroll performance
+    if (isMobile || isTouch) {
+        container.style.display = 'none';
+        document.body.classList.add('no-webgl');
+        return;
+    }
+
+    try {
+        await tsParticles.load('tsparticles', {
+            background: { color: { value: 'transparent' } },
+            fpsLimit: 60,
+            particles: {
+                number: {
+                    value: 80,
+                    density: { enable: true, area: 900 }
+                },
+                color: { value: ['#0EA5E9', '#ffffff', '#7C3AED'] },
+                opacity: {
+                    value: 0.45,
+                    random: { enable: true, minimumValue: 0.15 },
+                    animation: { enable: true, speed: 0.6, minimumValue: 0.1, sync: false }
+                },
+                size: { value: { min: 0.5, max: 2 } },
+                links: {
+                    enable: true, distance: 130,
+                    color: '#0EA5E9', opacity: 0.18, width: 0.7
+                },
+                move: {
+                    enable: true,
+                    speed: 0.7,
+                    direction: 'none', random: true, straight: false, outMode: 'out'
+                }
+            },
+            interactivity: {
+                events: {
+                    onHover: { enable: true, mode: 'grab' },
+                    onClick:  { enable: false }
+                },
+                modes: {
+                    grab: { distance: 140, lineLinked: { opacity: 0.5 } }
+                }
+            },
+            detectRetina: true
+        });
+
+        // Particles canvas should not block mouse events
+        const canvas = container.querySelector('canvas');
+        if (canvas) canvas.style.pointerEvents = 'none';
+    } catch (e) {
+        console.warn('tsParticles failed:', e);
+        document.body.classList.add('no-webgl');
+    }
+}
+
+/* =========================================================================
+   4. REVEAL ANIMATIONS (GSAP)
+   ========================================================================= */
+function splitTextNodes(el) {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+    const textNodes = [];
+    while (walker.nextNode()) {
+        textNodes.push(walker.currentNode);
+    }
+    textNodes.forEach(node => {
+        if (!node.nodeValue.trim()) return;
+        const text = node.nodeValue;
+        const fragment = document.createDocumentFragment();
+        for (let i = 0; i < text.length; i++) {
+            if (text[i] === ' ' || text[i] === '\n') {
+                fragment.appendChild(document.createTextNode(text[i]));
+            } else {
+                const span = document.createElement('span');
+                span.className = 'char';
+                span.textContent = text[i];
+                fragment.appendChild(span);
+            }
         }
-    }
+        node.parentNode.replaceChild(fragment, node);
+    });
+}
 
-    // Menampilkan tombol Back To Top setelah scroll > 500px
-    if (backToTopBtn) {
-        if (totalScroll > 500) {
-            backToTopBtn.classList.add('visible');
-        } else {
-            backToTopBtn.classList.remove('visible');
+function initReveal() {
+    const elements = document.querySelectorAll('.reveal');
+    if (!elements.length) return;
+
+    const isMobile = window.innerWidth < 768;
+    
+    // Split text for titles before animating
+    const splitTargets = document.querySelectorAll('.hero-title, .section-title');
+    splitTargets.forEach(el => splitTextNodes(el));
+
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        // Reveal elements
+        elements.forEach(el => {
+            const isTitle = el.classList.contains('hero-title') || el.classList.contains('section-title');
+            const target = isTitle ? el.querySelectorAll('.char') : el;
+            
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.95) {
+                const delay = parseFloat(el.style.animationDelay) ||
+                    (el.classList.contains('delay-1') ? 0.15 :
+                     el.classList.contains('delay-2') ? 0.3  :
+                     el.classList.contains('delay-3') ? 0.45 : 0);
+
+                gsap.fromTo(target,
+                    { opacity: 0, y: isMobile ? 20 : 32 },
+                    { opacity: 1, y: 0, duration: 0.8, delay, ease: 'power3.out', stagger: isTitle ? 0.03 : 0,
+                      onComplete: () => el.classList.add('active') }
+                );
+            } else {
+                // Off-screen: use ScrollTrigger
+                const delay = el.classList.contains('delay-1') ? 0.1 :
+                              el.classList.contains('delay-2') ? 0.2 :
+                              el.classList.contains('delay-3') ? 0.3 : 0;
+                gsap.fromTo(target,
+                    { opacity: 0, y: isMobile ? 20 : 32 },
+                    {
+                        opacity: 1, y: 0, duration: 0.8, delay, ease: 'power3.out', stagger: isTitle ? 0.03 : 0,
+                        scrollTrigger: {
+                            trigger: el,
+                            start: isMobile ? 'top 95%' : 'top 88%',
+                            toggleActions: 'play none none none',
+                            once: true
+                        },
+                        onComplete: () => el.classList.add('active')
+                    }
+                );
+            }
+        });
+
+        // Stagger bento items
+        const bentoItems = document.querySelectorAll('.bento-item');
+        if (bentoItems.length) {
+            gsap.fromTo(bentoItems,
+                { opacity: 0, y: 30, scale: 0.97 },
+                {
+                    opacity: 1, y: 0, scale: 1, duration: 0.7,
+                    stagger: 0.1, ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: '.bento-grid', start: 'top 85%',
+                        toggleActions: 'play none none none', once: true
+                    }
+                }
+            );
         }
-    }
-});
 
-// Smooth scroll untuk tombol Back To Top
-if (backToTopBtn) {
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    } else {
+        // Fallback without GSAP
+        const obs = new IntersectionObserver((entries, o) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                o.unobserve(entry.target);
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px 20px 0px' });
+
+        elements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight) el.classList.add('active');
+            else obs.observe(el);
+        });
+
+        setTimeout(() => {
+            document.querySelectorAll('.reveal:not(.active)').forEach(el => el.classList.add('active'));
+        }, 1200);
+    }
+}
+
+/* =========================================================================
+   5. NAVBAR
+   ========================================================================= */
+function initNavbar() {
+    const header = document.getElementById('header');
+    const scrollProgress = document.getElementById('scrollProgress');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        
+        if (header) {
+            header.classList.toggle('scrolled', scrollY > 60);
+            
+            // Hide/Show logic
+            if (scrollY > lastScroll && scrollY > 100) {
+                // Scrolling down
+                header.classList.add('nav-hidden');
+            } else {
+                // Scrolling up
+                header.classList.remove('nav-hidden');
+            }
+        }
+        
+        if (scrollProgress) {
+            const total = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            scrollProgress.style.width = `${(scrollY / total) * 100}%`;
+        }
+        
+        lastScroll = scrollY;
+    }, { passive: true });
+}
+
+/* =========================================================================
+   6. MOBILE NAV
+   ========================================================================= */
+function initMobileNav() {
+    const toggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('mainNav') || document.querySelector('.desktop-nav');
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('open');
+        toggle.classList.toggle('open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen);
+        document.body.classList.toggle('menu-open', isOpen);
+    });
+
+    nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', e => {
+            const href = link.getAttribute('href');
+            nav.classList.remove('open');
+            toggle.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.classList.remove('menu-open');
+
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+            }
         });
     });
 }
 
+/* =========================================================================
+   7. SCROLL PROGRESS + ACTIVE NAV
+   ========================================================================= */
+function initScrollProgress() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            navLinks.forEach(a => {
+                a.classList.toggle('active-link', a.getAttribute('href') === '#' + entry.target.id);
+            });
+        });
+    }, { threshold: 0.3 });
+
+    sections.forEach(s => obs.observe(s));
+}
 
 /* =========================================================================
-   4. SCROLL REVEAL ANIMATIONS (INTERSECTION OBSERVER API)
+   8. CUSTOM CURSOR (Desktop)
    ========================================================================= */
-// Menyeleksi semua elemen yang memiliki kelas 'reveal'
-const revealElements = document.querySelectorAll('.reveal');
+function initCursor() {
+    if ('ontouchstart' in window || window.innerWidth < 1025) return;
 
-// Gunakan rootMargin lebih kecil di mobile agar elemen lebih mudah terreveal
-const isMobileReveal = window.matchMedia('(max-width: 768px)').matches;
+    const cursor = document.querySelector('.custom-cursor');
+    const follower = document.querySelector('.cursor-follower');
+    if (!cursor) return;
 
-const revealOptions = {
-    threshold: isMobileReveal ? 0.05 : 0.15,
-    rootMargin: isMobileReveal ? "0px 0px -10px 0px" : "0px 0px -50px 0px"
-};
+    let mx = 0, my = 0, fx = 0, fy = 0;
 
-const revealOnScroll = new IntersectionObserver(function (entries, observer) {
-    entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('active');
-        observer.unobserve(entry.target);
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        cursor.style.left = mx + 'px';
+        cursor.style.top = my + 'px';
     });
-}, revealOptions);
 
-revealElements.forEach(el => {
-    revealOnScroll.observe(el);
-});
+    (function animFollower() {
+        fx += (mx - fx) * 0.12;
+        fy += (my - fy) * 0.12;
+        if (follower) {
+            follower.style.left = fx + 'px';
+            follower.style.top = fy + 'px';
+        }
+        requestAnimationFrame(animFollower);
+    })();
 
-// FAILSAFE: Reveal semua elemen setelah 5 detik agar konten tidak pernah
-// tetap tersembunyi jika IntersectionObserver tidak trigger di iOS lama
-setTimeout(() => {
-    document.querySelectorAll('.reveal:not(.active)').forEach(el => {
-        el.classList.add('active');
+    document.querySelectorAll('a, button, .portfolio-card, .filter-btn').forEach(el => {
+        el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); if(follower) follower.classList.add('hover'); });
+        el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); if(follower) follower.classList.remove('hover'); });
     });
-}, 5000);
-
+}
 
 /* =========================================================================
-   5. MODAL / LIGHTBOX LOGIC UNTUK PORTFOLIO
+   9. NUMBER COUNTERS
    ========================================================================= */
-/**
- * DATABASE PROYEK PORTFOLIO (Dummy JSON)
- * Key/properti (seperti 'luxury') harus sama persis dengan atribut 'data-project' pada HTML.
- * Dengan begini, Anda dapat dengan mudah menambahkan proyek baru tanpa mengubah logika JS.
- */
+function initCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    if (!counters.length) return;
+
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            const target = parseInt(el.dataset.target, 10);
+            const suffix = el.dataset.suffix || '';
+            const dur = 1600;
+            const start = performance.now();
+
+            function step(now) {
+                const p = Math.min((now - start) / dur, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(eased * target) + suffix;
+                if (p < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+            obs.unobserve(el);
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(el => obs.observe(el));
+}
+
+/* =========================================================================
+   10. BACK TO TOP
+   ========================================================================= */
+function initBackToTop() {
+    const btn = document.getElementById('backToTop');
+    if (!btn) return;
+
+    window.addEventListener('scroll', () => {
+        btn.classList.toggle('visible', window.scrollY > 500);
+    }, { passive: true });
+
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
+/* =========================================================================
+   11. MODAL
+   ========================================================================= */
 const projectData = {
     vault: {
         title: "RNVN — web Development",
-        desc: "Layanan RNVN Web Developer Web Design Desain website modern, clean, dan premium dengan tampilan yang elegan dan user friendly. Web Development Pembuatan website cepat, aman, responsif, dan berperforma tinggi. Responsive Design Tampilan optimal di desktop, tablet, maupun smartphone. E-Commerce Website Membangun toko online modern lengkap dengan produk, cart, checkout, dan payment gateway. Landing Page Premium  Landing page cinematic untuk promosi brand, produk, event, atau bisnis. Portfolio Website Website personal atau company profile dengan identitas visual profesional. SEO & Speed Optimization Optimasi website agar cepat, ringan, dan mudah ditemukan di Google. Maintenance & Support Perawatan website, update sistem, dan support berkelanjutan. Domain & Hosting Membantu setup domain dan hosting agar website siap online dengan aman dan stabil.",
+        desc: "Layanan RNVN Web Developer Web Design Desain website modern, clean, dan premium dengan tampilan yang elegan dan user friendly. Web Development Pembuatan website cepat, aman, responsif, dan berperforma tinggi. Responsive Design Tampilan optimal di desktop, tablet, maupun smartphone. E-Commerce Website Membangun toko online modern lengkap dengan produk, cart, checkout, dan payment gateway. Landing Page Premium Landing page cinematic untuk promosi brand, produk, event, atau bisnis. Portfolio Website Website personal atau company profile dengan identitas visual profesional. SEO & Speed Optimization Optimasi website agar cepat, ringan, dan mudah ditemukan di Google. Maintenance & Support Perawatan website, update sistem, dan support berkelanjutan. Domain & Hosting Membantu setup domain dan hosting agar website siap online dengan aman dan stabil.",
         imgSrc: "rnvn web.png",
-        link: "https://randianodeskaputra.netlify.app/" // Ganti dengan URL project VAULT
+        link: "https://randianodeskaputra.netlify.app"
     },
     rnvn: {
         title: "RNVN — Streetwear Identity",
         desc: "RNVN is a brand born from controlled aggression. The visual identity fuses brutalist grid systems with editorial typography to create a presence that dominates — online and off. Logo, lookbook, and digital storefront conceived as a singular, cohesive statement.",
         imgSrc: "mockup.png",
-        link: "https://rnvnofficial.netlify.app/" // URL RNVN (sudah diperbaiki)
+        link: "https://rnvn-brand.vercel.app"
     },
     nexus: {
         title: "RNVN PRINTING",
         desc: "Kami melayani Cetak Undangan Cetak Foto Banner & Poster Sticker & Merchandise Sablon Kaos Branding UMKM Digital Printing Desain & Produksi Visual Dengan kualitas modern dan hasil yang siap meningkatkan identitas visual bisnis maupun personal project Anda.",
         imgSrc: "rnvn printing2.png",
-        link: "https://randianodeskaputra.netlify.app/" // Ganti dengan URL project NEXUS
+        link: "https://rnvn-printing.vercel.app"
+    },
+    aiautomation: {
+        title: "RNVN AI Automation",
+        desc: "Platform otomasi bisnis berbasis AI yang dirancang untuk membantu bisnis, brand, dan individu mengotomatiskan alur kerja secara cerdas. Mulai dari otomasi pemasaran, manajemen leads, hingga integrasi sistem — semua dalam satu platform modern yang efisien dan berorientasi pada hasil nyata.",
+        imgSrc: "rnvnaiautomation.png",
+        link: "https://aiautomation-teal.vercel.app"
+    },
+    nexusplatform: {
+        title: "NEXUS — Cyberpunk Observability Platform",
+        desc: "Futuristic observability platform dengan 3D city visualization menggunakan Three.js + WebGL. Menampilkan mission-control cockpit interface, autonomous AI monitoring agents, real-time alert feed, animated dashboard, dan GSAP ScrollTrigger animations. Dibangun dengan dark-mode cyberpunk aesthetic, HUD overlays, dan immersive sci-fi storytelling.",
+        imgSrc: "rnvnaiautomation.png",
+        link: "https://aiautomation-teal.vercel.app"
     }
 };
 
+function initModal() {
+    const modal = document.getElementById('projectModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalLink = document.getElementById('modalLink');
+    const closeBtn = document.querySelector('.close-modal');
+    if (!modal) return;
 
-// Referensi DOM untuk Modal
-const modal = document.getElementById('projectModal');
-const modalImage = document.getElementById('modalImage');
-const modalTitle = document.getElementById('modalTitle');
-const modalDesc = document.getElementById('modalDesc');
-const modalLink = document.getElementById('modalLink');
-const closeBtn = document.querySelector('.close-modal');
-const portfolioCards = document.querySelectorAll('.portfolio-card');
+    let _savedScrollY = 0;
 
-portfolioCards.forEach(card => {
-    card.addEventListener('click', () => {
-        const projectId = card.getAttribute('data-project');
+    const openModal = (projectId) => {
         const data = projectData[projectId];
+        if (!data) return;
+        modalImage.src = data.imgSrc;
+        modalTitle.textContent = data.title;
+        modalDesc.textContent = data.desc;
+        modalLink.setAttribute('href', data.link);
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
 
-        if (data) {
-            modalImage.src = data.imgSrc;
-            modalTitle.textContent = data.title;
-            modalDesc.textContent = data.desc;
-            modalLink.href = data.link;
+        // Save scroll position before locking
+        _savedScrollY = window.scrollY || window.pageYOffset;
+        document.body.style.top = `-${_savedScrollY}px`;
+        document.body.classList.add('modal-open');
 
-            modal.classList.add('active');
-            modal.setAttribute('aria-hidden', 'false');
-
-            // iOS scroll lock: save position, fix body in place
-            const scrollY = window.scrollY;
-            document.body.style.top = `-${scrollY}px`;
-            document.body.classList.add('modal-open');
+        if (typeof gsap !== 'undefined') {
+            gsap.fromTo(modal.querySelector('.modal-content'),
+                { y: 60, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.45, ease: 'power3.out' }
+            );
         }
-    });
-});
+    };
 
-// Store scroll position for restore on close
-const closeModal = () => {
-    if (modal) {
+    const closeModal = () => {
         modal.classList.remove('active');
         modal.setAttribute('aria-hidden', 'true');
-        // Restore scroll position after unlocking body
-        const scrollY = parseFloat(document.body.style.top || '0') * -1;
         document.body.classList.remove('modal-open');
         document.body.style.top = '';
-        document.body.style.overflow = '';
-        window.scrollTo(0, scrollY);
-    }
-};
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.overflowY = '';
+        // Restore scroll — use both methods for Android compatibility
+        window.scrollTo({ top: _savedScrollY, left: 0, behavior: 'instant' });
+        document.documentElement.scrollTop = _savedScrollY;
+    };
 
-// Event listener untuk tombol 'X'
-if (closeBtn) {
-    closeBtn.addEventListener('click', closeModal);
-}
-
-// UX: Tutup modal jika user meng-klik area gelap (backdrop) di luar konten modal
-if (modal) {
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
+    document.querySelectorAll('.portfolio-card').forEach(card => {
+        card.addEventListener('click', () => openModal(card.dataset.project));
+        card.addEventListener('touchstart', () => {}, { passive: true });
     });
-}
 
-// UX: Tutup modal saat user menekan tombol 'Escape' di keyboard
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
-        closeModal();
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+
+    // Swipe to close
+    const content = modal.querySelector('.modal-content');
+    if (content) {
+        let startY = 0;
+        content.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+        content.addEventListener('touchend', e => {
+            if (e.changedTouches[0].clientY - startY > 100) closeModal();
+        }, { passive: true });
     }
-});
 
+    // iOS modal link fix
+    if (modalLink) {
+        modalLink.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            const href = this.href;
+            if (href && href !== '#') window.open(href, '_blank', 'noopener,noreferrer');
+        }, { passive: false });
+    }
+}
 
 /* =========================================================================
-   6. CONTACT FORM → WHATSAPP INTEGRATION
+   12. CONTACT FORM → WHATSAPP
    ========================================================================= */
+function initContactForm() {
+    const WA = '628563122123';
+    const form = document.getElementById('contactForm');
+    if (!form) return;
 
-// ⚠️ GANTI dengan nomor WhatsApp kamu (format internasional, tanpa +)
-// Contoh: Indonesia 08123456789 → 628123456789
-const WA_NUMBER = '6285159223964'; // <-- GANTI INI
-
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    form.addEventListener('submit', e => {
         e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const msg = document.getElementById('message').value.trim();
+        if (!name || !email || !msg) return;
 
-        const btn       = contactForm.querySelector('button');
-        const nameVal   = document.getElementById('name').value.trim();
-        const emailVal  = document.getElementById('email').value.trim();
-        const msgVal    = document.getElementById('message').value.trim();
+        const text = `Halo Randiano Deska Putra! 👋%0A%0ASaya menghubungi kamu melalui portfolio website.%0A%0A*Nama:* ${encodeURIComponent(name)}%0A*Email:* ${encodeURIComponent(email)}%0A%0A*Pesan:*%0A${encodeURIComponent(msg)}`;
+        const url = `https://wa.me/${WA}?text=${text}`;
 
-        if (!nameVal || !emailVal || !msgVal) return;
+        const waWin = window.open(url, '_blank', 'noopener,noreferrer');
+        if (!waWin) window.location.href = url;
 
-        // Loading state
-        const originalText    = btn.textContent;
-        btn.textContent       = 'Opening WhatsApp...';
-        btn.style.opacity     = '0.7';
-        btn.style.pointerEvents = 'none';
-
-        // Buat pesan WhatsApp yang sudah diformat
-        const waMessage = `Halo Randiano Deska Putra! 👋%0A%0ASaya menghubungi kamu melalui portfolio website.%0A%0A*Nama:* ${encodeURIComponent(nameVal)}%0A*Email:* ${encodeURIComponent(emailVal)}%0A%0A*Pesan:*%0A${encodeURIComponent(msgVal)}`;
-
-        const waURL = `https://wa.me/${WA_NUMBER}?text=${waMessage}`;
-        // Save full innerHTML including SVG icon before we overwrite it
-        const originalHTML = btn.innerHTML;
-
-        setTimeout(() => {
-            window.open(waURL, '_blank', 'noopener,noreferrer');
-
-            btn.textContent              = '✓ Redirected to WhatsApp!';
-            btn.style.backgroundColor    = 'var(--accent-blue)';
-            btn.style.color              = 'var(--bg-dark)';
-            btn.style.opacity            = '1';
-
-            contactForm.reset();
-
-            // Restore button with original icon after 4 seconds
-            setTimeout(() => {
-                btn.innerHTML                = originalHTML;
-                btn.style.backgroundColor    = 'transparent';
-                btn.style.color              = 'var(--text-light)';
-                btn.style.pointerEvents      = 'auto';
-            }, 4000);
-
-        }, 800);
-    });
-}
-
-
-/* =========================================================================
-   7. MOBILE NAVIGATION TOGGLE
-   ========================================================================= */
-const menuToggle = document.getElementById('menuToggle');
-const desktopNav = document.querySelector('.desktop-nav');
-
-if (menuToggle && desktopNav) {
-    const toggleIcon = menuToggle.querySelector('span') || menuToggle;
-    menuToggle.addEventListener('click', () => {
-        const isOpen = desktopNav.classList.toggle('open');
-        toggleIcon.innerHTML = isOpen ? '&times;' : '&#9776;';
-        menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
-    desktopNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            desktopNav.classList.remove('open');
-            toggleIcon.innerHTML = '&#9776;';
-            menuToggle.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = '';
-        });
+        const btn = form.querySelector('button[type="submit"]');
+        const orig = btn.innerHTML;
+        btn.textContent = '✓ Redirected to WhatsApp!';
+        btn.style.opacity = '0.8';
+        form.reset();
+        setTimeout(() => { btn.innerHTML = orig; btn.style.opacity = '1'; }, 4000);
     });
 }
 
 /* =========================================================================
-   8. CURSOR TRAIL EFFECT (Desktop only)
+   13. FILTER TABS
    ========================================================================= */
-(function initCursorTrail() {
-    if (window.innerWidth < 1025) return;
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
-    const TRAIL_COUNT = 6;
-    const trails = [];
-    for (let i = 0; i < TRAIL_COUNT; i++) {
-        const dot = document.createElement('div');
-        const size = 4 - i * 0.5;
-        dot.style.cssText = `position:fixed;top:0;left:0;width:${size}px;height:${size}px;border-radius:50%;background:rgba(14,165,233,${0.55 - i * 0.08});pointer-events:none;z-index:9997;transform:translate(-50%,-50%);mix-blend-mode:screen;`;
-        document.body.appendChild(dot);
-        trails.push({ el: dot, x: 0, y: 0 });
-    }
-    let mx = 0, my = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animateTrail() {
-        let lx = mx, ly = my;
-        trails.forEach((t, i) => {
-            const delay = 0.18 + i * 0.06;
-            t.x += (lx - t.x) * delay;
-            t.y += (ly - t.y) * delay;
-            t.el.style.left = t.x + 'px';
-            t.el.style.top  = t.y + 'px';
-            lx = t.x; ly = t.y;
-        });
-        requestAnimationFrame(animateTrail);
-    }
-    animateTrail();
-})();
+function initFilterTabs() {
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.portfolio-card');
+    if (!btns.length) return;
 
-/* =========================================================================
-   9. ACTIVE NAV HIGHLIGHT ON SCROLL
-   ========================================================================= */
-(function initActiveNav() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    // Lower threshold on mobile so section detection triggers sooner
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            navLinks.forEach(a => {
-                a.style.color = '';
-                if (a.getAttribute('href') === '#' + entry.target.id) {
-                    a.style.color = 'var(--accent-blue)';
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            btns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+            const filter = btn.dataset.filter;
+
+            cards.forEach(card => {
+                const show = filter === 'all' || card.dataset.category === filter;
+                if (typeof gsap !== 'undefined') {
+                    if (show) {
+                        card.style.display = '';
+                        gsap.fromTo(card, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' });
+                    } else {
+                        gsap.to(card, { opacity: 0, y: -10, duration: 0.3, ease: 'power2.in',
+                            onComplete: () => { card.style.display = 'none'; }
+                        });
+                    }
+                } else {
+                    card.style.display = show ? '' : 'none';
                 }
             });
         });
-    }, { threshold: isMobile ? 0.2 : 0.4 });
-    sections.forEach(sec => observer.observe(sec));
+    });
+}
+
+/* =========================================================================
+   14. IOS TOUCH FIX
+   ========================================================================= */
+(function() {
+    if (!('ontouchstart' in window) && navigator.maxTouchPoints === 0) return;
+    document.querySelectorAll('a, button, .portfolio-card, .filter-btn, .modal-link, .close-modal').forEach(el => {
+        el.style.pointerEvents = 'auto';
+        el.addEventListener('touchstart', () => {}, { passive: true });
+    });
 })();
 
 /* =========================================================================
-   10. PORTFOLIO CARD MAGNETIC HOVER (desktop only)
+   15. LENIS SMOOTH SCROLLING
    ========================================================================= */
-(function initCardMagnetic() {
-    // Disable on touch/mobile — prevents transform conflicts with filter animation
-    if (window.matchMedia('(max-width: 1024px)').matches) return;
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
-    document.querySelectorAll('.portfolio-card').forEach(card => {
+function initLenis() {
+    if (typeof Lenis === 'undefined') return;
+
+    const isTouch  = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // ANDROID/iOS FIX: Disable Lenis entirely on touch devices.
+    // Native browser scroll is smoother and more reliable on mobile.
+    // Lenis interferes with Android Chrome's native momentum scrolling.
+    if (isTouch) {
+        // Ensure html/body can scroll natively
+        document.documentElement.style.overflowY = '';
+        document.body.style.overflowY = '';
+        // Still update GSAP ScrollTrigger on native scroll
+        if (typeof ScrollTrigger !== 'undefined') {
+            window.addEventListener('scroll', ScrollTrigger.update, { passive: true });
+        }
+        return;
+    }
+
+    const lenis = new Lenis({
+        duration: 1.0,
+        easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t), // expo-out
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        smoothTouch: false,   // keep native touch on mobile
+        touchMultiplier: 1.5,
+        infinite: false,
+        lerp: 0.1,            // lower = smoother but more lag; 0.1 is ideal
+    });
+
+    // CRITICAL FIX: Use ONLY ONE animation loop.
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(500, 33); // allow up to 33ms frames before lag correction
+    } else {
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+    }
+
+    // Fix anchor links to use Lenis scroll (smooth animated jump)
+    document.querySelectorAll('a[href^="#"]:not(#modalLink)').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (!href || href === '#') return;
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                lenis.scrollTo(target, { offset: -80, duration: 1.2 });
+            }
+        });
+    });
+
+    window._lenis = lenis;
+}
+
+/* =========================================================================
+   16. PORTFOLIO SPOTLIGHT GLOW
+   ========================================================================= */
+function initSpotlight() {
+    const cards = document.querySelectorAll('.portfolio-card');
+    
+    cards.forEach(card => {
         card.addEventListener('mousemove', e => {
             const rect = card.getBoundingClientRect();
-            const cx = rect.left + rect.width  / 2;
-            const cy = rect.top  + rect.height / 2;
-            const dx = (e.clientX - cx) * 0.035;
-            const dy = (e.clientY - cy) * 0.035;
-            card.style.transform = `translate(${dx}px, ${dy}px)`;
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
         });
+    });
+}
+
+/* =========================================================================
+   17. HERO IMAGE PARALLAX
+   ========================================================================= */
+function initHeroParallax() {
+    const heroImageWrapper = document.querySelector('.hero-image-wrapper');
+    const heroImage = document.querySelector('.hero-image');
+    
+    if (!heroImageWrapper || !heroImage) return;
+    
+    // Desktop Parallax
+    if (window.innerWidth > 1024) {
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            // Move wrapper slightly opposite to mouse
+            gsap.to(heroImageWrapper, {
+                x: -x * 1.5,
+                y: -y * 1.5,
+                duration: 1.5,
+                ease: 'power2.out'
+            });
+            
+            // Move image slightly more to create 3D depth
+            gsap.to(heroImage, {
+                x: -x * 0.5,
+                y: -y * 0.5,
+                rotationY: x * 1.5,
+                rotationX: -y * 1.5,
+                duration: 1.5,
+                ease: 'power2.out'
+            });
+        });
+    }
+}
+
+/* =========================================================================
+   18. MAGNETIC BUTTONS
+   ========================================================================= */
+function initMagneticButtons() {
+    if (window.innerWidth <= 1024) return; // Desktop only
+    
+    const magneticElements = document.querySelectorAll('.cta-button, .cta-secondary, .filter-btn');
+    
+    magneticElements.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            gsap.to(el, {
+                x: x * 0.3,
+                y: y * 0.3,
+                duration: 0.4,
+                ease: "power2.out"
+            });
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            gsap.to(el, {
+                x: 0,
+                y: 0,
+                duration: 0.7,
+                ease: "elastic.out(1, 0.3)"
+            });
+        });
+    });
+}
+
+/* =========================================================================
+   19. CARDS 3D TILT
+   ========================================================================= */
+function initCards3DTilt() {
+    document.querySelectorAll('.portfolio-card, .skill-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const tiltX = (y / (rect.height / 2)) * 8;
+            const tiltY = -(x / (rect.width / 2)) * 8;
+            card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+        }, { passive: true });
+        
         card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
-            card.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
         });
+        
+        card.style.transition = 'transform 0.1s ease-out, box-shadow 0.15s ease-out';
     });
-})();
-
-/* =========================================================================
-   11. SWIPE DOWN TO CLOSE MODAL (mobile)
-   ========================================================================= */
-(function initSwipeToCloseModal() {
-    if (!modal) return;
-    const modalContent = modal.querySelector('.modal-content');
-    if (!modalContent) return;
-
-    let startY = 0;
-    let isDragging = false;
-
-    modalContent.addEventListener('touchstart', e => {
-        startY = e.touches[0].clientY;
-        isDragging = true;
-    }, { passive: true });
-
-    modalContent.addEventListener('touchmove', e => {
-        if (!isDragging) return;
-        const deltaY = e.touches[0].clientY - startY;
-        // Only allow downward swipe
-        if (deltaY > 0) {
-            modalContent.style.transform = `translateY(${deltaY}px)`;
-            modalContent.style.transition = 'none';
-        }
-    }, { passive: true });
-
-    modalContent.addEventListener('touchend', e => {
-        if (!isDragging) return;
-        isDragging = false;
-        const deltaY = e.changedTouches[0].clientY - startY;
-        // Close if swiped down more than 120px
-        if (deltaY > 120) {
-            closeModal();
-        } else {
-            // Snap back
-            modalContent.style.transform = '';
-            modalContent.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
-        }
-    }, { passive: true });
-})();
-
-/* =========================================================================
-   12. TOUCH ACTIVE STATES — visual tap feedback on cards
-   ========================================================================= */
-(function initTouchFeedback() {
-    if (!('ontouchstart' in window) && navigator.maxTouchPoints === 0) return;
-
-    // Portfolio cards — scale down on tap
-    document.querySelectorAll('.portfolio-card').forEach(card => {
-        card.addEventListener('touchstart', () => {
-            card.style.transition = 'transform 0.15s ease, opacity 0.15s ease';
-            card.style.transform  = 'scale(0.97)';
-            card.style.opacity    = '0.85';
-        }, { passive: true });
-
-        const resetCard = () => {
-            card.style.transform = 'scale(1)';
-            card.style.opacity   = '1';
-            setTimeout(() => {
-                card.style.transform = '';
-                card.style.opacity   = '';
-                card.style.transition = '';
-            }, 200);
-        };
-        card.addEventListener('touchend',    resetCard, { passive: true });
-        card.addEventListener('touchcancel', resetCard, { passive: true });
-    });
-
-    // Filter buttons — pulse on tap
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('touchstart', () => {
-            btn.style.transition = 'transform 0.1s ease';
-            btn.style.transform  = 'scale(0.94)';
-        }, { passive: true });
-        const resetBtn = () => {
-            btn.style.transform = 'scale(1)';
-            setTimeout(() => {
-                btn.style.transform  = '';
-                btn.style.transition = '';
-            }, 150);
-        };
-        btn.addEventListener('touchend',    resetBtn, { passive: true });
-        btn.addEventListener('touchcancel', resetBtn, { passive: true });
-    });
-
-    // CTA buttons
-    document.querySelectorAll('.cta-button, .submit-btn, .cta-secondary').forEach(btn => {
-        btn.addEventListener('touchstart', () => {
-            btn.style.transition = 'opacity 0.1s ease';
-            btn.style.opacity    = '0.75';
-        }, { passive: true });
-        const resetBtn = () => {
-            btn.style.opacity    = '1';
-            setTimeout(() => {
-                btn.style.opacity    = '';
-                btn.style.transition = '';
-            }, 150);
-        };
-        btn.addEventListener('touchend',    resetBtn, { passive: true });
-        btn.addEventListener('touchcancel', resetBtn, { passive: true });
-    });
-})();
+}

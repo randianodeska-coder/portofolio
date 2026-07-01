@@ -1,0 +1,770 @@
+/* ============================================================
+   ULTRA 3D — Supplementary CSS v2.0
+   No content blur. Mobile-first. Premium cinematic quality.
+   ============================================================ */
+
+/* ── 1. Canvas layers ── */
+#cityCanvas,
+#starCanvas,
+#auroraCanvas {
+  will-change: transform;
+  image-rendering: auto;
+}
+
+#starCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+}
+
+#auroraCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+  mix-blend-mode: screen;
+}
+
+/* ── 2. Hero image — cinematic glow ── */
+#heroImage3D {
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+/* ── 3. HUD corners — glass panels (desktop only) ── */
+@media (min-width: 1025px) {
+  .hud-tl, .hud-tr, .hud-bl, .hud-br {
+    backdrop-filter: blur(8px) saturate(1.5);
+    -webkit-backdrop-filter: blur(8px) saturate(1.5);
+    background: rgba(5, 5, 18, 0.6);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 6px;
+    padding: 8px 14px;
+    transition: border-color 0.3s;
+  }
+  .hud-tl:hover, .hud-tr:hover {
+    border-color: rgba(0, 212, 255, 0.35);
+  }
+}
+
+/* ── 4. Skill cards — on-hover shimmer ── */
+.skill-card {
+  position: relative;
+  overflow: hidden;
+}
+/* The existing ::before in nexus-portfolio.css handles the shimmer.
+   We only add a subtle cyan tint on hover, not overriding the original. */
+.skill-card:hover {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,212,255,0.1) !important;
+}
+
+/* ── 5. Portfolio cards — depth hover ── */
+.portfolio-card .card-img img {
+  transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+              filter 0.55s ease;
+}
+.portfolio-card:hover .card-img img {
+  transform: scale(1.09);
+  filter: brightness(1.08) saturate(1.15) grayscale(0%) !important;
+}
+
+/* ── 6. Preloader — deep space look ── */
+#preloader {
+  background: radial-gradient(ellipse at 50% 40%,
+    #0d0d1a 0%, #07070f 50%, #000000 100%);
+}
+.pre-bar {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(0, 212, 255, 0.18);
+}
+.pre-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent, rgba(0,212,255,0.35), transparent);
+  animation: barShimmer 1.6s linear infinite;
+}
+@keyframes barShimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(200%); }
+}
+
+/* ── 7. Scrollbar — themed ── */
+::-webkit-scrollbar { width: 4px; background: #050509; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00D4FF 0%, #C1121F 100%);
+  border-radius: 4px;
+}
+
+/* ── 8. NO blur on any content element ── */
+.reveal,
+.reveal-left,
+.reveal-right,
+.reveal-scale {
+  filter: none !important;
+}
+
+/* ── 9. Hero content — better mobile spacing ── */
+@media (max-width: 480px) {
+  .hero-content {
+    padding: 0 1.2rem 100px !important;
+  }
+  .hero-title {
+    font-size: clamp(2.6rem, 13vw, 4.5rem) !important;
+    line-height: 1.02 !important;
+    letter-spacing: 0 !important;
+  }
+  .hero-tagline {
+    font-size: clamp(0.9rem, 3.8vw, 1.15rem) !important;
+    line-height: 1.5 !important;
+  }
+  .hero-sub {
+    font-size: 0.9rem !important;
+    line-height: 1.7 !important;
+  }
+  .hero-metrics {
+    gap: 1rem !important;
+    padding-top: 1.2rem !important;
+  }
+  .hero-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+  }
+  .btn-primary, .btn-ghost {
+    text-align: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* ── 10. About section — crisp text on mobile ── */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    text-align: center;
+  }
+  .sec-title {
+    font-size: clamp(2rem, 8vw, 3rem) !important;
+  }
+  .sec-body {
+    font-size: 0.95rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .about-stats {
+    justify-content: center !important;
+    gap: 1rem !important;
+  }
+  /* Ensure about-right goes above text */
+  .about-right { order: -1; }
+}
+
+/* ── 11. Skills — 2-col grid on mobile ── */
+@media (max-width: 600px) {
+  .skills-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+  }
+  .skill-card {
+    padding: 1.5rem 1rem !important;
+  }
+  .skill-card h3 {
+    font-size: 1.1rem !important;
+  }
+  .skill-card p {
+    font-size: 0.78rem !important;
+  }
+  .tech-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+  }
+}
+
+/* ── 12. Portfolio — single col, big tap targets ── */
+@media (max-width: 768px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  .portfolio-card {
+    transform: none !important; /* no 3D tilt on mobile */
+  }
+  .card-body h3 {
+    font-size: 1.4rem !important;
+  }
+  /* Always show overlay hint on mobile */
+  .card-overlay {
+    opacity: 0.6 !important;
+  }
+  .card-overlay span {
+    transform: translateY(0) !important;
+    font-size: 0.7rem !important;
+    padding: 0.5rem 1.2rem !important;
+  }
+}
+
+/* ── 13. Floating dock — glassmorphism ── */
+.floating-dock {
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  background: rgba(5, 5, 20, 0.7) !important;
+  border: 1px solid rgba(0, 212, 255, 0.12) !important;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 0 0 1px rgba(0,212,255,0.06) !important;
+}
+.dock-item {
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
+              color 0.25s ease,
+              filter 0.25s ease !important;
+}
+.dock-item:hover {
+  transform: translateY(-6px) scale(1.15) !important;
+  filter: drop-shadow(0 0 10px rgba(0,212,255,0.7));
+}
+
+/* ── 14. Nav — always glass ── */
+#header.scrolled {
+  backdrop-filter: blur(24px) saturate(1.6) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.6) !important;
+}
+
+/* ── 15. Back to top — red glow button ── */
+#backToTop {
+  background: linear-gradient(135deg, #C1121F 0%, #7a0b12 100%) !important;
+  box-shadow: 0 4px 20px rgba(193,18,31,0.5),
+              0 0 30px rgba(193,18,31,0.15) !important;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.3s ease !important;
+}
+#backToTop:hover {
+  transform: translateY(-5px) scale(1.1) !important;
+  box-shadow: 0 10px 30px rgba(193,18,31,0.7),
+              0 0 50px rgba(193,18,31,0.25) !important;
+}
+
+/* ── 16. Contact form — neon input glow ── */
+.input-group input:focus,
+.input-group textarea:focus {
+  box-shadow: none !important; /* no box shadow — border handles it */
+}
+
+/* ── 17. Section mesh background pulse ── */
+.mesh-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(0,212,255,0.04) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 70%, rgba(193,18,31,0.06) 0%, transparent 50%);
+  animation: meshPulse 9s ease-in-out infinite alternate;
+}
+@keyframes meshPulse {
+  0%   { opacity: 0.5; transform: scale(1); }
+  50%  { opacity: 1;   transform: scale(1.04); }
+  100% { opacity: 0.6; transform: scale(0.97); }
+}
+
+/* ── 18. Marquee glow ── */
+.marquee-content span {
+  text-shadow: 0 0 10px rgba(0,212,255,0.3);
+}
+
+/* ── 19. Tech tags — subtle cyan hover ── */
+.tech-tags span:hover {
+  background: rgba(0,212,255,0.15) !important;
+  border-color: rgba(0,212,255,0.4) !important;
+  color: #00D4FF !important;
+  box-shadow: 0 0 10px rgba(0,212,255,0.15);
+}
+
+/* ── 20. Mobile canvas opacity — reduce overlay clutter ── */
+@media (max-width: 768px) {
+  #spiderWebCanvas { opacity: 0.35 !important; }
+  #embersCanvas    { opacity: 0.5  !important; }
+  #auroraCanvas    { opacity: 0.3  !important; }
+  #starCanvas      { opacity: 0.5  !important; }
+}
+
+/* ── 21. TESTIMONIALS — Premium 3D Cards ── */
+.testi-section {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Floating background orbs */
+.testi-bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+  z-index: 0;
+}
+.testi-orb-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(193,18,31,0.18) 0%, transparent 70%);
+  top: -150px; left: -150px;
+  animation: orbFloat1 10s ease-in-out infinite alternate;
+}
+.testi-orb-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%);
+  bottom: -100px; right: -100px;
+  animation: orbFloat2 13s ease-in-out infinite alternate;
+}
+@keyframes orbFloat1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(80px, 60px) scale(1.15); }
+}
+@keyframes orbFloat2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-60px, -80px) scale(1.2); }
+}
+
+.testi-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+/* ── 3D Card Grid ── */
+.testi-3d-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 3.5rem;
+  perspective: 1200px;
+}
+
+.testi-3d-card {
+  position: relative;
+  border-radius: 20px;
+  cursor: default;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.6s ease;
+  will-change: transform;
+}
+
+.testi-3d-card:hover {
+  transform: translateY(-12px) rotateX(4deg) rotateY(-3deg) scale(1.02);
+  box-shadow:
+    0 30px 70px rgba(0,0,0,0.6),
+    0 0 40px rgba(193,18,31,0.15),
+    0 0 80px rgba(0,212,255,0.05);
+}
+
+/* Featured card — center raised */
+.testi-featured {
+  transform: translateY(-16px) scale(1.04);
+  z-index: 3;
+}
+.testi-featured:hover {
+  transform: translateY(-28px) rotateX(4deg) rotateY(-2deg) scale(1.06);
+}
+
+.testi-card-inner {
+  position: relative;
+  background: rgba(10, 15, 26, 0.75);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  padding: 2.2rem 2rem 1.8rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  overflow: hidden;
+  text-align: left;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: border-color 0.4s ease, background 0.4s ease;
+}
+.testi-3d-card:hover .testi-card-inner {
+  border-color: rgba(193,18,31,0.35);
+  background: rgba(10, 15, 26, 0.9);
+}
+.testi-featured .testi-card-inner {
+  background: rgba(12, 8, 20, 0.85);
+  border-color: rgba(193,18,31,0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 0 0 1px rgba(193,18,31,0.15);
+}
+
+/* Animated glow on hover */
+.testi-card-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(circle at 50% 0%, rgba(193,18,31,0.18) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.testi-3d-card:hover .testi-card-glow { opacity: 1; }
+.testi-featured .testi-card-glow      { opacity: 0.6; }
+
+/* Animated gradient border */
+.testi-card-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(193,18,31,0.5), transparent 40%, rgba(0,212,255,0.3) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.testi-3d-card:hover .testi-card-border { opacity: 1; }
+.testi-featured .testi-card-border       { opacity: 0.8; }
+
+/* Stars */
+.testi-stars {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 4px;
+}
+.testi-stars span {
+  color: #C1121F;
+  font-size: 1rem;
+  filter: drop-shadow(0 0 5px rgba(193,18,31,0.6));
+  animation: starPulse 2.5s ease-in-out infinite;
+}
+.testi-stars span:nth-child(2) { animation-delay: 0.1s; }
+.testi-stars span:nth-child(3) { animation-delay: 0.2s; }
+.testi-stars span:nth-child(4) { animation-delay: 0.3s; }
+.testi-stars span:nth-child(5) { animation-delay: 0.4s; }
+@keyframes starPulse {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(193,18,31,0.5)); }
+  50%       { filter: drop-shadow(0 0 10px rgba(193,18,31,0.9)); }
+}
+
+/* Big quote icon */
+.testi-quote-icon {
+  position: relative;
+  z-index: 2;
+  font-family: Georgia, serif;
+  font-size: 5rem;
+  line-height: 0.6;
+  color: var(--red);
+  opacity: 0.3;
+  font-weight: 900;
+  margin-bottom: -1rem;
+  transition: opacity 0.4s;
+}
+.testi-3d-card:hover .testi-quote-icon { opacity: 0.5; }
+
+/* Quote text */
+.testi-quote-text {
+  position: relative;
+  z-index: 2;
+  font-size: 0.97rem;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.75;
+  font-family: var(--font-body);
+  flex: 1;
+}
+
+/* Divider line */
+.testi-divider {
+  position: relative;
+  z-index: 2;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(193,18,31,0.4), transparent);
+  margin: 0.5rem 0;
+}
+
+/* Author row */
+.testi-author-row {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.testi-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--red) 0%, #7a0b12 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-head);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(193,18,31,0.4);
+  transition: box-shadow 0.4s;
+}
+.testi-3d-card:hover .testi-avatar {
+  box-shadow: 0 0 30px rgba(193,18,31,0.7);
+}
+
+.testi-author-info {
+  flex: 1;
+}
+.testi-author-info h4 {
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+.testi-author-info span {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--silver);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.testi-badge {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(0,212,255,0.08);
+  border: 1px solid rgba(0,212,255,0.2);
+  color: #00D4FF;
+  white-space: nowrap;
+}
+
+/* ── Stats bar ── */
+.testi-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  padding: 2.5rem 3rem;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.tstat { text-align: center; }
+.tstat-num {
+  font-family: var(--font-head);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--white);
+  text-shadow: 0 0 20px rgba(193,18,31,0.4);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.tstat-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+.tstat-sep {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.15), transparent);
+}
+
+/* ── Testimonials mobile ── */
+@media (max-width: 900px) {
+  .testi-3d-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    perspective: none;
+  }
+  .testi-featured {
+    transform: none;
+    order: -1;
+  }
+  .testi-3d-card:hover {
+    transform: translateY(-6px) scale(1.01) !important;
+  }
+  .testi-stats {
+    gap: 1.5rem !important;
+    padding: 1.8rem 1.5rem !important;
+  }
+}
+
+/* ── 22. Footer mobile ── */
+@media (max-width: 600px) {
+  .footer-inner {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1.2rem !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   EXTRA 3D DEPTH EFFECTS — Global enhancements
+   ═══════════════════════════════════════════════ */
+
+/* Section titles — 3D depth shimmer */
+.sec-title {
+  position: relative;
+}
+.sec-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red), rgba(0,212,255,0.6), transparent);
+  box-shadow: 0 0 12px rgba(193,18,31,0.6);
+  transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+}
+.sec-title.active::after,
+.reveal.active .sec-title::after { width: 60%; }
+
+/* About section image — 3D float */
+.hero-image-wrapper {
+  animation: floatProfile 6s ease-in-out infinite alternate;
+}
+@keyframes floatProfile {
+  0%   { transform: translateY(0px) rotateY(0deg); }
+  50%  { transform: translateY(-12px) rotateY(3deg); }
+  100% { transform: translateY(-6px) rotateY(-2deg); }
+}
+
+/* Skill cards — 3D depth tilt on hover */
+.skill-card {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.5s ease,
+              border-color 0.5s ease !important;
+  transform-style: preserve-3d;
+}
+.skill-card:hover {
+  transform: translateY(-12px) rotateX(5deg) scale(1.02) !important;
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(193,18,31,0.2),
+    0 0 40px rgba(193,18,31,0.08) !important;
+}
+
+/* Portfolio cards — enhanced 3D perspective on hover */
+.portfolio-card {
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.5s ease,
+              border-color 0.4s ease !important;
+}
+.portfolio-card:hover {
+  transform: translateY(-18px) rotateX(4deg) scale(1.02) !important;
+  box-shadow:
+    0 35px 80px rgba(193,18,31,0.2),
+    0 20px 40px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(193,18,31,0.25) !important;
+}
+
+/* About stats — 3D pop on hover */
+.astat {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 0.4s ease,
+              box-shadow 0.4s ease !important;
+}
+.astat:hover {
+  transform: translateY(-8px) rotateX(6deg) !important;
+  border-color: var(--red) !important;
+  box-shadow: 0 20px 40px rgba(193,18,31,0.2) !important;
+}
+
+/* Marquee — 3D perspective container */
+.marquee-wrapper {
+  perspective: 800px;
+}
+.marquee-track {
+  transform-origin: center;
+}
+
+/* Contact form — 3D depth */
+.contact-form {
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease, box-shadow 0.5s ease !important;
+}
+.contact-form:hover {
+  transform: translateY(-4px) rotateX(1deg) !important;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 30px rgba(193,18,31,0.08) !important;
+}
+
+/* Tech category cards — 3D hover */
+.tech-cat {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 0.4s ease,
+              box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+}
+.tech-cat:hover {
+  transform: translateY(-6px) rotateX(4deg);
+  border-color: rgba(193,18,31,0.3);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(193,18,31,0.06);
+}
+
+/* Floating 3D glow orbs behind hero */
+#hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red) 40%, rgba(0,212,255,0.5) 60%, transparent);
+  opacity: 0.6;
+  z-index: 2;
+  animation: heroLineBreath 4s ease-in-out infinite alternate;
+}
+@keyframes heroLineBreath {
+  0%   { opacity: 0.3; width: 50%; }
+  100% { opacity: 0.7; width: 85%; }
+}
+
+/* Scroll progress — 3D neon glow */
+.scroll-fill {
+  background: linear-gradient(90deg, var(--red), rgba(0,212,255,0.8), var(--red)) !important;
+  background-size: 200% !important;
+  animation: progressGlow 3s linear infinite !important;
+  box-shadow: 0 0 12px var(--red), 0 0 24px rgba(193,18,31,0.4) !important;
+}
+@keyframes progressGlow {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}

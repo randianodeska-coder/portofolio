@@ -11,67 +11,111 @@
    ========================================================================= */
 (function initThreeScene() {
     const canvas = document.getElementById('heroCanvas');
-    if (!canvas || typeof THREE === 'undefined') return;
-    // Skip heavy WebGL on mobile/touch — huge battery & performance gain
-    if (window.innerWidth <= 768 || 'ontouchstart' in window || navigator.maxTouchPoints > 0) {
-        canvas.style.display = 'none';
+    if (!canvas || typeof THREE === 'undefined') {
+        document.body.classList.add('no-webgl');
         return;
     }
 
-    const scene    = new THREE.Scene();
-    const camera   = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    camera.position.z = 5;
-
-    /* ---- Create particle dots ---- */
-    const PARTICLE_COUNT = window.innerWidth > 1200 ? 180 : 90;
-    const positions = new Float32Array(PARTICLE_COUNT * 3);
-    const speeds    = [];
-
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-        positions[i * 3]     = (Math.random() - 0.5) * 18;  // x
-        positions[i * 3 + 1] = (Math.random() - 0.5) * 10;  // y
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 8;   // z
-        speeds.push({
-            x: (Math.random() - 0.5) * 0.003,
-            y: (Math.random() - 0.5) * 0.003,
-        });
+    // iOS: Allow Three.js on all iPhones except very small/old ones
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const screenW = window.innerWidth;
+    const screenH = window.innerHeight;
+    const isTinyScreen = screenW <= 360 || screenH <= 550;
+    if (isTinyScreen) {
+        canvas.style.display = 'none';
+        document.body.classList.add('no-webgl');
+        return;
     }
 
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    /* ---- WebGL availability check ---- */
+    function isWebGLAvailable() {
+        try {
+            const testCanvas = document.createElement('canvas');
+            return !!(window.WebGLRenderingContext &&
+                (testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl')));
+        } catch(e) {
+            return false;
+        }
+    }
 
-    const material = new THREE.PointsMaterial({
-        color: 0x00A3FF,
-        size: 0.06,
-        transparent: true,
-        opacity: 0.7,
-        sizeAttenuation: true,
-    });
+    if (!isWebGLAvailable()) {
+        // WebGL not supported — hide canvas, activate CSS fallback
+        canvas.style.display = 'none';
+        document.body.classList.add('no-webgl');
+        console.log('WebGL not available — CSS fallback active');
+        return;
+    }
 
-    const particles = new THREE.Points(geometry, material);
-    scene.add(particles);
+    let scene, camera, renderer, particles, lineGroup, geometry, material, lineMat;
+    let speeds = [];
 
-    /* ---- Create connecting lines between near particles ---- */
-    const lineMat = new THREE.LineBasicMaterial({
-        color: 0x00A3FF,
-        transparent: true,
-        opacity: 0.12,
-    });
+    try {
+        scene    = new THREE.Scene();
+        camera   = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+        renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !isTouch, powerPreference: 'low-power' });
 
-    const lineGroup = new THREE.Group();
-    scene.add(lineGroup);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, isTouch ? 2 : 2));
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+        camera.position.z = 5;
+
+        /* ---- Create particle dots ---- */
+        // More particles on touch so network looks dense
+        const PARTICLE_COUNT = isTouch ? 120 : (window.innerWidth > 1200 ? 180 : 90);
+        const positions = new Float32Array(PARTICLE_COUNT * 3);
+
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            positions[i * 3]     = (Math.random() - 0.5) * 18;  // x
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 10;  // y
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 8;   // z
+            speeds.push({
+                x: (Math.random() - 0.5) * 0.003,
+                y: (Math.random() - 0.5) * 0.003,
+            });
+        }
+
+        geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        // Bigger & brighter particles on mobile
+        const dpr = Math.min(window.devicePixelRatio || 1, 3);
+        const particleSize = isTouch ? (0.13 * (dpr > 1.5 ? 1.5 : 1)) : 0.06;
+
+        material = new THREE.PointsMaterial({
+            color: 0x00D4FF,
+            size: particleSize,
+            transparent: true,
+            opacity: isTouch ? 1.0 : 0.7,
+            sizeAttenuation: true,
+        });
+
+        particles = new THREE.Points(geometry, material);
+        scene.add(particles);
+
+        /* ---- Connecting lines ---- */
+        lineMat = new THREE.LineBasicMaterial({
+            color: 0x00D4FF,
+            transparent: true,
+            opacity: isTouch ? 0.3 : 0.12,
+        });
+
+        lineGroup = new THREE.Group();
+        scene.add(lineGroup);
+
+    } catch(err) {
+        // WebGL context creation failed — activate CSS fallback
+        canvas.style.display = 'none';
+        document.body.classList.add('no-webgl');
+        console.warn('Three.js init failed:', err);
+        return;
+    }
 
     function rebuildLines() {
-        // Clear old lines
         while (lineGroup.children.length) {
             lineGroup.remove(lineGroup.children[0]);
         }
         const pos = geometry.attributes.position.array;
-        const CONNECT_DIST = 3.5;
+        const PARTICLE_COUNT = speeds.length;
+        const CONNECT_DIST = isTouch ? 4.5 : 3.5;
 
         for (let a = 0; a < PARTICLE_COUNT; a++) {
             for (let b = a + 1; b < PARTICLE_COUNT; b++) {
@@ -100,6 +144,7 @@
 
     /* ---- Animate ---- */
     let frame = 0;
+    const PARTICLE_COUNT = speeds.length;
     function animate() {
         requestAnimationFrame(animate);
         frame++;
@@ -109,7 +154,6 @@
             pos[i * 3]     += speeds[i].x;
             pos[i * 3 + 1] += speeds[i].y;
 
-            // Wrap around bounds
             if (pos[i * 3]     >  9)  pos[i * 3]     = -9;
             if (pos[i * 3]     < -9)  pos[i * 3]     =  9;
             if (pos[i * 3 + 1] >  5)  pos[i * 3 + 1] = -5;
@@ -117,12 +161,12 @@
         }
         geometry.attributes.position.needsUpdate = true;
 
-        // Rebuild lines every 8 frames (performance balance)
+        // Rebuild lines every 8 frames
         if (frame % 8 === 0) rebuildLines();
 
-        // Gentle camera drift following mouse
-        camera.position.x += (mouseX - camera.position.x) * 0.03;
-        camera.position.y += (-mouseY - camera.position.y) * 0.03;
+        const driftSpeed = isTouch ? 0.018 : 0.03;
+        camera.position.x += (mouseX - camera.position.x) * driftSpeed;
+        camera.position.y += (-mouseY - camera.position.y) * driftSpeed;
         camera.lookAt(scene.position);
 
         renderer.render(scene, camera);
@@ -144,8 +188,20 @@
    2. 3D TILT EFFECT — BENTO CARDS
    ========================================================================= */
 (function initTilt() {
-    // Disable 3D tilt on touch devices
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+    // On touch devices: use a subtle CSS float instead of mouse-tilt
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouch) {
+        // On mobile: disable 3D transforms entirely to prevent overflow bleed
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.style.transformStyle  = 'flat';
+            card.style.transform       = 'none';
+            card.style.perspective     = 'none';
+            // Hide glow entirely on mobile
+            const glow = card.querySelector('.bento-glow');
+            if (glow) glow.style.display = 'none';
+        });
+        return;
+    }
     const cards = document.querySelectorAll('.tilt-card');
     const MAX_TILT   = 15;  // degrees
     const SCALE_UP   = 1.03;
@@ -191,8 +247,21 @@
    3. HERO PARALLAX — Elements drift slightly on mouse move
    ========================================================================= */
 (function initHeroParallax() {
-    // Disable parallax on mobile/touch (uses gyro differently, causes jank)
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    // On iOS, use DeviceOrientation as parallax instead of mouse
+    if (isTouch) {
+        const orb1 = document.querySelector('.orb-1');
+        if (!orb1 || !window.DeviceOrientationEvent) return;
+        let lastGamma = 0, lastBeta = 0;
+        window.addEventListener('deviceorientation', (e) => {
+            const gamma = Math.max(-20, Math.min(20, e.gamma || 0));
+            const beta  = Math.max(-20, Math.min(20, (e.beta  || 0) - 45));
+            lastGamma += (gamma - lastGamma) * 0.1;
+            lastBeta  += (beta  - lastBeta)  * 0.1;
+            if (orb1) orb1.style.transform = `translate(${lastGamma * 0.8}px, ${lastBeta * 0.5}px)`;
+        }, { passive: true });
+        return;
+    }
     const cube     = document.querySelector('.cube-3d');
     const orb1     = document.querySelector('.orb-1');
     const orb2     = document.querySelector('.orb-2');

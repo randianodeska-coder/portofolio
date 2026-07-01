@@ -1,0 +1,515 @@
+/* =========================================================================
+   POLISH.CSS — Clean smooth animations, loaded LAST
+   No content changes. Mobile-first. Lightweight.
+   ========================================================================= */
+
+/* ════════════════════════════════
+   SCROLL REVEAL BASE
+════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px) scale(0.98);
+  transition:
+    opacity 0.75s cubic-bezier(0.16,1,0.3,1),
+    transform 0.75s cubic-bezier(0.16,1,0.3,1);
+  will-change: opacity, transform;
+}
+.reveal.delay-1 { transition-delay: 0.1s; }
+.reveal.delay-2 { transition-delay: 0.2s; }
+.reveal.delay-3 { transition-delay: 0.32s; }
+.reveal.active {
+  opacity: 1;
+  transform: translate3d(0,0,0) scale(1);
+}
+
+@media (max-width: 768px) {
+  .reveal {
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+}
+
+/* ════════════════════════════════
+   PRELOADER — splash
+════════════════════════════════ */
+.preloader {
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+.preloader.hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* ════════════════════════════════
+   SMOOTH SCROLL
+════════════════════════════════ */
+/* scroll-behavior intentionally omitted — Lenis handles smooth scroll */
+/* html { scroll-behavior: smooth; } */
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ════════════════════════════════
+   HERO — fade-in sequence
+════════════════════════════════ */
+.hero-badge {
+  animation: fadeSlideDown 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+}
+.hero-title {
+  animation: fadeSlideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s both;
+}
+.hero-tagline {
+  animation: fadeSlideUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.7s both;
+}
+.hero-desc {
+  animation: fadeSlideUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.85s both;
+}
+.hero-cta-group {
+  animation: fadeSlideUp 0.6s cubic-bezier(0.16,1,0.3,1) 1.0s both;
+}
+.hero-image-wrapper {
+  animation: fadeZoomIn 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s both;
+}
+
+.loading .hero-badge,
+.loading .hero-title,
+.loading .hero-tagline,
+.loading .hero-desc,
+.loading .hero-cta-group,
+.loading .hero-image-wrapper {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes fadeSlideDown {
+  from { opacity:0; transform: translateY(-20px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+@keyframes fadeSlideUp {
+  from { opacity:0; transform: translateY(28px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+@keyframes fadeZoomIn {
+  from { opacity:0; transform: scale(0.88); }
+  to   { opacity:1; transform: scale(1); }
+}
+
+/* ════════════════════════════════
+   NAV — drop from top
+════════════════════════════════ */
+.loaded .nav-links li {
+  animation: navDrop 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+  opacity: 0;
+}
+.loaded .nav-links li:nth-child(1) { animation-delay: 0.9s; }
+.loaded .nav-links li:nth-child(2) { animation-delay: 1.0s; }
+.loaded .nav-links li:nth-child(3) { animation-delay: 1.1s; }
+.loaded .nav-links li:nth-child(4) { animation-delay: 1.2s; }
+@keyframes navDrop {
+  from { opacity:0; transform: translateY(-10px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ════════════════════════════════
+   BUTTONS — hover transitions
+════════════════════════════════ */
+.cta-button,
+.cta-secondary,
+.filter-btn,
+.submit-btn,
+.modal-link {
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1) !important;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 28px rgba(14,165,233,0.25) !important;
+}
+
+.filter-btn:hover {
+  transform: translateY(-1px) !important;
+}
+
+.filter-btn.active {
+  box-shadow: 0 0 20px rgba(14,165,233,0.35) !important;
+}
+
+/* ════════════════════════════════
+   BENTO CARDS — hover lift
+════════════════════════════════ */
+.bento-item {
+  transition:
+    transform 0.4s cubic-bezier(0.16,1,0.3,1),
+    border-color 0.35s ease,
+    box-shadow 0.4s ease !important;
+}
+.bento-item:hover {
+  transform: translateY(-5px) !important;
+  border-color: rgba(14,165,233,0.35) !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 24px rgba(14,165,233,0.08) !important;
+}
+
+@media (max-width: 768px) {
+  .bento-item:hover { transform: none !important; }
+  .bento-item:active { transform: scale(0.97) !important; }
+}
+
+/* ════════════════════════════════
+   PORTFOLIO CARDS — hover lift
+════════════════════════════════ */
+.portfolio-card {
+  transition:
+    transform 0.45s cubic-bezier(0.16,1,0.3,1),
+    box-shadow 0.45s ease,
+    border-color 0.3s ease !important;
+}
+.portfolio-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 32px rgba(14,165,233,0.1) !important;
+}
+.portfolio-card .portfolio-image {
+  transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), filter 0.55s ease !important;
+}
+.portfolio-card:hover .portfolio-image {
+  transform: scale(1.05) !important;
+}
+
+@media (max-width: 768px) {
+  .portfolio-card:hover { transform: none !important; }
+  .portfolio-card:active { transform: scale(0.98) !important; }
+}
+
+/* ════════════════════════════════
+   STAT ITEMS — hover pop
+════════════════════════════════ */
+.stat-item {
+  transition: transform 0.35s ease, border-color 0.3s ease, box-shadow 0.35s ease !important;
+}
+.stat-item:hover {
+  transform: translateY(-4px) !important;
+  border-color: rgba(14,165,233,0.3) !important;
+  box-shadow: 0 8px 24px rgba(14,165,233,0.08) !important;
+}
+@media (max-width: 768px) {
+  .stat-item:hover { transform: none !important; }
+  .stat-item:active { transform: scale(0.96) !important; }
+}
+
+/* ════════════════════════════════
+   TECH TAGS — hover
+════════════════════════════════ */
+.tech-tag {
+  transition: all 0.25s cubic-bezier(0.16,1,0.3,1) !important;
+}
+.tech-tag:hover {
+  background: rgba(14,165,233,0.15) !important;
+  border-color: rgba(14,165,233,0.5) !important;
+  color: #fff !important;
+  transform: translateY(-2px) scale(1.04) !important;
+}
+@media (max-width: 768px) {
+  .tech-tag:hover { transform: none !important; }
+  .tech-tag:active { transform: scale(0.94) !important; background: rgba(14,165,233,0.2) !important; }
+}
+
+/* ════════════════════════════════
+   SOCIAL LINKS — hover lift + glow
+════════════════════════════════ */
+.social-links a {
+  transition: all 0.3s cubic-bezier(0.16,1,0.3,1) !important;
+}
+.social-links a:hover {
+  transform: translateY(-4px) scale(1.15) !important;
+  color: #0EA5E9 !important;
+  filter: drop-shadow(0 0 10px rgba(14,165,233,0.6)) !important;
+}
+
+/* ════════════════════════════════
+   SCROLL PROGRESS — gradient shimmer
+════════════════════════════════ */
+.scroll-progress-bar {
+  background: linear-gradient(90deg, #0EA5E9, #7C3AED, #0EA5E9) !important;
+  background-size: 200% !important;
+  animation: progressMove 3s linear infinite !important;
+  box-shadow: 0 0 10px rgba(14,165,233,0.5) !important;
+}
+@keyframes progressMove {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ════════════════════════════════
+   HEADER — scroll blur transition
+════════════════════════════════ */
+header {
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease !important;
+}
+header.scrolled {
+  box-shadow: 0 1px 32px rgba(0,0,0,0.4) !important;
+}
+
+/* ════════════════════════════════
+   DOCK — smooth entry
+════════════════════════════════ */
+.floating-dock {
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s ease !important;
+}
+.dock-item {
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease, color 0.3s ease !important;
+}
+.dock-item:hover {
+  transform: translateY(-5px) scale(1.18) !important;
+  opacity: 1 !important;
+  color: #0EA5E9 !important;
+  filter: drop-shadow(0 0 10px rgba(14,165,233,0.7)) !important;
+}
+
+/* ════════════════════════════════
+   INPUT FOCUS — glow
+════════════════════════════════ */
+.input-group input,
+.input-group textarea {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+.input-group input:focus,
+.input-group textarea:focus {
+  border-bottom-color: #0EA5E9 !important;
+  box-shadow: 0 4px 16px -6px rgba(14,165,233,0.4) !important;
+}
+
+/* ════════════════════════════════
+   BACK TO TOP — hover
+════════════════════════════════ */
+.back-to-top {
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1) !important;
+}
+.back-to-top:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 24px rgba(14,165,233,0.3) !important;
+}
+
+/* ════════════════════════════════
+   MODAL — smooth open/close
+════════════════════════════════ */
+.modal {
+  transition: opacity 0.4s ease, visibility 0.4s ease !important;
+}
+.modal-content {
+  transition: transform 0.45s cubic-bezier(0.16,1,0.3,1) !important;
+}
+
+/* ════════════════════════════════
+   SECTION TITLE — underline reveal
+════════════════════════════════ */
+.section-title {
+  position: relative;
+  display: inline-block;
+}
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -6px; left: 0;
+  width: 0; height: 1.5px;
+  background: linear-gradient(90deg, #0EA5E9, #7C3AED);
+  border-radius: 2px;
+  transition: width 0.9s cubic-bezier(0.16,1,0.3,1) !important;
+}
+.section-title.line-reveal::after,
+.section-title.active::after { width: 100%; }
+
+@media (max-width: 768px) {
+  .section-title::after { display: none; }
+}
+
+/* ════════════════════════════════
+   Z-INDEX FIX — interactive elements always above overlays
+════════════════════════════════ */
+
+/* Overlays must NEVER capture clicks */
+.film-grain,
+.scanlines,
+.vignette,
+.data-streams,
+.ds,
+.light-beams,
+.light-beam,
+.css-particles,
+.cp,
+.neon-sweep-line,
+.letterbox-top,
+.letterbox-bottom,
+.section-entry-line,
+.matrix-canvas,
+.hero-canvas,
+.premium-bg-aurora,
+.premium-bg-noise,
+.aurora-1, .aurora-2, .aurora-3,
+.orb, .orb-1, .orb-2, .orb-3,
+.bento-glow,
+.energy-ring {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+/* Interactive elements — ALWAYS clickable */
+.portfolio-card,
+.filter-btn,
+.cta-button,
+.cta-secondary,
+.submit-btn,
+.tech-tag,
+.bento-item,
+.stat-item,
+.modal-link,
+.close-modal,
+.back-to-top,
+.dock-item,
+.social-links a,
+a, button {
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 10 !important;
+  cursor: pointer !important;
+}
+
+/* Portfolio cards need higher z-index */
+.portfolio-card {
+  z-index: 20 !important;
+}
+
+/* Filter tabs */
+.filter-tabs {
+  position: relative !important;
+  z-index: 20 !important;
+}
+
+/* Portfolio grid — ensure cards are above bg effects */
+.portfolio-grid {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+/* Contact form */
+.contact-form,
+.input-group,
+.form-actions {
+  position: relative !important;
+  z-index: 10 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity:1; transform: none; }
+}
+
+/* ════════════════════════════════
+   PERFORMANCE — GPU compositing
+   Prevent scroll jank from expensive paints
+════════════════════════════════ */
+
+/* Promote scroll-driven elements to GPU layer */
+.portfolio-card,
+.bento-item,
+.hero-image-wrapper,
+.tech-category,
+.stat-item,
+.floating-dock,
+header {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Film grain — slow it WAY down during scroll to reduce paint */
+.film-grain {
+  animation-duration: 0.5s !important; /* was 0.15s — too many repaints */
+}
+
+/* Scanlines — static, no animation */
+.scanlines {
+  animation: none !important;
+}
+.scanlines::after {
+  animation-duration: 8s !important; /* slow down sweep */
+}
+
+/* Disable backdrop-filter on decorative elements — expensive on scroll */
+.hero-badge {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Contain sections — layout only, NOT style (style breaks gradient text & stacking) */
+.section, section {
+  contain: layout !important;
+  /* NO contain:style — breaks gradient text and event propagation */
+}
+
+/* Promote hero photo to own layer */
+.hero-image-clip {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* ── MOBILE: aggressive performance ── */
+@media (max-width: 768px) {
+  /* Kill film grain entirely — biggest jank culprit on mobile */
+  .film-grain { display: none !important; }
+
+  /* Kill scanlines */
+  .scanlines { display: none !important; }
+
+  /* Vignette — no animation */
+  .vignette { animation: none !important; }
+
+  /* Aurora blobs — slow down */
+  .aurora-1, .aurora-2, .aurora-3 {
+    animation-duration: 30s !important;
+  }
+
+  /* Disable will-change on too many elements */
+  .bento-item,
+  .tech-category,
+  .stat-item {
+    will-change: auto !important;
+  }
+
+  /* Only key interactive elements get GPU layer */
+  .portfolio-card,
+  .hero-image-wrapper,
+  .floating-dock,
+  header {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  /* Remove all backdrop-filter on mobile */
+  .tech-category,
+  .bento-item,
+  .hero-badge,
+  .filter-btn {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Ensure native scroll is never blocked */
+  html, body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+  }
+
+  /* No sections blocking scroll */
+  section, .section {
+    overflow: hidden !important;
+    overscroll-behavior: none !important;
+    touch-action: pan-y !important;
+  }
+}
+
