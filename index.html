@@ -1,485 +1,358 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Randiano Deska Putra - Creative Developer &amp; Digital Entrepreneur</title>
-  <meta name="description"
-    content="Portfolio of Randiano Deska, a Senior Creative Developer and Digital Entrepreneur specializing in high-end, modern web experiences.">
+  <title>Randiano Deska Putra — Creative Developer & Digital Entrepreneur</title>
+  <meta name="description" content="Portfolio of Randiano Deska Putra, Creative Developer specializing in modern web experiences.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="nexus-portfolio.css?v=1.4">
-  <link rel="stylesheet" href="ultra-3d.css?v=2.1">
-  <link rel="stylesheet" href="page-3d.css?v=1.3">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="galaxy-theme.css">
+  <style>
+    /* Force visibility fallback */
+    .section.active { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+    .reveal { opacity: 1 !important; transform: none !important; transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal:not(.active) { opacity: 0 !important; transform: translateY(30px) !important; }
+  </style>
 </head>
-
 <body class="loading">
-
-  <div class="scanlines" aria-hidden="true"></div>
-  <div class="vignette" aria-hidden="true"></div>
 
   <!-- PRELOADER -->
   <div id="preloader">
     <div class="pre-inner">
-      <div class="pre-percentage" id="prePercent" style="font-family: var(--font-header); font-size: 5rem; color: var(--white); font-weight: 800; text-shadow: 0 0 20px var(--red); margin-bottom: 10px;">0%</div>
-      <div class="pre-logo" style="font-family: var(--font-header), 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 600; letter-spacing: 6px; color: var(--white); -webkit-text-stroke: 0; text-transform: uppercase; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255,255,255,0.3);">WELCOME TO MY PORTFOLIO</div>
-      <div class="pre-bar">
-        <div class="pre-fill" id="preFill"></div>
-      </div>
-      <div class="pre-status" id="preStatus">SYMBIONT_LINK INITIALIZING...</div>
+      <div class="pre-logo">✦ RNVN ✦</div>
+      <div class="pre-status" id="preStatus">SCANNING COSMOS...</div>
+      <div class="pre-bar-wrap"><div class="pre-bar" id="preFill"></div></div>
+      <div class="pre-pct" id="prePercent">0%</div>
     </div>
   </div>
 
+  <!-- GALAXY CANVAS — fullscreen 3D -->
+  <canvas id="galaxyCanvas"></canvas>
+  <!-- WebGL Fallback -->
+  <div id="glFallback" style="display:none;position:fixed;inset:0;background:radial-gradient(ellipse at 30% 40%,#4c1d95 0%,#1a0b2e 40%,#060212 80%);z-index:-2;"></div>
+
+  <!-- CUSTOM CURSOR (hidden on touch) -->
+  <div id="cursorDot"></div>
+  <div id="cursorRing"></div>
+
+  <!-- WARP OVERLAY -->
+  <div id="warpOverlay"></div>
+
+  <!-- AUDIO TOGGLE -->
+  <button id="audioToggle" class="audio-toggle" aria-label="Toggle audio" style="display: none;">
+    <svg id="audioIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+  </button>
+
   <!-- SCROLL PROGRESS -->
-  <div class="scroll-progress">
-    <div class="scroll-fill" id="scrollFill"></div>
+  <div class="scroll-progress"><div class="scroll-fill" id="scrollFill"></div></div>
+
+  <!-- HUD OVERLAY -->
+  <div id="hud" aria-hidden="true">
+    <div class="hud-tl">
+      <div class="hud-corner-line"></div>
+      <div class="hud-item" id="hudSector">SECTOR: X-27</div>
+      <div class="hud-item" id="hudDepth">DEPTH: 0.0 LY</div>
+    </div>
+    <div class="hud-tr">
+      <div class="hud-corner-line"></div>
+      <div class="hud-item">STATUS: <span class="hud-green">ONLINE</span></div>
+      <div class="hud-item" id="hudFPS">FPS: --</div>
+    </div>
+    <div class="hud-bl">
+      <div class="hud-item">INDONESIA 🇮🇩</div>
+      <div class="hud-item" id="hudTime">--:--:-- WIB</div>
+      <div class="hud-corner-line"></div>
+    </div>
+    <div class="hud-br">
+      <div class="hud-item">AVAILABLE</div>
+      <div class="hud-item" id="hudCam">CAM: 0°</div>
+      <div class="hud-corner-line"></div>
+    </div>
+    <!-- Discovery Counter -->
+    <div class="hud-discovery" id="hudDiscovery">DISCOVERIES: <span id="discCount">0</span>/8</div>
   </div>
 
-  <!-- AMBIENT EMBERS & SYMBIOTE TRAIL -->
-  <canvas id="embersCanvas" style="position:fixed; inset:0; width:100%; height:100%; z-index:1; pointer-events:none; mix-blend-mode: screen;"></canvas>
-  <canvas id="symbioteTrail" style="position:fixed; inset:0; width:100%; height:100%; z-index:99999; pointer-events:none;"></canvas>
+  <!-- DISCOVERY NOTIFICATION -->
+  <div id="discoveryNotif" class="discovery-notif"></div>
 
-  <!-- NAV -->
+  <!-- TOUR BUTTON -->
+  <div id="tourBtn" class="tour-btn">TAKE A TOUR ✦</div>
+
+  <!-- TOUR OVERLAY -->
+  <div id="tourOverlay" class="tour-overlay">
+    <div class="tour-caption" id="tourCaption"></div>
+    <button class="tour-skip" id="tourSkip">SKIP TOUR ×</button>
+    <div class="tour-progress"><div class="tour-prog-fill" id="tourProgFill"></div></div>
+  </div>
+
+  <!-- HEADER -->
   <header id="header">
     <div class="nav-inner">
-      <div class="nav-logo">
-        <span class="logo-bracket">[</span>RNVN<span class="logo-bracket">]</span>
-        <span class="logo-ver">PORTFOLIO</span>
-      </div>
-      <div class="nav-status">
-        <span class="status-dot"></span>
-        <span class="status-text">OPEN FOR COLLABORATION</span>
-      </div>
+      <div class="nav-logo"><span class="bracket">[</span>RNVN<span class="bracket">]</span></div>
       <nav class="desktop-nav" id="mainNav">
         <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">Nation</a></li>
+          <li><a href="#philosophy">Philosophy</a></li>
+          <li><a href="#skills">Values</a></li>
+          <li><a href="#portfolio">Services</a></li>
+          <li><a href="#contact">Join</a></li>
         </ul>
       </nav>
+      <div class="nav-status"><span class="status-dot"></span><span>OPEN FOR COLLAB</span></div>
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
+        <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
   <!-- HERO -->
-  <section id="hero" class="section" style="background: transparent;">
-    <div class="hero-3d-bg" id="hero3DBg">
-      <img src="spiderman-venom.jpg" id="heroImage3D" alt="Spider-Man 3D" loading="lazy">
-      <div class="symbiote-overlay"></div>
-    </div>
-    <canvas id="cityCanvas"></canvas>
-
-    <div class="hud-tl">
-      <div class="hud-label">LOCATION</div>
-      <div class="hud-value">Indonesia 🇮🇩</div>
-      <div class="hud-label mt">STATUS</div>
-      <div class="hud-value text-green">AVAILABLE</div>
-    </div>
-    <div class="hud-tr">
-      <div class="hud-label">PROJECTS DONE</div>
-      <div class="hud-value text-red">30+</div>
-      <div class="hud-label mt">EXPERIENCE</div>
-      <div class="hud-value text-cyan">1 YR</div>
-    </div>
-    <div class="hud-bl">
-      <div class="hud-coord">CREATIVE DEVELOPER</div>
-      <div class="hud-coord">UI/UX DESIGNER</div>
-      <div class="hud-coord" id="sysTime">--:--:-- WIB</div>
-    </div>
-    <div class="hud-br">
-      <div class="hud-label">STACK</div>
-      <div class="hud-value text-cyan">HTML · CSS · JS · DART</div>
-      <div class="hud-label mt">FRAMEWORK</div>
-      <div class="hud-value text-green">NEXT.JS · REACT · FLUTTER</div>
-    </div>
-
-    <div class="crosshair" aria-hidden="true">
-      <div class="cross-h"></div>
-      <div class="cross-v"></div>
-      <div class="cross-ring"></div>
-      <div class="cross-ring ring2"></div>
-    </div>
-
+  <section id="hero" class="section">
     <div class="hero-content">
-      <div class="hero-eyebrow">
-        <span class="eyebrow-dot"></span>
-        CREATIVE DEVELOPER — DARK LUXURY SPECIALIST
-      </div>
-      <h1 class="hero-title loaded">
-        <span class="title-line">RANDIANO</span>
-        <span class="title-line title-red">DESKA</span>
-        <span class="title-line">PUTRA</span>
+      <div class="hero-eyebrow"><span class="eyebrow-dot"></span> THE RNVN ECOSYSTEM — CREATIVE & TECH HUB</div>
+      <h1 class="hero-title">
+        <span class="title-line">WHERE <span class="accent-text">VISION</span></span>
+        <span class="title-line">BECOMES</span>
+        <span class="title-line">REALITY.</span>
       </h1>
-      <h2 class="hero-tagline">Building Digital Experiences That <span class="text-red">Drive Growth</span> &amp; Create
-        Impact.</h2>
-      <p class="hero-sub">
-        Saya membantu bisnis, brand, dan individu membangun website modern yang cepat, responsif, dan berorientasi pada
-        hasil. Menggabungkan desain yang menarik dengan teknologi yang efisien untuk menciptakan pengalaman digital yang
-        berkesan.
-      </p>
+      <p class="hero-tagline">Empowering Brands Through Design, Technology, and Innovation.</p>
+      <p class="hero-sub">RNVN lahir dari keyakinan bahwa setiap ide memiliki potensi untuk menjadi karya berdampak. Kami menggabungkan desain, fashion, printing, teknologi, dan inovasi untuk membantu individu maupun bisnis membangun identitas yang kuat dan berkelas.</p>
       <div class="hero-actions">
-        <a href="#portfolio" class="btn-primary">EXPLORE MY WORK</a>
-        <a href="#contact" class="btn-ghost">LET'S COLLABORATE →</a>
+        <a href="#portfolio" class="btn-primary" id="btnExplore">EXPLORE SERVICES</a>
+        <a href="#contact" class="btn-ghost" id="btnCollab">JOIN THE NATION →</a>
       </div>
+      
       <div class="hero-metrics">
-        <div class="metric">
-          <span class="m-num" data-target="30">0</span><span class="m-unit">+</span>
-          <div class="m-label">PROJECTS</div>
-        </div>
-        <div class="metric-sep">|</div>
-        <div class="metric">
-          <span class="m-num" data-target="20">0</span><span class="m-unit">+</span>
-          <div class="m-label">HAPPY CLIENTS</div>
-        </div>
-        <div class="metric-sep">|</div>
-        <div class="metric">
-          <span class="m-num" data-target="1">0</span><span class="m-unit">YR</span>
-          <div class="m-label">EXPERIENCE</div>
-        </div>
+        <div class="metric"><span class="m-num" data-target="30">0</span><span class="m-unit">+</span><div class="m-label">PROJECTS</div></div>
+        <div class="metric-divider"></div>
+        <div class="metric"><span class="m-num" data-target="20">0</span><span class="m-unit">+</span><div class="m-label">CLIENTS</div></div>
+        <div class="metric-divider"></div>
+        <div class="metric"><span class="m-num" data-target="4">0</span><span class="m-unit">+</span><div class="m-label">SERVICES</div></div>
       </div>
     </div>
+  
+    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#about" class="btn-ghost">NEXT: THE NATION →</a></div>
   </section>
 
-  <!-- INFINITE MARQUEE -->
-  <div class="marquee-wrapper section reveal">
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
     <div class="marquee-track">
-      <div class="marquee-content">
-        <span>✦ OPEN FOR COLLABORATION</span>
-        <span>✦ CREATIVE DEVELOPMENT</span>
-        <span>✦ UI/UX EXPERT</span>
-        <span>✦ DARK LUXURY SPECIALIST</span>
-        <span>✦ AVAILABLE FOR FREELANCE</span>
-      </div>
-      <div class="marquee-content" aria-hidden="true">
-        <span>✦ OPEN FOR COLLABORATION</span>
-        <span>✦ CREATIVE DEVELOPMENT</span>
-        <span>✦ UI/UX EXPERT</span>
-        <span>✦ DARK LUXURY SPECIALIST</span>
-        <span>✦ AVAILABLE FOR FREELANCE</span>
-      </div>
+      <div class="marquee-inner"><span>✦ CREATIVE DEVELOPMENT</span><span>✦ UI/UX DESIGN</span><span>✦ OPEN FOR FREELANCE</span><span>✦ DARK LUXURY SPECIALIST</span><span>✦ WEB DEVELOPMENT</span><span>✦ DIGITAL ENTREPRENEUR</span></div>
+      <div class="marquee-inner" aria-hidden="true"><span>✦ CREATIVE DEVELOPMENT</span><span>✦ UI/UX DESIGN</span><span>✦ OPEN FOR FREELANCE</span><span>✦ DARK LUXURY SPECIALIST</span><span>✦ WEB DEVELOPMENT</span><span>✦ DIGITAL ENTREPRENEUR</span></div>
     </div>
   </div>
 
-  <!-- ABOUT -->
-  <section id="about" class="section sec-pad">
-    <div class="sec-tag reveal">// 01 ABOUT</div>
-    <div class="about-grid">
-      <div class="about-left">
-        <h2 class="sec-title reveal">TENTANG<br><span class="text-red">SAYA.</span></h2>
-        <p class="sec-body reveal">
-          Saya adalah seorang <em>Creative Developer</em> yang memiliki minat besar dalam teknologi, desain, dan
-          pengembangan bisnis digital.
-        </p>
-        <p class="sec-body reveal">
-          Dengan pendekatan yang mengutamakan kualitas dan detail, saya menciptakan website modern yang menggabungkan
-          estetika, performa, dan pengalaman pengguna yang optimal.
-        </p>
-        <p class="sec-body reveal">
-          Saya percaya bahwa sebuah produk digital yang baik bukan hanya tentang tampilan, tetapi juga tentang
-          <em>bagaimana produk tersebut memberikan nilai nyata bagi penggunanya.</em>
-        </p>
-        <div class="about-stats">
-          <div class="astat reveal">
-            <div class="astat-num text-red">30+</div>
-            <div class="astat-label">Projects</div>
-          </div>
-          <div class="astat reveal">
-            <div class="astat-num text-cyan">20+</div>
-            <div class="astat-label">Clients</div>
-          </div>
-          <div class="astat reveal">
-            <div class="astat-num text-green">1yr</div>
-            <div class="astat-label">Experience</div>
-          </div>
+    <!-- TENTANG RNVN -->
+  <section id="about" class="section sec-pad" data-3d-scene="about-planet">
+    <div class="sec-inner">
+      <div class="sec-tag">THE NATION</div>
+      <div class="about-grid">
+        <div class="about-left">
+          <h2 class="sec-title reveal">MORE THAN A BRAND.<br><span class="accent-text">WE BUILD VISIONS.</span></h2>
+          <p class="sec-body reveal">RNVN dibangun di atas satu filosofi utama: perubahan besar selalu berawal dari sebuah visi.</p>
+          <p class="sec-body reveal"><em>"Nation"</em> bagi kami bukan sekadar komunitas, melainkan sebuah pergerakan kolektif menyatukan para visioner, inovator, dan kreator yang meyakini bahwa batas terbesar hanyalah imajinasi.</p>
+          <p class="sec-body reveal">Kami hadir untuk ide menjadi realitas. Membantu orang berpikir lebih jauh, berkarya lebih besar, dan berkembang tanpa batas.</p>
         </div>
-      </div>
-      <div class="about-right reveal">
-        <div class="hero-image-wrapper">
-          <div class="hero-img-ring"></div>
-          <div class="hero-img-clip">
-            <img src="foto profil.png" loading="lazy">
+        <div class="about-right">
+          <div class="profile-frame reveal" style="border-radius: 50%;">
+            <div class="profile-ring"></div>
+            <div style="width: 100%; height: 100%; border-radius: 50%; background: var(--bg-deep); z-index: 2; position: relative; border: 2px solid rgba(124, 58, 237, 0.4); overflow: hidden; display: flex; align-items: center; justify-content: center;">
+              <img src="logo.png" alt="RNVN Logo" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="profile-glow"></div>
           </div>
-          <div class="hero-img-glow"></div>
-        </div>
-        <div class="about-badge reveal">
-          <span class="badge-dot"></span>
-          <span>Open for Collaboration</span>
         </div>
       </div>
     </div>
+  
+    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#philosophy" class="btn-ghost">NEXT: PHILOSOPHY →</a></div>
   </section>
 
-  <!-- SKILLS -->
-  <section id="skills" class="section sec-pad sec-dark">
-    <div class="sec-tag reveal">// 02 EXPERTISE</div>
-    <h2 class="sec-title text-center reveal">CORE <span class="text-red">SKILLS.</span></h2>
-    <p class="sec-body text-center reveal" style="margin:0 auto 3rem">
-      Kombinasi keterampilan teknis, desain, dan pemahaman bisnis untuk solusi digital yang efektif.
-    </p>
-
-    <div class="skills-grid">
-      <div class="skill-card reveal">
-        <div class="skill-icon">&lt;/&gt;</div>
-        <h3>HTML5 & CSS3</h3>
-        <p>Semantic markup, advanced Grid/Flexbox, custom animations & pixel-perfect design systems.</p>
+  <!-- FILOSOFI -->
+  <section id="philosophy" class="section sec-pad sec-dark" data-3d-scene="solar-system">
+    <div class="sec-inner text-center">
+      <div class="sec-tag" style="justify-content: center;">PHILOSOPHY</div>
+      <h2 class="sec-title reveal">THINK <span class="accent-text">BEYOND LIMITS.</span></h2>
+      <p class="sec-body reveal" style="margin: 0 auto 15px auto;">Di dalam diri setiap manusia, terbentang alam semesta dengan kemungkinan tak terhingga.</p>
+      <p class="sec-body reveal" style="margin: 0 auto 40px auto;">Planet-planet yang mengorbit dalam identitas RNVN adalah simbol bahwa kreativitas, ide, dan visi tidak mengenal batas. Seluruh terobosan besar yang berhasil mengubah dunia selalu berawal dari satu titik singular: sebuah pikiran yang berani mendobrak batas.</p>
+      <div class="reveal" style="padding: 40px; border: 1px solid rgba(124, 58, 237, 0.3); border-radius: 12px; background: rgba(18, 5, 36, 0.5); position: relative; overflow: hidden; margin-top: 40px;">
+        <h3 style="font-family: var(--font-body); font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; font-style: italic; background: linear-gradient(90deg, var(--cyan), var(--violet-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+          "The Universe Doesn't Exist Above You.<br>It Exists Within You."
+        </h3>
       </div>
-      <div class="skill-card reveal">
-        <div class="skill-icon">JS</div>
-        <h3>JavaScript</h3>
-        <p>ES6+ modern JS — interactive, performant & clean. React, Next.js, GSAP, Three.js.</p>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-icon">✦</div>
-        <h3>UI/UX Design</h3>
-        <p>Luxury UI/UX design — dari wireframe hingga high-fidelity prototype yang memukau.</p>
-      </div>
-      <div class="skill-card reveal">
-        <div class="skill-icon">◈</div>
-        <h3>Web Development</h3>
-        <p>Full-stack capable — E-Commerce, Landing Page, Portfolio, SaaS, API Integration.</p>
-      </div>
-    </div>
-
-    <div class="tech-grid">
-      <div class="tech-cat reveal">
-        <div class="tcat-head"><span class="tcat-icon">⟨/⟩</span>
-          <h4>Frontend</h4>
-        </div>
-        <div class="tech-tags">
-          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>React</span><span>Next.js</span>
-        </div>
-      </div>
-      <div class="tech-cat reveal">
-        <div class="tcat-head"><span class="tcat-icon">⚙</span>
-          <h4>Backend</h4>
-        </div>
-        <div class="tech-tags"><span>Node.js</span><span>Express</span></div>
-      </div>
-      <div class="tech-cat reveal">
-        <div class="tcat-head"><span class="tcat-icon">◈</span>
-          <h4>Database</h4>
-        </div>
-        <div class="tech-tags"><span>MySQL</span><span>Firebase</span></div>
-      </div>
-      <div class="tech-cat reveal">
-        <div class="tcat-head"><span class="tcat-icon">◎</span>
-          <h4>Tools</h4>
-        </div>
-        <div class="tech-tags"><span>Git</span><span>Figma</span><span>Vercel</span><span>GSAP</span></div>
-      </div>
-    </div>
+    </div> 
+    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#vision-mission" class="btn-ghost">NEXT: VISION & MISSION →</a></div>
   </section>
 
-  <!-- PORTFOLIO -->
-  <section id="portfolio" class="section sec-pad">
-    <div class="sec-tag reveal">// 03 SELECTED WORK</div>
-    <div class="port-header">
-      <h2 class="sec-title reveal">SELECTED <span class="text-red">PROJECTS.</span></h2>
-      <p class="sec-body reveal">Karya yang mencerminkan kemampuan saya dalam membangun identitas digital dan website
-        berkualitas.</p>
-    </div>
-
-    <div class="filter-tabs reveal">
-      <button class="filter-btn active" data-filter="all">Semua Karya</button>
-      <button class="filter-btn" data-filter="web">Web Dev</button>
-      <button class="filter-btn" data-filter="design">Branding</button>
-      <button class="filter-btn" data-filter="digital">Digital</button>
-    </div>
-
-    <div class="portfolio-grid" id="portfolioGrid">
-      <div class="portfolio-card reveal" data-project="vault" data-category="web" tabindex="0" role="button">
-        <div class="card-num">01</div>
-        <div class="card-img">
-          <img src="web.png" alt="RNVN Web Developer" loading="lazy">
-          <div class="card-overlay"><span>Open Case Study</span></div>
+  <!-- VISI & MISI -->
+  <section id="vision-mission" class="section sec-pad" data-3d-scene="vision-mission">
+    <div class="sec-inner">
+      <div class="sec-tag">DIRECTION</div>
+      <div class="about-grid" style="align-items: start;">
+        <div>
+          <h2 class="sec-title reveal">OUR <span class="accent-text">VISION.</span></h2>
+          <p class="sec-body reveal">Menjadi <em>creative ecosystem</em> yang menghubungkan desain, teknologi, fashion, dan inovasi untuk menciptakan karya yang memberi dampak positif bagi individu, bisnis, dan komunitas di tingkat nasional hingga global.</p>
         </div>
-        <div class="card-body">
-          <span class="card-tag">WEB DEVELOPMENT</span>
-          <h3>RNVN WEB</h3>
-          <p>RNVN Web Developer menciptakan website modern dengan kombinasi desain cinematic, clean UI, dan teknologi
-            performa tinggi untuk membantu brand tampil lebih eksklusif dan profesional.</p>
-        </div>
-      </div>
-
-      <div class="portfolio-card reveal" data-project="rnvn" data-category="design" tabindex="0" role="button">
-        <div class="card-num">02</div>
-        <div class="card-img">
-          <img src="rnvnwear.png" alt="RNVN Streetwear" loading="lazy">
-          <div class="card-overlay"><span>Open Case Study</span></div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">BRAND IDENTITY</span>
-          <h3>RNVN STREETWEAR</h3>
-          <p>Brand identity streetwear yang dibangun di atas controlled aggression. Di mana silence berbicara lebih
-            keras dari noise.</p>
-        </div>
-      </div>
-
-      <div class="portfolio-card reveal" data-project="nexus" data-category="digital" tabindex="0" role="button">
-        <div class="card-num">03</div>
-        <div class="card-img">
-          <img src="rnvn printing.png" alt="RNVN Printing" loading="lazy">
-          <div class="card-overlay"><span>Open Case Study</span></div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">PREMIUM PRINTING</span>
-          <h3>RNVN PRINTING</h3>
-          <p>Menyediakan layanan percetakan modern dengan kualitas premium untuk kebutuhan personal, bisnis, dan brand
-            kreatif.</p>
-        </div>
-      </div>
-
-      <div class="portfolio-card reveal" data-project="aiautomation" data-category="digital" tabindex="0" role="button">
-        <div class="card-num">04</div>
-        <div class="card-img">
-          <img src="rnvnaiautomation.png" alt="RNVN AI" loading="lazy">
-          <div class="card-overlay"><span>Open Case Study</span></div>
-        </div>
-        <div class="card-body">
-          <span class="card-tag">AI AUTOMATION</span>
-          <h3>RNVN AI AUTOMATION</h3>
-          <p>Platform otomasi bisnis berbasis AI yang membantu bisnis dan brand mengotomatiskan alur kerja, meningkatkan
-            efisiensi, dan menciptakan pengalaman pelanggan yang lebih cerdas.</p>
+        <div>
+          <h2 class="sec-title reveal">OUR <span class="accent-text">MISSION.</span></h2>
+          <ul style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; display: flex; flex-direction: column; gap: 15px;" class="reveal">
+            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Menghasilkan produk dan layanan dengan kualitas premium.</li>
+            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Mengembangkan solusi kreatif berbasis desain dan teknologi.</li>
+            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Memberdayakan UMKM, kreator, dan bisnis lokal melalui branding yang kuat.</li>
+            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Terus berinovasi mengikuti perkembangan teknologi, AI, dan industri kreatif.</li>
+            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Membangun komunitas yang tumbuh bersama dalam semangat kolaborasi dan kreativitas.</li>
+          </ul>
         </div>
       </div>
     </div>
+    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#skills" class="btn-ghost">NEXT: BRAND VALUES → </a></div>
   </section>
 
+  <!-- NILAI BRAND -->
+  <section id="skills" class="section sec-pad sec-dark" data-3d-scene="brand-values">
+    <div class="sec-inner">
+      <div class="sec-tag" style="justify-content: center;">// 04 CORE VALUES</div>
+      <h2 class="sec-title text-center reveal">BRAND <span class="accent-text">VALUES.</span></h2>
+      <div class="skills-grid" style="margin-top: 50px;">
+        <div class="skill-card reveal"><div class="skill-icon" style="color: #c084fc;">👁</div><h3>Vision</h3><p>Semua karya besar selalu dimulai dari sebuah visi.</p></div>
+        <div class="skill-card reveal"><div class="skill-icon" style="color: #2dd4bf;">✦</div><h3>Creativity</h3><p>Kreativitas adalah bahasa universal yang mampu menciptakan perubahan.</p></div>
+        <div class="skill-card reveal"><div class="skill-icon" style="color: #38bdf8;">⚡</div><h3>Innovation</h3><p>Terus berkembang melalui teknologi, AI, dan solusi modern.</p></div>
+        <div class="skill-card reveal"><div class="skill-icon" style="color: #fbbf24;">💎</div><h3>Quality</h3><p>Kualitas bukan pilihan, tetapi standar dalam setiap proses.</p></div>
+        <div class="skill-card reveal"><div class="skill-icon" style="color: #f87171;">🛡</div><h3>Integrity</h3><p>Kepercayaan dibangun melalui konsistensi, tanggung jawab, dan transparansi.</p></div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#portfolio" class="btn-ghost">NEXT: Our Services →</a></div>
+  </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="section sec-pad sec-dark">
-    <div class="sec-tag reveal">// 04 CONTACT</div>
-    <div class="contact-grid">
-      <div class="contact-left">
-        <h2 class="sec-title reveal">LET'S BUILD SOMETHING <span class="text-red">GREAT TOGETHER.</span></h2>
-        <p class="sec-body reveal">
-          Memiliki ide, proyek, atau peluang kolaborasi? Saya selalu terbuka untuk mendiskusikan solusi digital yang
-          dapat membantu mewujudkan visi Anda.
-        </p>
-        <div class="contact-info">
-          <div class="cinfo reveal">
-            <span class="cinfo-label">WHATSAPP</span>
-            <a href="https://wa.me/628563122123" class="cinfo-val text-cyan">+62 856 3122 123</a>
+  <!-- PORTFOLIO / WORKS -->
+  <section id="portfolio" class="section sec-pad" data-3d-scene="services-planets">
+    <div class="sec-inner">
+      <div class="sec-tag"></div>
+      <h2 class="sec-title reveal">OUR <span class="accent-text">SERVICES.</span></h2>
+      
+      <div class="portfolio-filters reveal" style="display: flex; gap: 15px; margin-bottom: 40px; justify-content: center; flex-wrap: wrap;">
+        <button class="filter-btn active" data-filter="all" style="padding: 8px 20px; border-radius: 20px; border: 1px solid rgba(34,211,238,0.3); color: var(--text-main); font-family: var(--font-mono); font-size: 0.8rem; background: rgba(0,0,0,0.5);">ALL</button>
+        <button class="filter-btn" data-filter="web" style="padding: 8px 20px; border-radius: 20px; border: 1px solid rgba(34,211,238,0.3); color: var(--text-main); font-family: var(--font-mono); font-size: 0.8rem; background: rgba(0,0,0,0.5);">WEB</button>
+        <button class="filter-btn" data-filter="brand" style="padding: 8px 20px; border-radius: 20px; border: 1px solid rgba(34,211,238,0.3); color: var(--text-main); font-family: var(--font-mono); font-size: 0.8rem; background: rgba(0,0,0,0.5);">BRANDING</button>
+      </div>
+
+      <div class="portfolio-grid" id="portfolioGrid">
+        <div class="portfolio-card reveal" data-category="web" data-project="vault" tabindex="0" role="button">
+          <div class="card-num">01</div>
+          <div class="card-img"><img src="web.png" alt="RNVN Web" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
+          <div class="card-body"><span class="card-tag">WEB & 3D</span><h3>RNVN WEB</h3><p>Website portfolio cinematic 3D.</p></div>
+        </div>
+        
+        <div class="portfolio-card reveal" data-category="brand" data-project="rnvn" tabindex="0" role="button">
+          <div class="card-num">02</div>
+          <div class="card-img"><img src="rnvnwear.png" alt="RNVN Streetwear" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
+          <div class="card-body"><span class="card-tag">STREETWEAR</span><h3>RNVN STREETWEAR</h3><p>Identitas brand streetwear premium.</p></div>
+        </div>
+        
+        <div class="portfolio-card reveal" data-category="brand" data-project="nexus" tabindex="0" role="button">
+          <div class="card-num">03</div>
+          <div class="card-img"><img src="rnvn printing.png" alt="RNVN Printing" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
+          <div class="card-body"><span class="card-tag">PRINTING</span><h3>RNVN PRINTING</h3><p>Layanan percetakan modern.</p></div>
+        </div>
+        
+        <div class="portfolio-card reveal" data-category="web" data-project="aiautomation" tabindex="0" role="button">
+          <div class="card-num">04</div>
+          <div class="card-img"><img src="rnvnaiautomation.png" alt="RNVN AI" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
+          <div class="card-body"><span class="card-tag">AI AUTOMATION</span><h3>RNVN AI</h3><p>Otomasi proses bisnis berbasis AI.</p></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#contact" class="btn-ghost">NEXT: JOIN THE NATION →</a></div>
+  </section>
+
+  <!-- CONTACT & PENUTUP -->
+  <section id="contact" class="section sec-pad sec-dark" data-3d-scene="grand-finale">
+    <div class="sec-inner">
+      <div class="sec-tag">JOIN THE NATION</div>
+      <div class="about-grid">
+        <div>
+          <h2 class="sec-title reveal">JOIN THE <span class="accent-text">VISION.</span></h2>
+          <p class="sec-body reveal">RNVN bukan sekadar sebuah nama. RNVN adalah perjalanan untuk terus berkembang, menciptakan sebuah karya yang bermakna, dan membangun masa depan melalui kreativitas tanpa batas.</p>
+          <p class="sec-body reveal">Kami mengundang Anda untuk menjadi bagian dari perjalanan ini. Karena setiap ide layak diwujudkan, dan setiap visi pantas menjadi kenyataan.</p>
+          <h3 class="reveal" style="font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 2px; margin-top: 30px; color: var(--text-main);">RNVN — <span class="cyan">THINK BEYOND LIMITS.</span></h3>
+          <div class="contact-info" style="margin-top: 40px; display: flex; flex-direction: column; gap: 20px;">
+            <div class="reveal" style="display: flex; flex-direction: column;"><span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 5px;">WHATSAPP</span><a href="https://wa.me/628563122123" class="cyan" style="font-size: 1.2rem; font-weight: 500;">+62 856 3122 123</a></div>
+            <div class="reveal" style="display: flex; flex-direction: column;"><span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 5px;">EMAIL</span><span style="font-size: 1.2rem;">rnvnofficial@gmail.com</span></div>
+            <div class="reveal" style="display: flex; flex-direction: column;"><span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 5px;">INSTAGRAM</span><a href="https://www.instagram.com/rnvn.official_/" target="_blank" rel="noopener" class="cyan" style="font-size: 1.2rem; font-weight: 500;">@rnvn.official_</a></div>
           </div>
-          <div class="cinfo reveal">
-            <span class="cinfo-label">EMAIL</span>
-            <span class="cinfo-val">randianodeska@gmail.com</span>
-          </div>
-          <div class="cinfo reveal">
-            <span class="cinfo-label">INSTAGRAM</span>
-            <a href="https://www.instagram.com/randianodskptra_/" target="_blank" rel="noopener noreferrer"
-              class="cinfo-val text-cyan">@randianodskptra_</a>
+        </div>
+        <div>
+          <div class="reveal" style="padding: 40px; border: 1px solid rgba(34, 211, 238, 0.3); border-radius: 16px; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); position: relative; overflow: hidden; box-shadow: 0 0 30px rgba(34, 211, 238, 0.1);">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 51%); background-size: 100% 4px; opacity: 0.3; pointer-events: none;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan); letter-spacing: 3px; margin-bottom: 20px;">INCOMING TRANSMISSION</div>
+            <p style="font-family: var(--font-mono); font-size: 0.95rem; line-height: 1.8; color: #d1d5db;">
+              Kami percaya bahwa dunia berubah karena keberanian seseorang untuk berpikir berbeda. Kami percaya bahwa kreativitas adalah kekuatan, teknologi adalah alat, dan visi adalah kompas yang mengarahkan masa depan.<br><br>
+              RNVN hadir bukan hanya untuk menciptakan produk, tetapi untuk membangun identitas, menghubungkan ide dengan realitas, dan menginspirasi setiap individu agar berani melampaui batas pikirannya.<br><br>
+              Kami tidak mengikuti tren. <strong style="color: var(--text-main);">Kami menciptakan arah.</strong><br>
+              Kami tidak hanya membangun sebuah brand. <strong style="color: var(--cyan);">Kami membangun sebuah Nation.</strong>
+            </p>
           </div>
         </div>
       </div>
-      <div class="contact-right reveal">
-        <form id="contactForm" class="contact-form">
-          <div class="input-group">
-            <input type="text" id="name" placeholder=" " required>
-            <label for="name">Your Name</label>
-          </div>
-          <div class="input-group">
-            <input type="email" id="email" placeholder=" " required>
-            <label for="email">Your Email</label>
-          </div>
-          <div class="input-group">
-            <textarea id="message" rows="4" placeholder=" " required></textarea>
-            <label for="message">Your Message</label>
-          </div>
-          <button type="submit" class="btn-primary" id="submitBtn">
-            <svg class="wa-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" style="vertical-align:middle;margin-right:8px;">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-            <span class="btn-text">Kirim Pesan via WhatsApp</span>
-          </button>
-        </form>
-      </div>
     </div>
+
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-logo">RNVN</div>
+        <div class="footer-copy">© 2026 RNVN Official. All Rights Reserved.</div>
+        <div class="footer-social">
+          <a href="https://wa.me/628563122123" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
+          <a href="https://www.instagram.com/rnvn.official_/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+          <a href="https://github.com/randianodeska-coder" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+        </div>
+      </div>
+    </footer>
   </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-logo">PORTFOLIO</div>
-      <div class="footer-copy">© 2026 Randiano Deska Putra. All Rights Reserved. — Available for Freelance &amp;
-        Collaboration</div>
-      <div class="footer-social">
-        <a href="https://wa.me/628563122123" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">WA</a>
-        <a href="https://www.instagram.com/randianodskptra_/" target="_blank" rel="noopener noreferrer"
-          aria-label="Instagram">IG</a>
-        <a href="https://github.com/randianodeska-coder" target="_blank" rel="noopener noreferrer"
-          aria-label="GitHub">GH</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- FLOATING DOCK -->
+  
   <div class="floating-dock">
-    <a href="https://www.instagram.com/randianodskptra_/" target="_blank" rel="noopener noreferrer" class="dock-item"
-      aria-label="Instagram">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="2" width="20" height="20" rx="5" />
-        <circle cx="12" cy="12" r="5" />
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
-      </svg>
+    <a href="https://www.instagram.com/randianodskptra_/" target="_blank" rel="noopener" class="dock-item" aria-label="Instagram">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
     </a>
-    <a href="https://github.com/randianodeska-coder" target="_blank" rel="noopener noreferrer" class="dock-item"
-      aria-label="GitHub">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path
-          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-      </svg>
+    <a href="https://github.com/randianodeska-coder" target="_blank" rel="noopener" class="dock-item" aria-label="GitHub">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
     </a>
-    <a href="https://wa.me/628563122123" target="_blank" rel="noopener noreferrer" class="dock-item"
-      aria-label="WhatsApp">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path
-          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-      </svg>
+    <a href="https://wa.me/628563122123" target="_blank" rel="noopener" class="dock-item" aria-label="WhatsApp">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </a>
   </div>
 
-  <!-- BACK TO TOP -->
+  
   <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
 
-  <!-- IMMERSIVE PORTFOLIO BACKGROUND -->
-  <div id="immersiveBg" class="immersive-bg"></div>
-
-  <!-- MODAL -->
+  
   <div id="projectModal" class="modal" aria-hidden="true" role="dialog">
     <div class="modal-content">
       <button class="close-modal" aria-label="Close">×</button>
       <div class="modal-body">
-        <div class="modal-img-wrap">
-          <img id="modalImage" src="" alt="" loading="lazy">
-        </div>
+        <div class="modal-img-wrap"><img id="modalImage" src="" alt="" loading="lazy"></div>
         <div class="modal-info">
           <h2 id="modalTitle"></h2>
           <p id="modalDesc"></p>
-          <a id="modalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary">Visit Project →</a>
+          <a id="modalLink" href="javascript:void(0)" target="_blank" rel="noopener" class="btn-primary">Visit Project →</a>
         </div>
       </div>
     </div>
   </div>
 
   <!-- SCRIPTS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  
-  <!-- Lenis Smooth Scroll -->
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
-
-  <!-- Custom Scripts -->
-  <script src="nexus-portfolio.js?v=1.1"></script>
-  <script src="spiderman-fx.js?v=1.0"></script>
-  <script src="ultra-3d.js?v=2.0"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/EffectComposer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/RenderPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/ShaderPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/shaders/CopyShader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+  <script src="galaxy-engine.js"></script>
+  <script src="galaxy-transitions.js"></script>
+  <script src="galaxy-effects.js"></script>
 </body>
 </html>
