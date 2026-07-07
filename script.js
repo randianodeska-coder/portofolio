@@ -557,7 +557,7 @@ function initContactForm() {
         const msg = document.getElementById('message').value.trim();
         if (!name || !email || !msg) return;
 
-        const text = `Halo Randiano Deska Putra! 👋%0A%0ASaya menghubungi kamu melalui portfolio website.%0A%0A*Nama:* ${encodeURIComponent(name)}%0A*Email:* ${encodeURIComponent(email)}%0A%0A*Pesan:*%0A${encodeURIComponent(msg)}`;
+        const text = `Halo RNVN! 👋%0A%0ASaya menghubungi Anda melalui website.%0A%0A*Nama:* ${encodeURIComponent(name)}%0A*Email:* ${encodeURIComponent(email)}%0A%0A*Pesan:*%0A${encodeURIComponent(msg)}`;
         const url = `https://wa.me/${WA}?text=${text}`;
 
         const waWin = window.open(url, '_blank', 'noopener,noreferrer');
