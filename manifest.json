@@ -1,0 +1,22 @@
+{
+  "name": "RNVN Official",
+  "short_name": "RNVN",
+  "description": "Creative Tech Hub yang menggabungkan branding, desain, fashion, printing, website, dan teknologi.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

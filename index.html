@@ -1,11 +1,73 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Randiano Deska Putra — Creative Developer & Digital Entrepreneur</title>
-  <meta name="description" content="Portfolio of Randiano Deska Putra, Creative Developer specializing in modern web experiences.">
+  
+  <!-- 13. Optimasi Performa SEO (Preconnect & Preload) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+  <!-- 2 & 7. Meta SEO Utama & Robots Meta Tag -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>RNVN Official | Creative Tech Hub & Digital Innovation</title>
+  <meta name="description" content="Creative Tech Hub yang menggabungkan branding, desain, fashion, printing, website, dan teknologi mutakhir untuk memajukan inovasi digital.">
+  <meta name="keywords" content="RNVN, RNVN Official, Creative Tech Hub, Branding, Fashion, Printing, Web Development, UI/UX, Digital Innovation, Teknologi, Desain Futuristik">
+  <meta name="author" content="RNVN Official">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://rnvnofficial.net/">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <!-- 12. Security Meta Tag -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  
+  <!-- 3. Open Graph -->
+  <meta property="og:site_name" content="RNVN Official">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rnvnofficial.net/">
+  <meta property="og:title" content="RNVN Official | Creative Tech Hub & Digital Innovation">
+  <meta property="og:description" content="Creative Tech Hub yang menggabungkan branding, desain, fashion, printing, website, dan teknologi.">
+  <meta property="og:image" content="https://rnvnofficial.net/logo.png">
+  
+  <!-- 4. Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://rnvnofficial.net/">
+  <meta name="twitter:title" content="RNVN Official | Creative Tech Hub & Digital Innovation">
+  <meta name="twitter:description" content="Creative Tech Hub yang menggabungkan branding, desain, fashion, printing, website, dan teknologi.">
+  <meta name="twitter:image" content="https://rnvnofficial.net/logo.png">
+  
+  <!-- 5 & 10. Favicons & Apple Touch Icon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
+  <link rel="mask-icon" href="/logo.png" color="#0a0a0a">
+
+  <!-- 8. Web App Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <!-- 9. BrowserConfig -->
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <meta name="msapplication-TileColor" content="#0a0a0a">
+  
+  <!-- 6. Schema.org (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "RNVN Official",
+    "url": "https://rnvnofficial.net",
+    "logo": "https://rnvnofficial.net/logo.png",
+    "description": "Creative Tech Hub yang menggabungkan branding, desain, fashion, printing, website, dan teknologi.",
+    "sameAs": [
+      "https://www.instagram.com/rnvn.official_/",
+      "https://github.com/randianodeska-coder",
+      "https://wa.me/628563122123"
+    ]
+  }
+  </script>
+
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="galaxy-theme.css">
   <style>
@@ -158,7 +220,7 @@
           <div class="profile-frame reveal" style="border-radius: 50%;">
             <div class="profile-ring"></div>
             <div style="width: 100%; height: 100%; border-radius: 50%; background: var(--bg-deep); z-index: 2; position: relative; border: 2px solid rgba(124, 58, 237, 0.4); overflow: hidden; display: flex; align-items: center; justify-content: center;">
-              <img src="logo.png" alt="RNVN Logo" style="width: 100%; height: 100%; object-fit: cover;">
+              <img src="logo.png" alt="RNVN Logo" width="300" height="300" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div class="profile-glow"></div>
           </div>
@@ -240,25 +302,25 @@
       <div class="portfolio-grid" id="portfolioGrid">
         <div class="portfolio-card reveal" data-category="web" data-project="vault" tabindex="0" role="button">
           <div class="card-num">01</div>
-          <div class="card-img"><img src="web.png" alt="RNVN Web" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
+          <div class="card-img"><img src="web.png" alt="RNVN Web" width="400" height="300" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
           <div class="card-body"><span class="card-tag">WEB & 3D</span><h3>RNVN WEB</h3><p>Website portfolio cinematic 3D.</p></div>
         </div>
         
         <div class="portfolio-card reveal" data-category="brand" data-project="rnvn" tabindex="0" role="button">
           <div class="card-num">02</div>
-          <div class="card-img"><img src="rnvnwear.png" alt="RNVN Streetwear" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
+          <div class="card-img"><img src="rnvnwear.png" alt="RNVN Streetwear" width="400" height="300" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
           <div class="card-body"><span class="card-tag">STREETWEAR</span><h3>RNVN STREETWEAR</h3><p>Identitas brand streetwear premium.</p></div>
         </div>
         
         <div class="portfolio-card reveal" data-category="brand" data-project="nexus" tabindex="0" role="button">
           <div class="card-num">03</div>
-          <div class="card-img"><img src="rnvn printing.png" alt="RNVN Printing" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
+          <div class="card-img"><img src="rnvn printing.png" alt="RNVN Printing" width="400" height="300" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
           <div class="card-body"><span class="card-tag">PRINTING</span><h3>RNVN PRINTING</h3><p>Layanan percetakan modern.</p></div>
         </div>
         
         <div class="portfolio-card reveal" data-category="web" data-project="aiautomation" tabindex="0" role="button">
           <div class="card-num">04</div>
-          <div class="card-img"><img src="rnvnaiautomation.png" alt="RNVN AI" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
+          <div class="card-img"><img src="rnvnaiautomation.png" alt="RNVN AI" width="400" height="300" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
           <div class="card-body"><span class="card-tag">AI AUTOMATION</span><h3>RNVN AI</h3><p>Otomasi proses bisnis berbasis AI.</p></div>
         </div>
       </div>
