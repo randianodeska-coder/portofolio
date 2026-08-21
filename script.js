@@ -360,12 +360,25 @@ function initCursor() {
     const follower = document.querySelector('.cursor-follower');
     if (!cursor) return;
 
-    let mx = 0, my = 0, fx = 0, fy = 0;
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let fx = mx, fy = my;
+    let cursorVisible = false;
+
+    // Hide until first mousemove so they don't appear at top-left corner
+    cursor.style.opacity = '0';
+    if (follower) follower.style.opacity = '0';
+    cursor.style.transition = 'opacity 0.3s ease, width 0.2s, height 0.2s, background-color 0.2s';
+    if (follower) follower.style.transition = 'opacity 0.3s ease, width 0.4s ease, height 0.4s ease, border-color 0.3s ease';
 
     document.addEventListener('mousemove', e => {
         mx = e.clientX; my = e.clientY;
         cursor.style.left = mx + 'px';
         cursor.style.top = my + 'px';
+        if (!cursorVisible) {
+            cursorVisible = true;
+            cursor.style.opacity = '1';
+            if (follower) follower.style.opacity = '1';
+        }
     });
 
     (function animFollower() {

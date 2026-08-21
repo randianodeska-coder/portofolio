@@ -175,8 +175,9 @@
       pointer-events: none;
       z-index: 999999;
       transform: translate(-50%,-50%);
-      transition: width .2s, height .2s, background .2s;
+      transition: width .2s, height .2s, background .2s, opacity .3s;
       mix-blend-mode: screen;
+      opacity: 0;
     }
     #cursorRing {
       width: 36px; height: 36px;
@@ -187,7 +188,8 @@
       pointer-events: none;
       z-index: 999998;
       transform: translate(-50%,-50%);
-      transition: width .3s ease, height .3s ease, border-color .3s;
+      transition: width .3s ease, height .3s ease, border-color .3s, opacity .3s;
+      opacity: 0;
     }
     #cursorDot.hover  { width: 14px; height: 14px; background: #2dd4bf; }
     #cursorRing.hover { width: 56px; height: 56px; border-color: rgba(45,212,191,0.7); }
@@ -906,9 +908,15 @@
   var ring = document.getElementById('cursorRing');
   if (dot && ring && window.matchMedia('(hover: hover)').matches) {
     var rx = innerWidth / 2, ry = innerHeight / 2;
+    var cursorVisible = false;
     document.addEventListener('mousemove', function(e) {
       dot.style.left = e.clientX + 'px';
       dot.style.top  = e.clientY + 'px';
+      if (!cursorVisible) {
+        cursorVisible = true;
+        dot.style.opacity  = '1';
+        ring.style.opacity = '1';
+      }
     });
     (function animRing() {
       var dx = parseFloat(dot.style.left) || innerWidth / 2;

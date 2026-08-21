@@ -331,11 +331,19 @@ if(p<40)st.innerText='CALIBRATING WARP DRIVE...';else if(p<80)st.innerText='MAPP
 if(!S.isMobile){
   const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
   let rx=innerWidth/2,ry=innerHeight/2;
-  addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';
-  S.tMouse.x=(e.clientX/innerWidth)*2-1;S.tMouse.y=-(e.clientY/innerHeight)*2+1;S.idle=0;S.isIdle=!1;});
+  let cursorVisible = false;
+  addEventListener('mousemove',e=>{
+    dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';
+    if (!cursorVisible) {
+      cursorVisible = true;
+      dot.style.opacity = '1';
+      ring.style.opacity = '1';
+    }
+    S.tMouse.x=(e.clientX/innerWidth)*2-1;S.tMouse.y=-(e.clientY/innerHeight)*2+1;S.idle=0;S.isIdle=!1;
+  });
   const rc=()=>{const dx=parseFloat(dot.style.left)||innerWidth/2,dy=parseFloat(dot.style.top)||innerHeight/2;
   rx=lerp(rx,dx,.15);ry=lerp(ry,dy,.15);ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(rc);};rc();
-  document.querySelectorAll('a,button,.portfolio-card,.skill-card,.dock-item,.filter-btn').forEach(el=>{
+  document.querySelectorAll('a,button,.portfolio-card,.skill-card,.dock-item,.filter-btn,.btn-primary,.btn-ghost').forEach(el=>{
   el.addEventListener('mouseenter',()=>{dot.classList.add('hover');ring.classList.add('hover');});
   el.addEventListener('mouseleave',()=>{dot.classList.remove('hover');ring.classList.remove('hover');});});
 } else {
