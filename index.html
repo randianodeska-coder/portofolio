@@ -10,9 +10,9 @@
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <title>RNVN Official | Creative Tech Hub & Digital Innovation</title>
-  <meta name="description" content="Creative Tech Hub yang menggabungkan branding, desain, fashion, printing, website, dan teknologi mutakhir untuk memajukan inovasi digital.">
-  <meta name="keywords" content="RNVN, RNVN Official, Creative Tech Hub, Branding, Fashion, Printing, Web Development, UI/UX, Digital Innovation, Teknologi, Desain Futuristik">
+  <title>RNVN Official | Premium Streetwear & Fashion Brand</title>
+  <meta name="description" content="RNVN is a premium streetwear and fashion brand built on character, identity, and quality. Discover our latest drops and wear your identity.">
+  <meta name="keywords" content="RNVN, RNVN Official, Streetwear, Fashion Brand, Premium Clothing, Indonesia Streetwear, Identity, The Nation, Boxy Tee, Fashion Drop">
   <meta name="author" content="RNVN Official">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://rnvnofficial.net/">
@@ -26,23 +26,23 @@
   <meta property="og:site_name" content="RNVN Official">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://rnvnofficial.net/">
-  <meta property="og:title" content="RNVN Official | Creative Tech Hub & Digital Innovation">
-  <meta property="og:description" content="Creative Tech Hub yang menggabungkan branding, desain, fashion, printing, website, dan teknologi.">
+  <meta property="og:title" content="RNVN Official | Premium Streetwear & Fashion Brand">
+  <meta property="og:description" content="Premium streetwear and fashion from RNVN. Wear your identity. Join The Nation.">
   <meta property="og:image" content="https://rnvnofficial.net/preview.png">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://rnvnofficial.net/">
-  <meta name="twitter:title" content="RNVN Official | Creative Tech Hub & Digital Innovation">
-  <meta name="twitter:description" content="Creative Tech Hub yang menggabungkan branding, desain, fashion, printing, website, dan teknologi.">
+  <meta name="twitter:title" content="RNVN Official | Premium Streetwear & Fashion Brand">
+  <meta name="twitter:description" content="Premium streetwear and fashion from RNVN. Wear your identity. Join The Nation.">
   <meta name="twitter:image" content="https://rnvnofficial.net/preview.png">
   
   <!-- 5 & 10. Favicons & Apple Touch Icon -->
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
-  <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/logornvn.png">
-  <link rel="mask-icon" href="/logornvn.png" color="#0a0a0a">
+  <link rel="icon" type="image/png" sizes="192x192" href="logornvn.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="logornvn.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="logornvn.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="logornvn.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="logornvn.png">
+  <link rel="mask-icon" href="logornvn.png" color="#0a0a0a">
 
   <!-- 8. Web App Manifest -->
   <link rel="manifest" href="/manifest.json">
@@ -72,11 +72,188 @@
   <link rel="stylesheet" href="galaxy-theme.css">
   <style>
     /* Force visibility fallback */
-    .section.active { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+    .section.active { opacity: 1; visibility: visible; pointer-events: auto; }
     .reveal { opacity: 1 !important; transform: none !important; transition: opacity 0.5s ease, transform 0.5s ease; }
     .reveal:not(.active) { opacity: 0 !important; transform: translateY(30px) !important; }
-  </style>
+    
+    /* Tour hiding logic */
+    body.tour-active #hero .hero-content { opacity: 0 !important; visibility: hidden !important; transition: none !important; }
+    body.tour-active #header { opacity: 0 !important; visibility: hidden !important; transition: none !important; }
 
+    /* Resize Hero Text (Desktop) */
+    @media (min-width: 769px) {
+      .hero-title { 
+        font-size: clamp(2.5rem, 5vw, 4rem) !important; 
+        line-height: 1.1 !important; 
+        margin-bottom: 1.5rem !important;
+      }
+      .hero-tagline { font-size: 1.2rem !important; }
+      .hero-sub { font-size: 1rem !important; max-width: 700px; margin: 0 auto 2rem auto !important; }
+    }
+
+    /* =====================================================
+       TYPOGRAPHY POLISH — Global Section Refinements
+       ===================================================== */
+
+    /* Section tag label */
+    .sec-tag {
+      font-size: 0.72rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    /* Section title */
+    .sec-title {
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      line-height: 1.1;
+      letter-spacing: 1px;
+      margin-bottom: 28px;
+    }
+
+    /* Section body — unified comfortable reading size */
+    .sec-body {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: #94a3b8;
+      line-height: 1.85;
+      max-width: 620px;
+      margin-bottom: 20px;
+    }
+
+    /* =====================================================
+       PHILOSOPHY SECTION
+       ===================================================== */
+    #philosophy .sec-inner {
+      max-width: 820px;
+    }
+
+    #philosophy .sec-body {
+      font-size: 1.08rem;
+      line-height: 1.9;
+      color: #a8b8cc;
+      max-width: 100%;
+      text-align: center;
+      margin: 0 auto 40px auto;
+    }
+
+    /* Philosophy quote box */
+    #philosophy .reveal > h3 {
+      font-size: clamp(1.3rem, 2.5vw, 2rem) !important;
+      line-height: 1.5 !important;
+      font-style: italic !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    /* =====================================================
+       VISION & MISSION SECTION
+       ===================================================== */
+    #vision-mission .sec-body {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #a8b8cc;
+      max-width: 100%;
+    }
+
+    #vision-mission ul {
+      font-family: 'Space Grotesk', sans-serif !important;
+      font-size: 1rem !important;
+      line-height: 2 !important;
+      color: #94a3b8 !important;
+    }
+
+    #vision-mission ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    /* =====================================================
+       BRAND DNA — SKILL CARDS
+       ===================================================== */
+    .skill-card h3 {
+      font-family: 'Space Grotesk', sans-serif !important;
+      font-size: 1.1rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.5px !important;
+      margin-bottom: 12px !important;
+      color: #f8fafc !important;
+    }
+
+    .skill-card p {
+      font-family: 'Space Grotesk', sans-serif !important;
+      font-size: 0.95rem !important;
+      line-height: 1.75 !important;
+      color: #8899aa !important;
+    }
+
+    /* =====================================================
+       CONTACT / JOIN THE NATION SECTION
+       ===================================================== */
+    #contact .sec-body {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #a8b8cc;
+      max-width: 100%;
+    }
+
+    #contact h3.reveal {
+      font-size: 1.3rem !important;
+      letter-spacing: 3px !important;
+      margin-top: 36px !important;
+      line-height: 1.5 !important;
+    }
+
+    /* Direct Message card — body text */
+    #contact .reveal p[style*="font-mono"] {
+      font-size: 0.9rem !important;
+      line-height: 1.95 !important;
+      color: #c9d5e0 !important;
+    }
+
+    /* Closing quote — gradient text */
+    #contact .reveal p[style*="font-weight: 700"] {
+      font-size: 1.05rem !important;
+      line-height: 1.7 !important;
+      margin-top: 28px !important;
+    }
+
+    /* About / Nation section body */
+    #about .sec-body {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #a8b8cc;
+    }
+
+    /* Custom Cursor */
+    #cursorDot {
+      width: 8px; height: 8px;
+      background: #c084fc;
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 999999;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, background .2s;
+      mix-blend-mode: screen;
+    }
+    #cursorRing {
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(192,132,252,0.6);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 999998;
+      transform: translate(-50%,-50%);
+      transition: width .3s ease, height .3s ease, border-color .3s;
+    }
+    #cursorDot.hover  { width: 14px; height: 14px; background: #2dd4bf; }
+    #cursorRing.hover { width: 56px; height: 56px; border-color: rgba(45,212,191,0.7); }
+    @media (hover: none) { #cursorDot, #cursorRing { display: none; } }
+  </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q0F97PTJXH"></script>
   <script>
@@ -88,12 +265,15 @@
   </script>
 </head>
 <body class="loading">
+  <!-- CUSTOM CURSOR -->
+  <div id="cursorDot"></div>
+  <div id="cursorRing"></div>
 
   <!-- PRELOADER -->
   <div id="preloader">
     <div class="pre-inner">
-      <div class="pre-logo">✦ RNVN ✦</div>
-      <div class="pre-status" id="preStatus">SCANNING COSMOS...</div>
+      <div class="pre-logo">RNVN</div>
+      <div class="pre-status" id="preStatus">LOADING RNVN...</div>
       <div class="pre-bar-wrap"><div class="pre-bar" id="preFill"></div></div>
       <div class="pre-pct" id="prePercent">0%</div>
     </div>
@@ -123,13 +303,13 @@
   <div id="hud" aria-hidden="true">
     <div class="hud-tl">
       <div class="hud-corner-line"></div>
-      <div class="hud-item" id="hudSector">SECTOR: X-27</div>
-      <div class="hud-item" id="hudDepth">DEPTH: 0.0 LY</div>
+      <div class="hud-item" id="hudSector">RNVN OFFICIAL</div>
+      <div class="hud-item" id="hudDepth">STREETWEAR BRAND</div>
     </div>
     <div class="hud-tr">
       <div class="hud-corner-line"></div>
-      <div class="hud-item">STATUS: <span class="hud-green">ONLINE</span></div>
-      <div class="hud-item" id="hudFPS">FPS: --</div>
+      <div class="hud-item">STATUS: <span class="hud-green">ACTIVE</span></div>
+      <div class="hud-item" id="hudFPS">NEW DROP SOON</div>
     </div>
     <div class="hud-bl">
       <div class="hud-item">INDONESIA 🇮🇩</div>
@@ -137,22 +317,19 @@
       <div class="hud-corner-line"></div>
     </div>
     <div class="hud-br">
-      <div class="hud-item">AVAILABLE</div>
-      <div class="hud-item" id="hudCam">CAM: 0°</div>
+      <div class="hud-item">SHOP NOW</div>
+      <div class="hud-item" id="hudCam">THE NATION</div>
       <div class="hud-corner-line"></div>
     </div>
-    <!-- Discovery Counter -->
-    <div class="hud-discovery" id="hudDiscovery">DISCOVERIES: <span id="discCount">0</span>/8</div>
+    <!-- Collection Counter (hidden) -->
+    <div class="hud-discovery" id="hudDiscovery" style="display: none;">COLLECTION: <span id="discCount">0</span>/8</div>
   </div>
 
-  <!-- DISCOVERY NOTIFICATION -->
-  <div id="discoveryNotif" class="discovery-notif"></div>
+  <!-- DISCOVERY NOTIFICATION (hidden) -->
+  <div id="discoveryNotif" class="discovery-notif" style="display: none;"></div>
 
-  <!-- TOUR BUTTON -->
-  <div id="tourBtn" class="tour-btn">TAKE A TOUR ✦</div>
-
-  <!-- TOUR OVERLAY -->
-  <div id="tourOverlay" class="tour-overlay">
+  <!-- TOUR OVERLAY (hidden) -->
+  <div id="tourOverlay" class="tour-overlay" style="display:none;">
     <div class="tour-caption" id="tourCaption"></div>
     <button class="tour-skip" id="tourSkip">SKIP TOUR ×</button>
     <div class="tour-progress"><div class="tour-prog-fill" id="tourProgFill"></div></div>
@@ -167,12 +344,12 @@
           <li><a href="#hero">Home</a></li>
           <li><a href="#about">Nation</a></li>
           <li><a href="#philosophy">Philosophy</a></li>
-          <li><a href="#skills">Values</a></li>
-          <li><a href="#portfolio">Services</a></li>
-          <li><a href="#contact">Join</a></li>
+          <li><a href="#skills">Brand DNA</a></li>
+          <li><a href="shop.html" style="color: #c084fc; font-weight: 700; border: 1px solid rgba(192,132,252,0.45); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; transition: all 0.3s;">Shop ✦</a></li>
+          <li><a href="#contact">Join Us</a></li>
         </ul>
       </nav>
-      <div class="nav-status"><span class="status-dot"></span><span>OPEN FOR COLLAB</span></div>
+      <div class="nav-status"><span class="status-dot"></span><span>NEW DROP AVAILABLE</span></div>
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -182,29 +359,29 @@
   <!-- HERO -->
   <section id="hero" class="section">
     <div class="hero-content">
-      <div class="hero-eyebrow"><span class="eyebrow-dot"></span> THE RNVN ECOSYSTEM — CREATIVE & TECH HUB</div>
+      <div class="hero-eyebrow"><span class="eyebrow-dot"></span> RNVN OFFICIAL — FASHION & STREETWEAR</div>
       <h1 class="hero-title">
-        <span class="title-line">WHERE <span class="accent-text">VISION</span></span>
-        <span class="title-line">BECOMES</span>
-        <span class="title-line">REALITY.</span>
+        <span class="title-line">WEAR YOUR <span class="accent-text">VISION</span></span>
+        <span class="title-line">OWN YOUR</span>
+        <span class="title-line">IDENTITY</span>
       </h1>
-      <p class="hero-tagline">Empowering Brands Through Design, Technology, and Innovation.</p>
-      <p class="hero-sub">RNVN lahir dari keyakinan bahwa setiap ide memiliki potensi untuk menjadi karya berdampak. Kami menggabungkan desain, fashion, printing, teknologi, dan inovasi untuk membantu individu maupun bisnis membangun identitas yang kuat dan berkelas.</p>
-      <div class="hero-actions">
-        <a href="#portfolio" class="btn-primary" id="btnExplore">EXPLORE SERVICES</a>
-        <a href="#contact" class="btn-ghost" id="btnCollab">JOIN THE NATION →</a>
+      <p class="hero-tagline">Fashion is more than clothing — it's a statement.</p>
+      <p class="hero-sub">RNVN adalah brand streetwear yang lahir untuk mereka yang berani tampil dengan cara mereka sendiri. Setiap koleksi dibangun dengan karakter yang kuat, kualitas premium, dan estetika yang sulit diabaikan.</p>
+      <div class="hero-actions" style="display:flex; flex-wrap:wrap; justify-content:center; gap:15px;">
+        <a href="shop.html" class="btn-primary" id="btnExplore">SHOP THE COLLECTION</a>
+        <a href="#contact" class="btn-ghost" id="btnCollab">JOIN THE NATION</a>
       </div>
       
       <div class="hero-metrics">
-        <div class="metric"><span class="m-num" data-target="30">0</span><span class="m-unit">+</span><div class="m-label">PROJECTS</div></div>
+        <div class="metric"><span class="m-num" data-target="30">0</span><span class="m-unit">+</span><div class="m-label">DROPS</div></div>
         <div class="metric-divider"></div>
-        <div class="metric"><span class="m-num" data-target="20">0</span><span class="m-unit">+</span><div class="m-label">CLIENTS</div></div>
+        <div class="metric"><span class="m-num" data-target="20">0</span><span class="m-unit">+</span><div class="m-label">MEMBERS</div></div>
         <div class="metric-divider"></div>
-        <div class="metric"><span class="m-num" data-target="2">0</span><span class="m-unit">+</span><div class="m-label">SERVICES</div></div>
+        <div class="metric"><span class="m-num" data-target="3">0</span><span class="m-unit">+</span><div class="m-label">COLLECTIONS</div></div>
       </div>
     </div>
   
-    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#about" class="btn-ghost">NEXT: THE NATION →</a></div>
+    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#about" class="btn-ghost" style="letter-spacing:3px; padding:12px 28px; border-radius:30px;">↓ THE NATION</a></div>
   </section>
 
     <!-- TENTANG RNVN -->
@@ -213,10 +390,9 @@
       <div class="sec-tag">THE NATION</div>
       <div class="about-grid">
         <div class="about-left">
-          <h2 class="sec-title reveal">MORE THAN A BRAND.<br><span class="accent-text">WE BUILD VISIONS.</span></h2>
-          <p class="sec-body reveal">RNVN dibangun di atas satu filosofi utama: perubahan besar selalu berawal dari sebuah visi.</p>
-          <p class="sec-body reveal"><em>"Nation"</em> bagi kami bukan sekadar komunitas, melainkan sebuah pergerakan kolektif menyatukan para visioner, inovator, dan kreator yang meyakini bahwa batas terbesar hanyalah imajinasi.</p>
-          <p class="sec-body reveal">Kami hadir untuk ide menjadi realitas. Membantu orang berpikir lebih jauh, berkarya lebih besar, dan berkembang tanpa batas.</p>
+          <h2 class="sec-title reveal">Not Just<br><span class="accent-text">Clothing</span></h2>
+          <p class="sec-body reveal">RNVN lahir dari satu keyakinan. cara kamu berpakaian adalah cara kamu berbicara, tanpa harus mengucapkan sepatah kata pun.<br><br></p>
+          <p class="sec-body reveal">Setiap jahitan, setiap desain, setiap detail — semuanya punya cerita. Kenakan identitasmu. Jadilah bagian dari RNVN</p>
         </div>
         <div class="about-right">
           <div class="profile-frame reveal" style="border-radius: 50%;">
@@ -230,23 +406,22 @@
       </div>
     </div>
   
-    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#philosophy" class="btn-ghost">NEXT: PHILOSOPHY →</a></div>
+    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#philosophy" class="btn-ghost" style="letter-spacing:3px; padding:12px 28px; border-radius:30px;">↓ PHILOSOPHY</a></div>
   </section>
 
   <!-- FILOSOFI -->
   <section id="philosophy" class="section sec-pad sec-dark" data-3d-scene="solar-system">
     <div class="sec-inner text-center">
       <div class="sec-tag" style="justify-content: center;">PHILOSOPHY</div>
-      <h2 class="sec-title reveal">THINK <span class="accent-text">BEYOND LIMITS.</span></h2>
-      <p class="sec-body reveal" style="margin: 0 auto 15px auto;">Di dalam diri setiap manusia, terbentang alam semesta dengan kemungkinan tak terhingga.</p>
-      <p class="sec-body reveal" style="margin: 0 auto 40px auto;">Planet-planet yang mengorbit dalam identitas RNVN adalah simbol bahwa kreativitas, ide, dan visi tidak mengenal batas. Seluruh terobosan besar yang berhasil mengubah dunia selalu berawal dari satu titik singular: sebuah pikiran yang berani mendobrak batas.</p>
+      <h2 class="sec-title reveal">DRESS BOLD.<span class="accent-text"> LIVE RAW.</span></h2>
+      <p class="sec-body reveal" style="margin: 0 auto 40px auto;">Di dunia yang penuh dengan tiruan, keaslian adalah bentuk perlawanan paling kuat. RNVN hadir untuk mereka yang lebih memilih substansi dari pada sekadar perhatian, karakter di atas tren, dan warisan di atas pengakuan sesaat. Ini bukan sekadar pakaian — ini ekspresi diri yang paling jujur.</p>
       <div class="reveal" style="padding: 40px; border: 1px solid rgba(124, 58, 237, 0.3); border-radius: 12px; background: rgba(18, 5, 36, 0.5); position: relative; overflow: hidden; margin-top: 40px;">
         <h3 style="font-family: var(--font-body); font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; font-style: italic; background: linear-gradient(90deg, var(--cyan), var(--violet-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-          "The Universe Doesn't Exist Above You.<br>It Exists Within You."
+          "Not Just Clothing. A Reflection Of Who You Are."
         </h3>
       </div>
     </div> 
-    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#vision-mission" class="btn-ghost">NEXT: VISION & MISSION →</a></div>
+    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#vision-mission" class="btn-ghost" style="letter-spacing:3px; padding:12px 28px; border-radius:30px;">↓ VISION &amp; MISSION</a></div>
   </section>
 
   <!-- VISI & MISI -->
@@ -255,65 +430,38 @@
       <div class="sec-tag">DIRECTION</div>
       <div class="about-grid" style="align-items: start;">
         <div>
-          <h2 class="sec-title reveal">OUR <span class="accent-text">VISION.</span></h2>
-          <p class="sec-body reveal">Menjadi <em>creative ecosystem</em> yang menghubungkan desain, teknologi, fashion, dan inovasi untuk menciptakan karya yang memberi dampak positif bagi individu, bisnis, dan komunitas di tingkat nasional hingga global.</p>
+          <h2 class="sec-title reveal">OUR <span class="accent-text">VISION</span></h2>
+          <p class="sec-body reveal">Menjadi brand streetwear yang benar-benar merepresentasikan identitas, kepercayaan diri, dan individualitas — menginspirasi satu generasi untuk tampil menjadi dirinya sendiri.</p>
         </div>
         <div>
-          <h2 class="sec-title reveal">OUR <span class="accent-text">MISSION.</span></h2>
+          <h2 class="sec-title reveal">OUR <span class="accent-text">MISSION</span></h2>
           <ul style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; display: flex; flex-direction: column; gap: 15px;" class="reveal">
-            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Menghasilkan produk dan layanan dengan kualitas premium.</li>
-            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Mengembangkan solusi kreatif berbasis desain dan teknologi.</li>
-            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Memberdayakan UMKM, kreator, dan bisnis lokal melalui branding yang kuat.</li>
-            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Terus berinovasi mengikuti perkembangan teknologi, AI, dan industri kreatif.</li>
-            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Membangun komunitas yang tumbuh bersama dalam semangat kolaborasi dan kreativitas.</li>
+            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Merancang pakaian yang punya makna — bukan sekadar tampilan.</li>
+            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Menghadirkan kualitas premium, kenyamanan, dan keahlian di setiap produk.</li>
+            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Membangun komunitas yang tumbuh bersama dalam ekspresi diri, ambisi, dan kreativitas.</li>
+            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Menjadikan setiap koleksi sebuah pernyataan — bukan sekadar perilisan produk biasa.</li>
+            <li><span style="color: var(--cyan); margin-right: 10px;">✦</span> Menjadikan RNVN simbol streetwear berbasis identitas kebanggaan Indonesia.</li>
           </ul>
         </div>
       </div>
     </div>
-    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#skills" class="btn-ghost">NEXT: BRAND VALUES → </a></div>
+    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#skills" class="btn-ghost" style="letter-spacing:3px; padding:12px 28px; border-radius:30px;">↓ BRAND DNA</a></div>
   </section>
 
   <!-- NILAI BRAND -->
   <section id="skills" class="section sec-pad sec-dark" data-3d-scene="brand-values">
     <div class="sec-inner">
-      <div class="sec-tag" style="justify-content: center;">CORE VALUES</div>
-      <h2 class="sec-title text-center reveal">BRAND <span class="accent-text">VALUES.</span></h2>
+      <div class="sec-tag" style="justify-content: center;">BRAND DNA</div>
+      <h2 class="sec-title text-center reveal">WHAT WE <span class="accent-text">STAND FOR</span></h2>
       <div class="skills-grid" style="margin-top: 50px;">
-        <div class="skill-card reveal"><div class="skill-icon" style="color: #c084fc;">👁</div><h3>Vision</h3><p>Semua karya besar selalu dimulai dari sebuah visi.</p></div>
-        <div class="skill-card reveal"><div class="skill-icon" style="color: #2dd4bf;">✦</div><h3>Creativity</h3><p>Kreativitas adalah bahasa universal yang mampu menciptakan perubahan.</p></div>
-        <div class="skill-card reveal"><div class="skill-icon" style="color: #38bdf8;">⚡</div><h3>Innovation</h3><p>Terus berkembang melalui teknologi, AI, dan solusi modern.</p></div>
-        <div class="skill-card reveal"><div class="skill-icon" style="color: #fbbf24;">💎</div><h3>Quality</h3><p>Kualitas bukan pilihan, tetapi standar dalam setiap proses.</p></div>
-        <div class="skill-card reveal"><div class="skill-icon" style="color: #f87171;">🛡</div><h3>Integrity</h3><p>Kepercayaan dibangun melalui konsistensi, tanggung jawab, dan transparansi.</p></div>
+        <div class="skill-card reveal"><div class="skill-icon" style="color: #c084fc;"></div><h3>Raw Authenticity</h3><p>Be real. Be bold. Be yourself — without compromise</p></div>
+        <div class="skill-card reveal"><div class="skill-icon" style="color: #2dd4bf;"></div><h3>Premium Craftsmanship</h3><p>Built with heart. Designed to last</p></div>
+        <div class="skill-card reveal"><div class="skill-icon" style="color: #38bdf8;"></div><h3>Purposeful Drops</h3><p>Every collection has a story. Every drop, a statement</p></div>
+        <div class="skill-card reveal"><div class="skill-icon" style="color: #fbbf24;"></div><h3>Identity First</h3><p>Style isn't what you wear. It's who you are — and that's what matters most</p></div>
+        <div class="skill-card reveal"><div class="skill-icon" style="color: #f87171;"></div><h3>Community</h3><p>More than customers. A movement of real individuals</p></div>
       </div>
     </div>
-    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#portfolio" class="btn-ghost">NEXT: Our Services →</a></div>
-  </section>
-
-  <!-- PORTFOLIO / WORKS -->
-  <section id="portfolio" class="section sec-pad" data-3d-scene="services-planets">
-    <div class="sec-inner">
-      <div class="sec-tag"></div>
-      <h2 class="sec-title reveal">OUR <span class="accent-text">SERVICES.</span></h2>
-      
-
-      <div class="portfolio-grid" id="portfolioGrid">
-        
-        <div class="portfolio-card reveal" data-category="brand" data-project="rnvn" tabindex="0" role="button">
-          <div class="card-num">01</div>
-          <div class="card-img"><img src="rnvnwear.png" alt="RNVN Streetwear" width="400" height="300" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
-          <div class="card-body"><span class="card-tag">STREETWEAR</span><h3>RNVN STREETWEAR</h3><p>Identitas brand streetwear premium.</p></div>
-        </div>
-        
-        <div class="portfolio-card reveal" data-category="brand" data-project="nexus" tabindex="0" role="button">
-          <div class="card-num">02</div>
-          <div class="card-img"><img src="rnvn printing.png" alt="RNVN Printing" width="400" height="300" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"><div class="card-overlay"><span>View Detail</span></div></div>
-          <div class="card-body"><span class="card-tag">PRINTING</span><h3>RNVN PRINTING</h3><p>Layanan percetakan modern.</p></div>
-        </div>
-        
-
-      </div>
-    </div>
-    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#contact" class="btn-ghost">NEXT: JOIN THE NATION →</a></div>
+    <div style="text-align:center; margin-top:50px; padding-bottom:50px; width:100%; position:relative; z-index:50;"><a href="#contact" class="btn-ghost" style="letter-spacing:3px; padding:12px 28px; border-radius:30px;">↓ JOIN THE NATION</a></div>
   </section>
 
   <!-- CONTACT & PENUTUP -->
@@ -322,25 +470,32 @@
       <div class="sec-tag">JOIN THE NATION</div>
       <div class="about-grid">
         <div>
-          <h2 class="sec-title reveal">JOIN THE <span class="accent-text">VISION.</span></h2>
-          <p class="sec-body reveal">RNVN bukan sekadar sebuah nama. RNVN adalah perjalanan untuk terus berkembang, menciptakan sebuah karya yang bermakna, dan membangun masa depan melalui kreativitas tanpa batas.</p>
-          <p class="sec-body reveal">Kami mengundang Anda untuk menjadi bagian dari perjalanan ini. Karena setiap ide layak diwujudkan, dan setiap visi pantas menjadi kenyataan.</p>
-          <h3 class="reveal" style="font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 2px; margin-top: 30px; color: var(--text-main);">RNVN — <span class="cyan">THINK BEYOND LIMITS.</span></h3>
+          <h2 class="sec-title reveal">PART OF THE <span class="accent-text">NATION</span></h2>
+          <p class="sec-body reveal">RNVN bukan sekadar brand yang menjual pakaian</p>
+          <p class="sec-body reveal">Kami membangun sebuah ruang untuk mereka yang berani berpikir berbeda, hidup dengan karakter, dan mengekspresikan diri tanpa batas</p>
+          <p class="sec-body reveal">The Nation adalah kumpulan individu yang percaya bahwa identitas bukan sesuatu yang perlu disembunyikan — melainkan sesuatu yang dikenakan dengan bangga</p>
+          <p class="sec-body reveal">Kalau nilai itu juga milikmu — kamu sudah jadi bagian dari cerita ini</p>
+          <h3 class="reveal" style="font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 2px; margin-top: 30px; color: var(--text-main);">RNVN — <span class="cyan">WEAR YOUR IDENTITY</span></h3>
           <div class="contact-info" style="margin-top: 40px; display: flex; flex-direction: column; gap: 20px;">
             <div class="reveal" style="display: flex; flex-direction: column;"><span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 5px;">WHATSAPP</span><a href="https://wa.me/628563122123" class="cyan" style="font-size: 1.2rem; font-weight: 500;">+62 856 3122 123</a></div>
-            <div class="reveal" style="display: flex; flex-direction: column;"><span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 5px;">EMAIL</span><span style="font-size: 1.2rem;">rnvnofficial@gmail.com</span></div>
+            <div class="reveal" style="display: flex; flex-direction: column;"><span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 5px;">EMAIL</span><span style="font-size: 1.2rem;">rnvnofficiall@gmail.com</span></div>
             <div class="reveal" style="display: flex; flex-direction: column;"><span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 5px;">INSTAGRAM</span><a href="https://www.instagram.com/rnvn.official_/" target="_blank" rel="noopener" class="cyan" style="font-size: 1.2rem; font-weight: 500;">@rnvn.official_</a></div>
           </div>
         </div>
         <div>
           <div class="reveal" style="padding: 40px; border: 1px solid rgba(34, 211, 238, 0.3); border-radius: 16px; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); position: relative; overflow: hidden; box-shadow: 0 0 30px rgba(34, 211, 238, 0.1);">
             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 51%); background-size: 100% 4px; opacity: 0.3; pointer-events: none;"></div>
-            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan); letter-spacing: 3px; margin-bottom: 20px;">INCOMING TRANSMISSION</div>
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan); letter-spacing: 3px; margin-bottom: 20px;">OUR MANIFESTO</div>
             <p style="font-family: var(--font-mono); font-size: 0.95rem; line-height: 1.8; color: #d1d5db;">
-              Kami percaya bahwa dunia berubah karena keberanian seseorang untuk berpikir berbeda. Kami percaya bahwa kreativitas adalah kekuatan, teknologi adalah alat, dan visi adalah kompas yang mengarahkan masa depan.<br><br>
-              RNVN hadir bukan hanya untuk menciptakan produk, tetapi untuk membangun identitas, menghubungkan ide dengan realitas, dan menginspirasi setiap individu agar berani melampaui batas pikirannya.<br><br>
-              Kami tidak mengikuti tren. <strong style="color: var(--text-main);">Kami menciptakan arah.</strong><br>
-              Kami tidak hanya membangun sebuah brand. <strong style="color: var(--cyan);">Kami membangun sebuah Nation.</strong>
+              RNVN lahir dari satu keyakinan<br><br>
+              Pakaian bukan cuma apa yang kamu pakai. Ini sebuah pesan yang kamu kirimkan ke dunia — tanpa perlu berbicara sepatah kata pun.<br><br>
+              Kami tidak mengejar tren yang datang dan pergi begitu saja.<br><br>
+              Kami menciptakan karya untuk mereka yang sudah tahu siapa dirinya — mereka yang punya tujuan, dan keberanian untuk tampil berbeda dari yang lain.<br><br>
+              Karena pada akhirnya — gaya bukan soal mengikuti orang lain.<br>
+              Gaya adalah soal menjadi dirimu sendiri.
+            </p>
+            <p style="font-family: var(--font-mono); font-size: 1rem; line-height: 1.8; margin-top: 24px; font-style: italic; background: linear-gradient(90deg, var(--cyan), var(--violet-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">
+              "You don't wear RNVN to fit in. You wear it to be yourself."
             </p>
           </div>
         </div>
@@ -354,7 +509,7 @@
         <div class="footer-social">
           <a href="https://wa.me/628563122123" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
           <a href="https://www.instagram.com/rnvn.official_/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
-          <a href="https://github.com/randianodeska-coder" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+          <a href="shop.html" rel="noopener" aria-label="Shop" style="color:#c084fc;">SHOP</a>
         </div>
       </div>
     </footer>
@@ -365,11 +520,11 @@
     <a href="https://www.instagram.com/rnvn.official_/" target="_blank" rel="noopener" class="dock-item" aria-label="Instagram">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
     </a>
-    <a href="https://github.com/randianodeska-coder" target="_blank" rel="noopener" class="dock-item" aria-label="GitHub">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-    </a>
     <a href="https://wa.me/628563122123" target="_blank" rel="noopener" class="dock-item" aria-label="WhatsApp">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="shop.html" class="dock-item" aria-label="Shop" style="color:#c084fc;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
     </a>
   </div>
 
@@ -391,7 +546,128 @@
     </div>
   </div>
 
-  <!-- SCRIPTS -->
+  <style>
+    /* === SHOP EXIT TRANSITION === */
+    .shop-shutter-wrap {
+      position: fixed; inset: 0; z-index: 99999;
+      pointer-events: none;
+      display: flex;
+    }
+    .shop-shutter-panel {
+      flex: 1;
+      background: #060212;
+      transform: scaleY(0);
+      transform-origin: top center;
+    }
+    .shop-shutter-panel:nth-child(even) { transform-origin: bottom center; }
+    .shop-link-text {
+      position: fixed; inset: 0; z-index: 100000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px;
+      pointer-events: none; opacity: 0;
+    }
+    .shop-link-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.6rem, 2vw, 0.85rem);
+      letter-spacing: 8px; color: #c084fc;
+    }
+    .shop-link-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.2rem, 4vw, 2.2rem);
+      font-weight: 900; letter-spacing: 6px;
+      color: #fff;
+      text-shadow: 0 0 30px rgba(192,132,252,0.8), 0 0 60px rgba(124,58,237,0.4);
+    }
+    .shop-link-bar {
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, #c084fc, #2dd4bf, transparent);
+    }
+    .shop-scanline {
+      position: fixed; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, #c084fc, transparent);
+      z-index: 100001; opacity: 0; pointer-events: none;
+    }
+  </style>
+  <div class="shop-shutter-wrap" id="shopShutterWrap" style="display:none;">
+    <div class="shop-shutter-panel"></div>
+    <div class="shop-shutter-panel"></div>
+    <div class="shop-shutter-panel"></div>
+    <div class="shop-shutter-panel"></div>
+    <div class="shop-shutter-panel"></div>
+  </div>
+  <div class="shop-link-text" id="shopLinkText">
+    <div class="shop-link-label">LINK ESTABLISHED</div>
+    <div class="shop-link-title">ENTERING SHOP</div>
+    <div class="shop-link-bar" id="shopLinkBar"></div>
+  </div>
+  <div class="shop-scanline" id="shopScanline"></div>
+
+  <script>
+    (function() {
+      var DEST = 'shop.html';
+      function doShopTransition(e) {
+        e.preventDefault();
+        if (window.S) S.warping = true;
+
+        var wrap    = document.getElementById('shopShutterWrap');
+        var panels  = wrap ? wrap.querySelectorAll('.shop-shutter-panel') : [];
+        var linkTxt = document.getElementById('shopLinkText');
+        var linkBar = document.getElementById('shopLinkBar');
+        var scanEl  = document.getElementById('shopScanline');
+
+        // ── 1. HYPERSPACE STAR LINES (existing galaxy effect) ──────────
+        if (window.warpHyperspace && window.S && !S.lowPerf && !S.isMobile) {
+          warpHyperspace();
+        }
+        // FOV blast on 3D camera
+        if (window.camera) {
+          gsap.to(camera, { fov: 115, duration: 0.45, ease: 'power2.in',
+            onUpdate: function() { camera.updateProjectionMatrix(); } });
+        }
+        // Camera zoom into galaxy core
+        if (window.S && window.S.baseCam) {
+          gsap.to(S.baseCam, { x: 0, y: 10, z: 80, duration: 0.8, ease: 'power3.in' });
+        }
+        // Bloom burst
+        if (window.bloomPass && window.S && !S.lowPerf) {
+          gsap.to(bloomPass, { strength: 4.5, duration: 0.3, ease: 'power2.in' });
+        }
+
+        var tl = gsap.timeline({ onComplete: function() { window.location.href = DEST; } });
+
+        // ── 2. SHUTTER PANELS SLAM IN ──────────────────────────────────
+        if (wrap && panels.length) {
+          wrap.style.display = 'flex';
+          panels.forEach(function(p, i) {
+            tl.to(p, {
+              scaleY: 1, duration: 0.28, ease: 'power3.in',
+              transformOrigin: i % 2 === 0 ? 'top center' : 'bottom center'
+            }, 0.2 + i * 0.04);
+          });
+        } else {
+          tl.to({}, { duration: 0.45 });
+        }
+
+        // ── 3. SCAN LINE SWEEP ─────────────────────────────────────────
+        tl.set(scanEl, { opacity: 1, top: '-2px' });
+        tl.to(scanEl, { top: '100vh', duration: 0.35, ease: 'power1.in', opacity: 0.6 }, 0.55);
+
+        // ── 4. LINK ESTABLISHED TEXT ───────────────────────────────────
+        tl.to(linkTxt, { opacity: 1, duration: 0.2, ease: 'power2.out' }, 0.58);
+        tl.to(linkBar, { width: '220px', duration: 0.4, ease: 'power2.out' }, 0.62);
+
+        // ── 5. HOLD → NAVIGATE ─────────────────────────────────────────
+        tl.to({}, { duration: 0.55 });
+      }
+
+      document.querySelectorAll('a[href="shop.html"]').forEach(function(link) {
+        link.addEventListener('click', doShopTransition);
+      });
+    })();
+  </script>
+</body>
+</html>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
@@ -401,8 +677,83 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/postprocessing/ShaderPass.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/shaders/CopyShader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-  <script src="galaxy-engine.js"></script>
-  <script src="galaxy-transitions.js"></script>
-  <script src="galaxy-effects.js"></script>
+  <script src="galaxy-engine.js?v=2.1"></script>
+  <script src="galaxy-transitions.js?v=2.1"></script>
+  <script src="galaxy-effects.js?v=2.1"></script>
+  <script>
+    // --- SHOP PAGE TRANSITION ---
+    (function() {
+      function doShopTransition(e) {
+        e.preventDefault();
+        const overlay = document.getElementById('shopWarpOverlay');
+        const text    = document.getElementById('shopWarpText');
+        if (!overlay || typeof gsap === 'undefined') {
+          window.location.href = 'shop.html'; return;
+        }
+
+        // Lock warping flag so nav SPA doesn't interfere
+        if (window.S) S.warping = true;
+
+        const tl = gsap.timeline({
+          onComplete: () => { window.location.href = 'shop.html'; }
+        });
+
+        // 1. FOV blast (if 3D engine running)
+        if (window.camera) {
+          tl.to(camera, { fov: 110, duration: 0.35, ease: 'power2.in',
+            onUpdate: () => camera.updateProjectionMatrix() }, 0);
+        }
+
+        // 2. Zoom galaxy cam toward center
+        if (window.S && window.S.baseCam) {
+          tl.to(S.baseCam, { x: 0, y: 0, z: 50, duration: 0.7, ease: 'power3.in' }, 0);
+        }
+
+        // 3. Bloom burst (if post-processing running)
+        if (window.bloomPass && window.S && !S.lowPerf) {
+          tl.to(bloomPass, { strength: 4, duration: 0.3, ease: 'power2.in' }, 0.2);
+        }
+
+        // 4. Fade text in
+        tl.to(text, { opacity: 1, duration: 0.25, ease: 'power2.out' }, 0.3);
+
+        // 5. Black overlay covers everything
+        tl.to(overlay, { opacity: 1, duration: 0.45, ease: 'power2.inOut' }, 0.35);
+      }
+
+      // Attach to all links pointing to shop.html
+      document.querySelectorAll('a[href="shop.html"]').forEach(function(link) {
+        link.addEventListener('click', doShopTransition);
+      });
+    })();
+
+    /* ============================================================
+       CUSTOM CURSOR
+    ============================================================ */
+    (function() {
+      var dot  = document.getElementById('cursorDot');
+      var ring = document.getElementById('cursorRing');
+      if (dot && ring && window.matchMedia('(hover: hover)').matches) {
+        var rx = innerWidth / 2, ry = innerHeight / 2;
+        document.addEventListener('mousemove', function(e) {
+          dot.style.left = e.clientX + 'px';
+          dot.style.top  = e.clientY + 'px';
+        });
+        (function animRing() {
+          var dx = parseFloat(dot.style.left) || innerWidth / 2;
+          var dy = parseFloat(dot.style.top)  || innerHeight / 2;
+          rx += (dx - rx) * 0.14;
+          ry += (dy - ry) * 0.14;
+          ring.style.left = rx + 'px';
+          ring.style.top  = ry + 'px';
+          requestAnimationFrame(animRing);
+        })();
+        document.querySelectorAll('a, button, .skill-card, .btn-primary, .btn-ghost, .dock-item').forEach(function(el) {
+          el.addEventListener('mouseenter', function() { dot.classList.add('hover'); ring.classList.add('hover'); });
+          el.addEventListener('mouseleave', function() { dot.classList.remove('hover'); ring.classList.remove('hover'); });
+        });
+      }
+    })();
+  </script>
 </body>
 </html>

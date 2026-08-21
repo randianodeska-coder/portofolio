@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RNVN Shop | Fashion & Streetwear Collection</title>
+  <meta name="description" content="Premium fashion and streetwear collection from RNVN Official. Discover our latest drops on TikTok Shop and Shopee.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="galaxy-theme.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #060212;
+      color: #e2e8f0;
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* --- HEADER --- */
+    .shop-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(6, 2, 18, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+    }
+    .shop-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.3rem;
+      letter-spacing: 4px;
+      color: #c084fc;
+    }
+    .shop-nav { display: flex; gap: 30px; align-items: center; }
+    .shop-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      transition: color 0.3s;
+    }
+    .shop-nav a:hover { color: #c084fc; }
+    .shop-nav a.active { color: #c084fc; font-weight: 600; }
+
+    /* --- HERO --- */
+    .shop-hero {
+      padding: 140px 40px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .shop-hero::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(192,132,252,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      color: #c084fc;
+      border: 1px solid rgba(192,132,252,0.4);
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .shop-hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .shop-hero h1 span { color: #c084fc; }
+    .shop-hero p {
+      font-family: 'Space Grotesk', sans-serif;
+      color: #a8b8cc;
+      font-size: 1.05rem;
+      font-weight: 400;
+      max-width: 560px;
+      margin: 0 auto 50px;
+      line-height: 1.85;
+    }
+
+    /* --- STORE BUTTONS --- */
+    .store-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 80px;
+    }
+    .store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .store-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .store-btn:hover::before { opacity: 1; }
+    .store-btn:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+
+    .btn-tiktok {
+      background: linear-gradient(135deg, #010101 0%, #1a1a2e 100%);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .btn-tiktok:hover { border-color: #c084fc; box-shadow: 0 20px 40px rgba(192,132,252,0.3) !important; }
+    .btn-tiktok .icon { font-size: 1.4rem; }
+
+    .btn-shopee {
+      background: linear-gradient(135deg, #EE4D2D 0%, #ff6b35 100%);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .btn-shopee:hover { box-shadow: 0 20px 40px rgba(238,77,45,0.4) !important; }
+    .btn-shopee .icon { font-size: 1.4rem; }
+
+    /* --- DIVIDER --- */
+    .section-label {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .section-label .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      color: #c084fc;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-label h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .section-label h2 span { color: #c084fc; }
+
+    /* --- CUSTOM CURSOR --- */
+    #cursorDot {
+      width: 8px; height: 8px;
+      background: #c084fc;
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 999999;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, background .2s;
+      mix-blend-mode: screen;
+    }
+    #cursorRing {
+      width: 36px; height: 36px;
+      border: 1.5px solid rgba(192,132,252,0.6);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 999998;
+      transform: translate(-50%,-50%);
+      transition: width .3s ease, height .3s ease, border-color .3s;
+    }
+    #cursorDot.hover  { width: 14px; height: 14px; background: #2dd4bf; }
+    #cursorRing.hover { width: 56px; height: 56px; border-color: rgba(45,212,191,0.7); }
+    @media (hover: none) { #cursorDot, #cursorRing { display: none; } }
+
+    /* --- COLLECTION GRID — LANDSCAPE --- */
+    .collection-section {
+      padding: 0 40px 100px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .collection-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Landscape card */
+    .item-card {
+      background: rgba(18, 5, 36, 0.7);
+      border: 1px solid rgba(124, 58, 237, 0.2);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: none;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      min-height: 220px;
+    }
+    .item-card:hover {
+      border-color: rgba(192,132,252,0.6);
+      transform: translateX(6px);
+      box-shadow: 0 20px 50px rgba(124,58,237,0.25);
+    }
+    .item-card .card-badge {
+      position: absolute;
+      top: 14px; left: 14px;
+      background: #c084fc;
+      color: #060212;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      z-index: 2;
+    }
+    .item-card .card-badge.new  { background: #2dd4bf; color:#060212; }
+    .item-card .card-badge.sale { background: #EE4D2D; color: #fff; }
+
+    /* Image takes left portion */
+    .card-img-wrap {
+      position: relative;
+      width: 340px;
+      flex-shrink: 0;
+      overflow: hidden;
+      background: #0f0520;
+    }
+    .card-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+      display: block;
+    }
+    .item-card:hover .card-img-wrap img { transform: scale(1.06); }
+
+    /* Hover overlay on image */
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(6,2,18,0.7) 0%, transparent 70%);
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .item-card:hover .card-overlay { opacity: 1; }
+    .card-overlay .shop-now { display: flex; flex-direction: column; gap: 8px; }
+    .card-overlay a {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: block;
+      text-align: center;
+    }
+    .card-overlay .o-tiktok { background:#010101; color:#69C9D0; border:1px solid #69C9D0; }
+    .card-overlay .o-shopee { background:#EE4D2D; color:#fff; }
+
+    /* Info on the right */
+    .card-info {
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      position: relative;
+    }
+    .card-info::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(124,58,237,0.4), transparent);
+    }
+    .card-info .cat {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      color: #c084fc;
+      margin-bottom: 12px;
+    }
+    .card-info h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+      color: #f1f5f9;
+    }
+    .card-info p {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.92rem;
+      color: #7a8fa6;
+      line-height: 1.75;
+      margin-bottom: 24px;
+    }
+    .card-info .buy-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .card-info .buy-links a {
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: none;
+    }
+    .card-info .buy-links .b-tiktok {
+      background: #0f0f1a;
+      color: #69C9D0;
+      border: 1px solid rgba(105,201,208,0.4);
+    }
+    .card-info .buy-links .b-tiktok:hover { border-color:#c084fc; box-shadow:0 0 16px rgba(192,132,252,0.3); }
+    .card-info .buy-links .b-shopee {
+      background: #EE4D2D;
+      color: #fff;
+    }
+    .card-info .buy-links .b-shopee:hover { box-shadow:0 0 16px rgba(238,77,45,0.4); }
+
+    /* --- COMING SOON CARD — LANDSCAPE --- */
+    .coming-soon-card {
+      border: 1px dashed rgba(124,58,237,0.25);
+      border-radius: 16px;
+      min-height: 120px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      color: #334155;
+      padding: 30px 40px;
+      transition: border-color 0.3s;
+    }
+    .coming-soon-card:hover { border-color: rgba(192,132,252,0.4); }
+    .coming-soon-card .cs-icon { font-size: 1.8rem; opacity: 0.3; }
+    .coming-soon-card p { font-size: 0.75rem; letter-spacing: 3px; font-family: 'JetBrains Mono', monospace; }
+
+    /* --- CTA BANNER --- */
+    .cta-banner {
+      margin: 60px 40px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(192,132,252,0.08) 100%);
+      border: 1px solid rgba(192,132,252,0.3);
+      border-radius: 20px;
+      padding: 60px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(192,132,252,0.1) 0%, transparent 70%);
+    }
+    .cta-banner h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.4rem, 2.8vw, 2rem);
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .cta-banner h2 span { color: #c084fc; }
+    .cta-banner p {
+      font-family: 'Space Grotesk', sans-serif;
+      color: #a8b8cc;
+      margin-bottom: 36px;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .cta-banner .store-buttons { margin-bottom: 0; }
+
+    /* --- FOOTER --- */
+    .shop-footer {
+      border-top: 1px solid rgba(124,58,237,0.2);
+      padding: 30px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .shop-footer .f-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      color: #c084fc;
+      font-size: 1rem;
+      letter-spacing: 3px;
+    }
+    .shop-footer .f-copy { color: #475569; font-size: 0.8rem; }
+    .shop-footer .f-links { display: flex; gap: 20px; }
+    .shop-footer .f-links a { color: #475569; text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+    .shop-footer .f-links a:hover { color: #c084fc; }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+      .shop-header { padding: 16px 20px; }
+      .shop-nav { gap: 16px; }
+      .shop-hero { padding: 120px 20px 60px; }
+      .collection-section { padding: 0 20px 80px; }
+      .cta-banner { margin: 40px 20px; padding: 40px 24px; }
+      .shop-footer { padding: 24px 20px; flex-direction: column; align-items: center; text-align: center; }
+      /* Stack cards vertically on mobile */
+      .item-card { flex-direction: column; min-height: unset; }
+      .card-img-wrap { width: 100%; height: 240px; }
+      .card-info { padding: 20px; }
+      .coming-soon-card { min-height: 90px; padding: 20px; }
+    }
+    @media (max-width: 480px) {
+      .shop-nav .hide-mobile { display: none; }
+      .store-btn { padding: 14px 22px; font-size: 0.9rem; }
+      .card-img-wrap { height: 200px; }
+    }
+    /* ===== CINEMATIC 3D ENTRANCE ===== */
+    #warpCanvas {
+      position: fixed; inset: 0; z-index: 99998;
+      background: #060212;
+      pointer-events: none;
+    }
+    /* Shutter panels for opening reveal */
+    .enter-shutter-wrap {
+      position: fixed; inset: 0; z-index: 99999;
+      pointer-events: none;
+      display: flex;
+    }
+    .enter-shutter-panel {
+      flex: 1;
+      background: #060212;
+      transform: scaleY(1);
+    }
+    .enter-shutter-panel:nth-child(odd)  { transform-origin: top center; }
+    .enter-shutter-panel:nth-child(even) { transform-origin: bottom center; }
+    /* LINK ESTABLISHED splash */
+    #enterSplash {
+      position: fixed; inset: 0; z-index: 100000;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px; pointer-events: none;
+      opacity: 1;
+    }
+    #enterSplash .es-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.55rem, 1.5vw, 0.8rem);
+      letter-spacing: 8px; color: #c084fc;
+    }
+    #enterSplash .es-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.1rem, 3.5vw, 2rem);
+      font-weight: 900; letter-spacing: 5px; color: #fff;
+      text-shadow: 0 0 30px rgba(192,132,252,.9), 0 0 60px rgba(124,58,237,.5);
+    }
+    #enterSplash .es-bar {
+      width: 200px; height: 2px;
+      background: linear-gradient(90deg, transparent, #c084fc, #2dd4bf, transparent);
+      animation: esBarPulse 1s ease infinite alternate;
+    }
+    @keyframes esBarPulse { from { opacity:.5; } to { opacity:1; } }
+    #enterScanline {
+      position: fixed; left:0; right:0; height:2px;
+      background: linear-gradient(90deg, transparent, #c084fc 30%, #2dd4bf 70%, transparent);
+      z-index: 100001; opacity: 0; pointer-events: none;
+      top: 0;
+    }
+    /* Content starts hidden for 3D reveal */
+    .shop-header, .shop-hero, .collection-section, .cta-banner, .shop-footer {
+      opacity: 0;
+    }
+    /* Exit overlay */
+    #shopExitWrap {
+      position: fixed; inset: 0; z-index: 99999;
+      pointer-events: none;
+      display: none;
+      flex: 1;
+    }
+    .exit-shutter-panel {
+      flex: 1;
+      background: #060212;
+      transform: scaleY(0);
+    }
+    .exit-shutter-panel:nth-child(odd)  { transform-origin: top center; }
+    .exit-shutter-panel:nth-child(even) { transform-origin: bottom center; }
+    #exitSplash {
+      position: fixed; inset: 0; z-index: 100000;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px; pointer-events: none; opacity: 0;
+    }
+    #exitSplash .xs-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(0.55rem, 1.5vw, 0.8rem);
+      letter-spacing: 8px; color: #c084fc;
+    }
+    #exitSplash .xs-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.1rem, 3.5vw, 2rem);
+      font-weight: 900; letter-spacing: 5px; color: #fff;
+      text-shadow: 0 0 30px rgba(192,132,252,.9);
+    }
+    #exitSplash .xs-bar {
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, #c084fc, #2dd4bf, transparent);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WARP CANVAS (hyperspace stars) -->
+  <canvas id="warpCanvas"></canvas>
+
+  <!-- SHUTTER PANELS (open on entrance) -->
+  <div class="enter-shutter-wrap" id="enterShutterWrap">
+    <div class="enter-shutter-panel"></div>
+    <div class="enter-shutter-panel"></div>
+    <div class="enter-shutter-panel"></div>
+    <div class="enter-shutter-panel"></div>
+    <div class="enter-shutter-panel"></div>
+  </div>
+
+  <!-- ENTRANCE SPLASH TEXT -->
+  <div id="enterSplash">
+    <div class="es-label">ENTERING THE NATION</div>
+    <div class="es-title">RNVN SHOP</div>
+    <div class="es-bar"></div>
+  </div>
+  <div id="enterScanline"></div>
+
+  <!-- EXIT ELEMENTS -->
+  <div id="shopExitWrap" style="display:none; position:fixed; inset:0; z-index:99999; pointer-events:none; display:none; flex-direction:row;">
+    <div class="exit-shutter-panel"></div>
+    <div class="exit-shutter-panel"></div>
+    <div class="exit-shutter-panel"></div>
+    <div class="exit-shutter-panel"></div>
+    <div class="exit-shutter-panel"></div>
+  </div>
+  <div id="exitSplash">
+    <div class="xs-label">LEAVING STORE</div>
+    <div class="xs-title">BACK TO BASE</div>
+    <div class="xs-bar" id="exitBar"></div>
+  </div>
+
+  <!-- CUSTOM CURSOR -->
+  <div id="cursorDot"></div>
+  <div id="cursorRing"></div>
+
+  <!-- HEADER -->
+  <header class="shop-header">
+    <div class="shop-logo">[RNVN]</div>
+    <nav class="shop-nav">
+      <a href="index.html" class="hide-mobile">Home</a>
+      <a href="shop.html" class="active" style="color: #c084fc; font-weight: 700; border: 1px solid rgba(192,132,252,0.45); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px;">Shop ✦</a>
+      <a href="index.html#contact">Join Us</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="shop-hero">
+    <div class="hero-tag"> RNVN FASHION COLLECTION</div>
+    <h1>WEAR THE <span>VISION.</span></h1>
+    <p>Premium streetwear and fashion from RNVN. Each piece is designed for those who dare to stand out — and think beyond the ordinary.</p>
+
+    <div class="store-buttons">
+      <a href=" https://vt.tiktok.com/ZS9k73nTbTagn-lVWru/" target="_blank" rel="noopener" class="store-btn btn-tiktok" id="btnTiktok">
+        <span class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z" fill="white"/></svg></span>
+        <div>
+          <div style="font-size:0.65rem; opacity:0.7; letter-spacing:2px; margin-bottom:2px;">SHOP ON</div>
+          TikTok Shop
+        </div>
+      </a>
+      <a href="https://id.shp.ee/qncND4FF" target="_blank" rel="noopener" class="store-btn btn-shopee" id="btnShopee">
+        <span class="icon"><svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C9.243 2 7 4.243 7 7v.057l-2.995.618A1 1 0 003.02 8.65l1.353 11.891A2 2 0 006.358 22h11.284a2 2 0 001.985-1.459l1.353-11.89a1 1 0 00-.985-1.977L17 7.056V7c0-2.757-2.243-5-5-5zm-3 5v-.057C9 5.347 10.347 4 12 4s3 1.347 3 2.943V7H9zm3 5a2 2 0 100 4 2 2 0 000-4z" fill="white"/></svg></span>
+        <div>
+          <div style="font-size:0.65rem; opacity:0.8; letter-spacing:2px; margin-bottom:2px;">SHOP ON</div>
+          Shopee
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- COLLECTION -->
+  <section class="collection-section">
+    <div class="section-label">
+      <span class="tag">OUR COLLECTION</span>
+      <h2>THE <span>COLLECTION.</span></h2>
+    </div>
+
+    <div class="collection-grid">
+
+      <div class="item-card">
+        <div class="card-badge new">NEW</div>
+        <div class="card-img-wrap">
+          <img src="think beyondlimits.png" alt="RNVN Streetwear Collection" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="cat">Boxy</div>
+          <h3>RNVN Think Beyond Limits</h3>
+          <p>A bold statement piece that embodies courage, ambition, and the spirit to think beyond limits.</p>
+          <div class="buy-links">
+            <a href=" https://vt.tokopedia.com/t/ZS9k73chg8EVJ-4cWWy/" target="_blank" rel="noopener" class="b-tiktok"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg> TikTok</a>
+            <a href="https://id.shp.ee/cE2Hgp1X" target="_blank" rel="noopener" class="b-shopee"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.243 2 7 4.243 7 7v.057l-2.995.618A1 1 0 003.02 8.65l1.353 11.891A2 2 0 006.358 22h11.284a2 2 0 001.985-1.459l1.353-11.89a1 1 0 00-.985-1.977L17 7.056V7c0-2.757-2.243-5-5-5zm-3 5v-.057C9 5.347 10.347 4 12 4s3 1.347 3 2.943V7H9zm3 5a2 2 0 100 4 2 2 0 000-4z"/></svg> Shopee</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-card">
+        <div class="card-badge">LIMITED</div>
+        <div class="card-img-wrap">
+          <img src="rnvn voidwear.png" alt="RNVN Street Wear" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="cat">Boxy</div>
+          <h3>RNVN Void Weaver</h3>
+          <p>Inspired by the cosmic void, woven with mystery and limitless imagination.</p>
+          <div class="buy-links">
+            <a href=" https://vt.tokopedia.com/t/ZS9k73EYF2txY-MOYDI/" target="_blank" rel="noopener" class="b-tiktok"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg> TikTok</a>
+            <a href=" https://id.shp.ee/15okasE1" target="_blank" rel="noopener" class="b-shopee"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.243 2 7 4.243 7 7v.057l-2.995.618A1 1 0 003.02 8.65l1.353 11.891A2 2 0 006.358 22h11.284a2 2 0 001.985-1.459l1.353-11.89a1 1 0 00-.985-1.977L17 7.056V7c0-2.757-2.243-5-5-5zm-3 5v-.057C9 5.347 10.347 4 12 4s3 1.347 3 2.943V7H9zm3 5a2 2 0 100 4 2 2 0 000-4z"/></svg> Shopee</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-card">
+        <div class="card-badge new">NEW</div>
+        <div class="card-img-wrap">
+          <img src="galaxyrnvn.png" alt="RNVN Fashion Drop" loading="lazy">
+        </div>
+        <div class="card-info">
+          <div class="cat">Boxy</div>
+          <h3>RNVN Gravity Of Hope</h3>
+          <p>I was falling into the void. You reached for me.</p>
+          <div class="buy-links">
+            <a href=" https://vt.tokopedia.com/t/ZS9k7TJMLrsj1-9Y9oL/" target="_blank" rel="noopener" class="b-tiktok"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg> TikTok</a>
+            <a href="https://id.shp.ee/6F8Ho3xY" target="_blank" rel="noopener" class="b-shopee"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C9.243 2 7 4.243 7 7v.057l-2.995.618A1 1 0 003.02 8.65l1.353 11.891A2 2 0 006.358 22h11.284a2 2 0 001.985-1.459l1.353-11.89a1 1 0 00-.985-1.977L17 7.056V7c0-2.757-2.243-5-5-5zm-3 5v-.057C9 5.347 10.347 4 12 4s3 1.347 3 2.943V7H9zm3 5a2 2 0 100 4 2 2 0 000-4z"/></svg> Shopee</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMING SOON BANNER -->
+      <div style="border: 1px dashed rgba(192,132,252,0.3); border-radius: 16px; padding: 50px 40px; text-align: center; background: rgba(18,5,36,0.4); position: relative; overflow: hidden;">
+        <div style="position:absolute; top:-60px; left:50%; transform:translateX(-50%); width:300px; height:300px; background:radial-gradient(circle, rgba(192,132,252,0.08) 0%, transparent 70%); pointer-events:none;"></div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:5px; color:#c084fc; margin-bottom:16px;">UPCOMING DROP</div>
+        <div style="font-family:'Orbitron',sans-serif; font-size:clamp(1.4rem,3vw,2rem); font-weight:900; letter-spacing:3px; color:#f1f5f9; margin-bottom:12px;">NEW COLLECTION</div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-size:0.95rem; color:#475569; margin-bottom:28px;">Something bold is coming. Stay tuned.</div>
+        <a href="https://www.instagram.com/rnvn.official_/" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; padding:10px 24px; border:1px solid rgba(192,132,252,0.4); border-radius:30px; color:#c084fc; font-size:0.8rem; letter-spacing:2px; font-family:'JetBrains Mono',monospace; text-decoration:none; transition:all 0.3s;" onmouseover="this.style.background='rgba(192,132,252,0.1)'" onmouseout="this.style.background='transparent'">★ FOLLOW FOR UPDATES</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <h2>EXPLORE THE FULL <span>RNVN</span> COLLECTION</h2>
+    <p>Visit our official store on TikTok Shop & Shopee to discover all collections and the latest drops.</p>
+    <div class="store-buttons">
+      <a href=" https://vt.tiktok.com/ZS9k73nTbTagn-lVWru/" target="_blank" rel="noopener" class="store-btn btn-tiktok">
+        <span class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z" fill="white"/></svg></span>
+        <div>
+          <div style="font-size:0.65rem; opacity:0.7; letter-spacing:2px; margin-bottom:2px;">SHOP ON</div>
+          TikTok Shop
+        </div>
+      </a>
+      <a href=" https://id.shp.ee/qncND4FF" target="_blank" rel="noopener" class="store-btn btn-shopee">
+        <span class="icon"><svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C9.243 2 7 4.243 7 7v.057l-2.995.618A1 1 0 003.02 8.65l1.353 11.891A2 2 0 006.358 22h11.284a2 2 0 001.985-1.459l1.353-11.89a1 1 0 00-.985-1.977L17 7.056V7c0-2.757-2.243-5-5-5zm-3 5v-.057C9 5.347 10.347 4 12 4s3 1.347 3 2.943V7H9zm3 5a2 2 0 100 4 2 2 0 000-4z" fill="white"/></svg></span>
+        <div>
+          <div style="font-size:0.65rem; opacity:0.8; letter-spacing:2px; margin-bottom:2px;">SHOP ON</div>
+          Shopee
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="shop-footer">
+    <div class="f-logo">RNVN</div>
+    <div class="f-copy">© 2026 RNVN Official. All Rights Reserved.</div>
+    <div class="f-links">
+      <a href="index.html" style="letter-spacing:2px; font-size:0.78rem;">HOME</a>
+      <a href="https://www.instagram.com/rnvn.official_/" target="_blank" rel="noopener" style="letter-spacing:2px; font-size:0.78rem;">INSTAGRAM</a>
+      <a href="https://wa.me/628563122123" target="_blank" rel="noopener" style="letter-spacing:2px; font-size:0.78rem;">WHATSAPP</a>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+(function() {
+
+  /* ============================================================
+     WARP SPEED CANVAS — hyperspace star lines
+  ============================================================ */
+  var canvas = document.getElementById('warpCanvas');
+  var ctx    = canvas ? canvas.getContext('2d') : null;
+  var stars  = [];
+  var warpRAF;
+  var warpActive = true;
+
+  function resizeCanvas() {
+    if (!canvas) return;
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  // Generate stars radiating from center
+  for (var i = 0; i < 280; i++) {
+    var angle = Math.random() * Math.PI * 2;
+    var dist  = 20 + Math.random() * 120;
+    stars.push({
+      x:     Math.cos(angle) * dist,
+      y:     Math.sin(angle) * dist,
+      vx:    Math.cos(angle) * (1.5 + Math.random() * 3),
+      vy:    Math.sin(angle) * (1.5 + Math.random() * 3),
+      len:   4 + Math.random() * 14,
+      alpha: 0.4 + Math.random() * 0.6,
+      hue:   Math.random() < 0.5 ? 270 : 190   // purple or cyan
+    });
+  }
+
+  function drawWarp(t) {
+    if (!ctx || !warpActive) return;
+    var W = canvas.width, H = canvas.height;
+    var cx = W / 2, cy = H / 2;
+    // Fade trail
+    ctx.fillStyle = 'rgba(6, 2, 18, 0.25)';
+    ctx.fillRect(0, 0, W, H);
+
+    var speed = Math.min(t / 300, 1);   // ramp 0→1 over 300 frames
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      s.x += s.vx * (1 + speed * 8);
+      s.y += s.vy * (1 + speed * 8);
+      var sx = cx + s.x, sy = cy + s.y;
+      // Reset if off screen
+      if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) {
+        var a2 = Math.random() * Math.PI * 2, d2 = 5 + Math.random() * 30;
+        s.x = Math.cos(a2) * d2; s.y = Math.sin(a2) * d2;
+        s.vx = Math.cos(a2) * (1.5 + Math.random() * 3);
+        s.vy = Math.sin(a2) * (1.5 + Math.random() * 3);
+      }
+      var tailLen = s.len * (1 + speed * 6);
+      ctx.beginPath();
+      ctx.moveTo(sx, sy);
+      ctx.lineTo(sx - s.vx * tailLen, sy - s.vy * tailLen);
+      ctx.strokeStyle = 'hsla(' + s.hue + ', 90%, 75%, ' + s.alpha + ')';
+      ctx.lineWidth   = 0.8 + speed;
+      ctx.stroke();
+    }
+    warpRAF = requestAnimationFrame(function(ts) { drawWarp(t + 1); });
+  }
+  drawWarp(0);
+
+  function stopWarp() {
+    warpActive = false;
+    if (warpRAF) cancelAnimationFrame(warpRAF);
+    if (canvas) gsap.to(canvas, { opacity: 0, duration: 0.4,
+      onComplete: function() { canvas.style.display = 'none'; } });
+  }
+
+  /* ============================================================
+     CINEMATIC ENTRANCE SEQUENCE
+  ============================================================ */
+  var shutterWrap  = document.getElementById('enterShutterWrap');
+  var shutterPanels= shutterWrap ? shutterWrap.querySelectorAll('.enter-shutter-panel') : [];
+  var splash       = document.getElementById('enterSplash');
+  var scanline     = document.getElementById('enterScanline');
+
+  // Targets that will do 3D reveal
+  var revealEls = document.querySelectorAll(
+    '.shop-header, .shop-hero, .collection-section, .cta-banner, .shop-footer'
+  );
+
+  // Set 3D start state
+  revealEls.forEach(function(el) {
+    gsap.set(el, { opacity: 0, y: 40, rotateX: 12, transformPerspective: 900 });
+  });
+
+  // ── TIMELINE ──────────────────────────────────────────────────
+  var tl = gsap.timeline();
+
+  // 1. Hold splash + warp for ~0.7s
+  tl.to({}, { duration: 0.7 });
+
+  // 2. Scan line sweeps down
+  tl.set(scanline, { opacity: 1, top: 0 });
+  tl.to(scanline,  { top: '100vh', duration: 0.4, ease: 'power1.in', opacity: 0.7 });
+
+  // 3. Splash fades out
+  tl.to(splash, { opacity: 0, duration: 0.3, ease: 'power2.in' }, '-=0.15');
+
+  // 4. Shutter panels open outward (odd → up, even → down)
+  shutterPanels.forEach(function(p, i) {
+    tl.to(p, {
+      scaleY: 0, duration: 0.38, ease: 'power3.inOut',
+      transformOrigin: i % 2 === 0 ? 'top center' : 'bottom center'
+    }, '-=0.32');
+  });
+
+  // 5. Stop warp canvas
+  tl.call(stopWarp, null, '-=0.2');
+
+  // 6. 3D content reveal — staggered
+  tl.to(revealEls, {
+    opacity: 1, y: 0, rotateX: 0,
+    duration: 0.65, ease: 'power3.out',
+    stagger: 0.1,
+    transformPerspective: 900
+  }, '-=0.1');
+
+  // 7. Hide shutter wrap completely
+  tl.call(function() {
+    if (shutterWrap) shutterWrap.style.display = 'none';
+    if (splash)      splash.style.display = 'none';
+  });
+
+  /* ============================================================
+     CINEMATIC EXIT (back to index.html)
+  ============================================================ */
+  var exitWrap     = document.getElementById('shopExitWrap');
+  var exitPanels   = exitWrap   ? exitWrap.querySelectorAll('.exit-shutter-panel')   : [];
+  var exitSplash   = document.getElementById('exitSplash');
+  var exitBar      = document.getElementById('exitBar');
+
+  function doExitTransition(e) {
+    var href = this.getAttribute('href');
+    if (!href || href.startsWith('http') || href.startsWith('#')) return;
+    e.preventDefault();
+
+    if (exitWrap) exitWrap.style.display = 'flex';
+
+    var etl = gsap.timeline({ onComplete: function() { window.location.href = href; } });
+
+    // Content folds away in 3D
+    var allEls = Array.from(document.querySelectorAll(
+      '.shop-header, .shop-hero, .collection-section, .cta-banner, .shop-footer'
+    )).reverse();
+    etl.to(allEls, {
+      opacity: 0, y: -30, rotateX: -10,
+      duration: 0.35, ease: 'power2.in',
+      stagger: 0.05,
+      transformPerspective: 900
+    }, 0);
+
+    // Shutter panels slam in
+    exitPanels.forEach(function(p, i) {
+      etl.to(p, {
+        scaleY: 1, duration: 0.28, ease: 'power3.in',
+        transformOrigin: i % 2 === 0 ? 'top center' : 'bottom center'
+      }, 0.2 + i * 0.04);
+    });
+
+    // Scanline sweep
+    var xs = document.createElement('div');
+    xs.style.cssText = 'position:fixed;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,#c084fc,transparent);z-index:100002;pointer-events:none;';
+    document.body.appendChild(xs);
+    etl.to(xs, { top: '100vh', duration: 0.35, ease: 'power1.in', opacity: 0.7 }, 0.45);
+
+    // Exit splash
+    etl.to(exitSplash, { opacity: 1, duration: 0.2 }, 0.52);
+    etl.to(exitBar,    { width: '200px', duration: 0.4, ease: 'power2.out' }, 0.56);
+
+    // Hold then navigate
+    etl.to({}, { duration: 0.5 });
+  }
+
+  document.querySelectorAll('a[href="index.html"]').forEach(function(link) {
+    link.addEventListener('click', doExitTransition);
+  });
+
+  /* ============================================================
+     CUSTOM CURSOR
+  ============================================================ */
+  var dot  = document.getElementById('cursorDot');
+  var ring = document.getElementById('cursorRing');
+  if (dot && ring && window.matchMedia('(hover: hover)').matches) {
+    var rx = innerWidth / 2, ry = innerHeight / 2;
+    document.addEventListener('mousemove', function(e) {
+      dot.style.left = e.clientX + 'px';
+      dot.style.top  = e.clientY + 'px';
+    });
+    (function animRing() {
+      var dx = parseFloat(dot.style.left) || innerWidth / 2;
+      var dy = parseFloat(dot.style.top)  || innerHeight / 2;
+      rx += (dx - rx) * 0.14;
+      ry += (dy - ry) * 0.14;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animRing);
+    })();
+    document.querySelectorAll('a, button, .item-card, .store-btn, .coming-soon-card').forEach(function(el) {
+      el.addEventListener('mouseenter', function() { dot.classList.add('hover'); ring.classList.add('hover'); });
+      el.addEventListener('mouseleave', function() { dot.classList.remove('hover'); ring.classList.remove('hover'); });
+    });
+  }
+
+})();
+</script>

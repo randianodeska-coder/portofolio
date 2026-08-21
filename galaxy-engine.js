@@ -244,43 +244,84 @@ const pre=document.getElementById('preloader'),fill=document.getElementById('pre
 let p=0;const iv=setInterval(()=>{p+=Math.random()*15;if(p>=100){p=100;clearInterval(iv);st.innerText='READY.';
 setTimeout(()=>{pre.style.opacity='0';setTimeout(()=>{pre.style.display='none';
 document.body.classList.remove('loading');
-
-// Epic Cinematic Intro (Mini Tour)
-if (!S.isMobile) {
+// Full Cinematic Tour on Load
+if (!S.isMobile && !sessionStorage.getItem('rnvn_tour_played_v3')) {
+  sessionStorage.setItem('rnvn_tour_played_v3', 'true');
   S.warping = true;
+  document.body.classList.add('tour-active'); // hide hero text during tour
   const heroEl = document.getElementById('hero');
   const hdr = document.getElementById('header');
   hdr.style.opacity = '0';
   heroEl.style.opacity = '0';
   heroEl.classList.add('active');
 
+  // Shared function: removes tour class and stagger-reveals hero
+  function revealHero(){
+    S.warping = false;
+    document.body.classList.remove('tour-active');
+    if(tOver) tOver.classList.remove('active');
+    heroEl.style.opacity = '1';
+    gsap.to(hdr, {opacity:1, duration:0.8, ease:'power2.out'});
+    const parts = [
+      heroEl.querySelector('.hero-eyebrow'),
+      heroEl.querySelector('.hero-title'),
+      heroEl.querySelector('.hero-tagline'),
+      heroEl.querySelector('.hero-sub'),
+      heroEl.querySelector('.hero-actions'),
+      heroEl.querySelector('.hero-metrics'),
+    ].filter(Boolean);
+    gsap.fromTo(parts,
+      {opacity:0, y:40},
+      {opacity:1, y:0, duration:0.85, ease:'power3.out', stagger:0.13,
+        onComplete: () => { trigRevs(heroEl); }
+      }
+    );
+  }
+
   const tOver = document.getElementById('tourOverlay');
-  const tCap = document.getElementById('tourCaption');
+  const tCap  = document.getElementById('tourCaption');
   const tProg = document.getElementById('tourProgFill');
-  const tSkip = document.getElementById('tourSkip');
+
+  if(tOver) tOver.classList.add('active');
+  // Clone skip button to clear old listeners
+  const tSkipOld = document.getElementById('tourSkip');
+  let tSkip = tSkipOld;
+  if(tSkipOld){
+    tSkip = tSkipOld.cloneNode(true);
+    tSkip.style.display = 'block';
+    tSkipOld.parentNode.replaceChild(tSkip, tSkipOld);
+  }
   
-  tOver.classList.add('active');
-  tSkip.style.display = 'none';
-  tProg.style.width = '0%';
-  
-  camera.fov = 90; camera.updateProjectionMatrix();
+  // The exact same 16-second tour
   const introTl = gsap.timeline();
-  introTl.call(() => { tCap.innerHTML = 'ENTERING THE UNIVERSE...'; gsap.to(tProg, {width:'50%', duration: 2.5}); })
-    .to(S.baseCam, {x: 100, y: -20, z: 100, duration: 2.5, ease: 'power2.inOut'})
-    .call(() => { tCap.innerHTML = 'SYSTEM ONLINE.'; gsap.to(tProg, {width:'100%', duration: 2.5}); })
-    .to(S.baseCam, {x: 0, y: 150, z: 400, duration: 2.5, ease: 'power3.out'})
-    .to(camera, {fov: 60, duration: 2.5, ease: 'power2.out', onUpdate: ()=>camera.updateProjectionMatrix()}, '-=2.5')
-    .call(() => {
-      tOver.classList.remove('active');
-      tSkip.style.display = '';
-      gsap.to(hdr, {opacity: 1, duration: 1});
-      gsap.to(heroEl, {opacity: 1, duration: 1});
-      trigRevs(heroEl);
-      S.warping = false;
+  // Scene 1: Dive in
+  introTl.call(()=>{tCap.innerHTML='WELCOME TO THE CREATIVE UNIVERSE.';gsap.to(tProg,{width:'20%',duration:4});})
+        .to(S.baseCam,{x:0,y:0,z:50,duration:4,ease:'power1.inOut'})
+  // Scene 2: The Core
+        .call(()=>{tCap.innerHTML='WHERE IDEAS GRAVITATE & BIND TOGETHER.';gsap.to(tProg,{width:'40%',duration:4});})
+        .to(S.baseCam,{x:100,y:-30,z:0,duration:4,ease:'power1.inOut'})
+  // Scene 3: Nebula
+        .call(()=>{tCap.innerHTML='EXPLORING NEW DIMENSIONS OF DESIGN.';gsap.to(tProg,{width:'70%',duration:4});})
+        .to(S.baseCam,{x:-50,y:60,z:-100,duration:4,ease:'power1.inOut'})
+  // Scene 4: Return
+        .call(()=>{tCap.innerHTML="LET'S BUILD SOMETHING GREAT.";gsap.to(tProg,{width:'100%',duration:4});})
+        .to(S.baseCam,{x:0,y:150,z:400,duration:4,ease:'power2.out'})
+        .call(()=>{ revealHero(); });
+
+  // Skip button
+  if(tSkip){
+    tSkip.addEventListener('click', ()=>{
+      introTl.kill();
+      gsap.to(S.baseCam,{x:0,y:150,z:400,duration:1.2,ease:'power2.out'});
+      revealHero();
     });
+  }
 } else {
-  document.getElementById('hero').classList.add('active');trigRevs(document.getElementById('hero'));
-  gsap.to(S.baseCam,{x:0,y:150,z:400,duration:2.5,ease:'power2.out'});
+  // Mobile or repeat visit — instant reveal
+  const heroEl = document.getElementById('hero');
+  const hdr = document.getElementById('header');
+  if(heroEl){ heroEl.classList.add('active'); heroEl.style.opacity='1'; trigRevs(heroEl); }
+  if(hdr) hdr.style.opacity = '1';
 }
 },800);},500);}
 fill.style.width=p+'%';pct.innerText=Math.floor(p)+'%';
@@ -363,42 +404,6 @@ const form=document.getElementById('contactForm');
 if(form)form.addEventListener('submit',e=>{e.preventDefault();
 const n=document.getElementById('fname').value,m=document.getElementById('fmsg').value;
 window.open(`https://wa.me/628563122123?text=${encodeURIComponent('Halo, saya '+n+'. '+m)}`,'_blank');});
-
-// Cinematic Tour
-const tBtn=document.getElementById('tourBtn'),tOver=document.getElementById('tourOverlay'),tSkip=document.getElementById('tourSkip'),tCap=document.getElementById('tourCaption'),tProg=document.getElementById('tourProgFill');
-let tourTl=null;
-if(tBtn){
-  tBtn.addEventListener('click',()=>{
-    if(S.isMobile)return;
-    document.getElementById('header').style.opacity='0';
-    document.getElementById(S.secs[S.page]).classList.remove('active');
-    tOver.classList.add('active');
-    S.warping=true;
-    
-    tourTl = gsap.timeline({onComplete:()=>{tSkip.click();}});
-    // Scene 1: Dive in
-    tourTl.call(()=>{tCap.innerHTML='WELCOME TO THE CREATIVE UNIVERSE.';gsap.to(tProg,{width:'20%',duration:4});})
-          .to(S.baseCam,{x:0,y:0,z:50,duration:4,ease:'power1.inOut'})
-    // Scene 2: The Core
-          .call(()=>{tCap.innerHTML='WHERE IDEAS GRAVITATE & BIND TOGETHER.';gsap.to(tProg,{width:'40%',duration:4});})
-          .to(S.baseCam,{x:100,y:-30,z:0,duration:4,ease:'power1.inOut'})
-    // Scene 3: Nebula
-          .call(()=>{tCap.innerHTML='EXPLORING NEW DIMENSIONS OF DESIGN.';gsap.to(tProg,{width:'70%',duration:4});})
-          .to(S.baseCam,{x:-50,y:60,z:-100,duration:4,ease:'power1.inOut'})
-    // Scene 4: Return
-          .call(()=>{tCap.innerHTML="LET'S BUILD SOMETHING GREAT.";gsap.to(tProg,{width:'100%',duration:4});})
-          .to(S.baseCam,{x:0,y:150,z:400,duration:4,ease:'power2.out'});
-  });
-  tSkip.addEventListener('click',()=>{
-    if(tourTl)tourTl.kill();
-    tOver.classList.remove('active');
-    document.getElementById('header').style.opacity='1';
-    S.warping=false;
-    const tc=S.pageCam[S.page];
-    gsap.to(S.baseCam,{x:tc.x,y:tc.y,z:tc.z,duration:1.5,ease:'power2.out'});
-    document.getElementById(S.secs[S.page]).classList.add('active');
-  });
-}
 
 initModal();}
 
